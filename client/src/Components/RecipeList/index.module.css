@@ -1,0 +1,11 @@
+.main {
+    margin-left: 16rem;
+    padding: 1rem;
+}
+
+/* Small screens */
+@media only screen and (max-width: 700px) {
+    .main {
+        margin-left: 2rem;
+    }
+}

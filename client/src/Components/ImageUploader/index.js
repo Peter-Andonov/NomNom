@@ -1,35 +1,37 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './index.module.css';
 import axios from 'axios';
 
-export default class ImageUploader extends React.Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            image: '',
-            loading: false
-        }
-    }
+export default function ImageUploader() {
+    const [image, setImage] = useState('');
+    const [loading, setLoading] = useState(false);
 
-    uploadImage = async (e) => {
+    const uploadImage = async (e) => {
         const files = e.target.files;
         const data = new FormData();
         data.append('file', files[0]);
         data.append('upload_preset', 'default');
-
-        const res = await axios.post(process.env.REACT_APP_CLOUDINARY_API_BASE_URL, data);
+        setLoading(true)
+        const res = await axios.post(process.env.REACT_APP_CLOUDINARY_API_BASE_URL, data)
+        setImage(res.data.secure_url);
+        setLoading(false)
     }
 
-    render() {
-        return (
+    return (
+        <div>
             <div className={styles.wrapper}>
-                <h3>Upload image</h3>
-                <input type='file'
+                <input className={styles.input} type='file'
                     name="File"
+                    id='file'
                     placeholder="Upload image"
-                    onChange={this.uploadImage}
+                    accept='image/*'
+                    onChange={uploadImage}
                 />
+                <label for="file">Select file</label>
             </div>
-        );
-    }
+            <div className={styles.wrapper}>
+                <img className={styles['uploaded-image-card']} src={image} />
+            </div>
+        </div>
+    );
 }

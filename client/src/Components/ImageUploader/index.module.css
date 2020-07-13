@@ -2,3 +2,12 @@
     margin-top: 4rem;
     margin-left: 16rem;
 }
+
+.input {
+    display: none;
+}
+
+.uploaded-image-card {
+    max-height: 20rem;
+    max-width: 20rem;
+}

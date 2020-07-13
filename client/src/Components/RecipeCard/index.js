@@ -10,7 +10,7 @@ export default class RecipeCard extends React.Component {
     render() {
         return (
             <div className={styles['card']}>
-                <img className={styles['card-img']} src={matcha} />
+                <img className={styles['card-img']} src={matcha} alt='Recipe'/>
                 <h4 className={styles['card-title']} >Green matcha</h4>
                 <table className={styles['table']}>
                     <tr>

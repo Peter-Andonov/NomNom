@@ -3,18 +3,29 @@ import styles from './index.module.css';
 import axios from 'axios';
 
 export default function ImageUploader() {
-    const [image, setImage] = useState('');
-    const [loading, setLoading] = useState(false);
+    const [previews, setPreviews] = useState([]);
+    const [imageUrls, setImageUrls] = useState([]);
 
-    const uploadImage = async (e) => {
-        const files = e.target.files;
-        const data = new FormData();
-        data.append('file', files[0]);
-        data.append('upload_preset', 'default');
-        setLoading(true)
-        const res = await axios.post(process.env.REACT_APP_CLOUDINARY_API_BASE_URL, data)
-        setImage(res.data.secure_url);
-        setLoading(false)
+    const uploadImages = () => {
+        
+        previews.map( async (preview) => {
+            const data = new FormData();
+
+            data.append('file', preview);
+
+            data.append('upload_preset', 'default');
+
+            const res = await axios.post(process.env.REACT_APP_CLOUDINARY_API_BASE_URL, data);
+
+            setImageUrls([...imageUrls, res.data.secure_url])
+        })
+        
+    }
+
+    const loadPreview = async (e) => {
+        const currFile = e.target.files[0];
+
+        setPreviews([...previews, currFile])
     }
 
     return (
@@ -25,12 +36,20 @@ export default function ImageUploader() {
                     id='file'
                     placeholder="Upload image"
                     accept='image/*'
-                    onChange={uploadImage}
+                    onChange={loadPreview}
                 />
-                <label for="file">Select file</label>
+                <label htmlFor="file">Add files to galery</label>
             </div>
             <div className={styles.wrapper}>
-                <img className={styles['uploaded-image-card']} src={image} />
+                {previews.map((preview, index) => {
+                    const imagePreview = URL.createObjectURL(preview)
+                    return <div key={index} className={styles['card-wrapper']}>
+                        <img className={styles['card-img']} src={imagePreview} />
+                    </div>
+                })}
+            </div>
+            <div className={styles.wrapper}>
+                <button onClick={uploadImages}>Upload images</button>
             </div>
         </div>
     );

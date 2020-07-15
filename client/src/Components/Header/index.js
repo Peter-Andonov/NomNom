@@ -2,7 +2,6 @@ import React from 'react';
 import styles from './index.module.css';
 import { ReactComponent as CookieLogo } from '../../Images/Icons/cookie-bite-solid.svg';
 import avatar from '../../Images/avatar.jpg';
-import avatar_alt from '../../Images/avatar_alt.png';
 
 export default class Header extends React.Component {
     constructor(props) {
@@ -36,7 +35,7 @@ export default class Header extends React.Component {
 
                     <li className={styles['header-item']}>
                         <a href='/' className={styles['header-link']}>
-                        <img className={styles['profile-pic']} src={avatar} />
+                        <img className={styles['profile-pic']} src={avatar} alt='Avatar'/>
                         <span className={styles['link-text']}>Test user</span>
                         </a>
                     </li>

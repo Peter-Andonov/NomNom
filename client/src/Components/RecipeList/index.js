@@ -1,29 +1,36 @@
 import React from 'react';
-import styles from './index.module.css';
-
+import styled from 'styled-components';
 import RecipeCard from '../RecipeCard';
+import PageInfo from '../PageInfo';
 
-export default class RecipeList extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+export default function RecipeList() {
 
-    render() {
-        return (
-            <main className={styles.main}>
-                <h1>Recipes</h1>
-                <div className={styles.container}>
-                    <RecipeCard />
-                    <RecipeCard />
-                    <RecipeCard />
-                    <RecipeCard />
-                    <RecipeCard />
-                    <RecipeCard />
-                    <RecipeCard />
-                    <RecipeCard />
-                    <RecipeCard />
-                </div>
-            </main>
-        );
-    }
+    const Main = styled.main`
+    margin: 1rem;
+    padding: 1rem;
+    `
+
+    const Container = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: left;
+    `
+
+    return (
+        <Main>
+            <PageInfo />
+            <Container>
+                <RecipeCard />
+                <RecipeCard />
+                <RecipeCard />
+                <RecipeCard />
+                <RecipeCard />
+                <RecipeCard />
+                <RecipeCard />
+                <RecipeCard />
+                <RecipeCard />
+            </Container>
+        </Main>
+    );
 }

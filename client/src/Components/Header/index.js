@@ -1,46 +1,41 @@
 import React from 'react';
-import styles from './index.module.css';
-import { ReactComponent as CookieLogo } from '../../Images/Icons/cookie-bite-solid.svg';
-import avatar from '../../Images/avatar.jpg';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+import ProfileNav from './ProfileNav';
+import Dropdown from './Dropdown';
 
-export default class Header extends React.Component {
-    constructor(props) {
-        super(props);
-    }
+export default function Header() {
 
-    render() {
-        return (
-            <header className={styles['header']}>
-                <ul className={styles['header-ul']}>
-                    <li className={styles['logo']}>
-                        <a href='/' className={styles['logo-link']} >
-                            <CookieLogo className={styles['logo-svg']} />
-                            <span className={styles['logo-text']}>NomNom</span>
-                        </a>
-                    </li>
+    const Header = styled.header`
+    top: 0;
+    width: 100%;
+    height: 100px;
+    position: fixed;
+    background-image: linear-gradient(rgba(0,0,0, .9),rgba(245,245,220, 0));
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    `;
 
-                    <li className={styles['spacer']}></li>
+    const Spacer = styled.div`
+    flex: 1;
+    `
 
-                    <li className={styles['header-item']}>
-                        <a href='/' className={styles['header-link']}>
-                        <span className={styles['link-text']}>Login</span>
-                        </a>
-                    </li>
+    const StyledLink = styled(Link)`
+    margin: 1rem;
+    color: white;
+    text-decoration: none;
+    `
 
-                    <li className={styles['header-item']}>
-                        <a href='/' className={styles['header-link']}>
-                        <span className={styles['link-text']}>Register</span>
-                        </a>
-                    </li>
-
-                    <li className={styles['header-item']}>
-                        <a href='/' className={styles['header-link']}>
-                        <img className={styles['profile-pic']} src={avatar} alt='Avatar'/>
-                        <span className={styles['link-text']}>Test user</span>
-                        </a>
-                    </li>
-                </ul>
-            </header>
-        );
-    }
+    return (
+        <Header>
+            <StyledLink to={'/'}>Home</StyledLink>
+            <Spacer />
+            <StyledLink to={'/login'}>Login</StyledLink>
+            <StyledLink to={'/register'}>Register</StyledLink>
+            <ProfileNav>
+                <Dropdown />
+            </ProfileNav>
+        </Header>
+    );
 }

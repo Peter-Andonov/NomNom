@@ -1,8 +1,10 @@
 body {
-  color: black;
-  background-color: white;
   margin: 0;
   padding: 0;
+  color: black;
+  background-color: beige;
+  font-size: 24px;
+  font-family: 'Sriracha', cursive;
 }
 
 body::-webkit-scrollbar {
@@ -10,9 +12,9 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-  background: #1e1e24;
+  background: beige;
 }
 
 body::-webkit-scrollbar-thumb {
-  background: #6649b8;
+  background: #141418;
 }

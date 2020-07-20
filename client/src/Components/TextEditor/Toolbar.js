@@ -1,47 +1,27 @@
 import React from 'react';
 import styled from 'styled-components';
+import { RichUtils } from 'draft-js';
+import { inlineStyles } from './constants';
+import ToolbarItem from './ToolbarItem';
 
 
 export default function Toolbar(props) {
 
-    function onBoldClick(e) {
-        e.preventDefault();
-        props.onBoldClick()
-    }
+    const { editorState, setEditorState } = props
 
-    function onItalicClick(e) {
+    const applyStyle = (style, e) => {
         e.preventDefault();
-        props.onItalicClick()
-    }
-
-    function onUnderlineClick(e) {
-        e.preventDefault();
-        props.onUnderlineClick()
-    }
-
-    function onUlClick(e) {
-        e.preventDefault();
-        props.onUlClick()
-    }
-
-    function onOlClick(e) {
-        e.preventDefault();
-        props.onOlClick()
-    }
-
-    function onLinkClick(e) {
-        e.preventDefault();
-        props.onLinkClick()
+        setEditorState(RichUtils.toggleInlineStyle(editorState, style));
     }
 
     return (
         <div>
-            <button onClick={onBoldClick} >Bold</button>
-            <button onClick={onItalicClick} >Italic</button>
-            <button onClick={onUnderlineClick} >Underline</button>
-            <button onClick={onUlClick} >UL</button>
-            <button onClick={onOlClick} >OL</button>
-            <button onClick={onLinkClick} >Link</button>
+            {inlineStyles.map((inlineStyle) => {
+                return <ToolbarItem
+                key={inlineStyle.name}
+                onClick={(e) => applyStyle(inlineStyle.style, e)} 
+                icon={inlineStyle.icon} />
+            })}
         </div>
     );
 }

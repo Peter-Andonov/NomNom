@@ -1,64 +1,42 @@
 import React, { useState } from 'react';
-import { Editor, EditorState, RichUtils } from 'draft-js';
+import { Editor, EditorState } from 'draft-js';
 import "draft-js/dist/Draft.css";
 import styled from 'styled-components';
 import Toolbar from './Toolbar';
-import LinkInput from './LinkInput';
+import URLInput from './URLInput';
 
 
 export default function TextEditor() {
 
-    const [editorState, setEditorState] = useState(
-        () => EditorState.createEmpty()
-    );
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [showURLInput, setShowURLInput] = useState(false);
     const [URLvalue, setURLvalue] = useState('');
 
+    const EditorContainer = styled.div`
+    width: 800px;
+    height: 400px;
+    background-color: white;
+    min-height: 400px;
+    min-width: 800px;
+    border: 1px solid black;
+    border-radius: 2px;
+    `
 
-    function onBoldClick() {
-        const nextState = RichUtils.toggleInlineStyle(editorState, 'BOLD');
-        setEditorState(nextState);
-    }
-
-    function onItalicClick() {
-        const nextState = RichUtils.toggleInlineStyle(editorState, 'ITALIC');
-        setEditorState(nextState);
-    }
-
-    function onUnderlineClick() {
-        const nextState = RichUtils.toggleInlineStyle(editorState, 'UNDERLINE');
-        setEditorState(nextState);
-    }
-
-    function onUlClick() {
-        const nextState = RichUtils.toggleBlockType(editorState, 'unordered-list-item');
-        setEditorState(nextState);
-    }
-
-    function onOlClick() {
-        const nextState = RichUtils.toggleBlockType(editorState, 'ordered-list-item');
-        setEditorState(nextState);
-    }
-
-    function onLinkClick() {
-        setShowURLInput(true);
-    }
+    const EditorWrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    `
 
     return (
-        <div>
+        <EditorWrapper>
             <Toolbar
-                onBoldClick={onBoldClick}
-                onItalicClick={onItalicClick}
-                onUnderlineClick={onUnderlineClick}
-                onUlClick={onUlClick}
-                onOlClick={onOlClick}
-                onLinkClick={onLinkClick}
-            />
-            <Editor
                 editorState={editorState}
-                onChange={setEditorState}
+                setEditorState={setEditorState}
             />
-            {showURLInput ? <LinkInput /> : null}
-        </div>
+            <EditorContainer>
+                <Editor editorState={editorState} onChange={setEditorState} />
+            </EditorContainer>
+        </EditorWrapper>
     );
 }

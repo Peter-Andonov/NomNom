@@ -10,7 +10,7 @@ export default function AdminPage() {
         <div>
             <HeaderImage />
             <Header />
-            <TextEditor />
+            <TextEditor height='600px' width='300px'/>
             <ImageSelector />
         </div>
     );

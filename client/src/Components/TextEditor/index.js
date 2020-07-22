@@ -1,28 +1,25 @@
 import React, { useState } from 'react';
 import { Editor, EditorState } from 'draft-js';
-import "draft-js/dist/Draft.css";
+import 'draft-js/dist/Draft.css';
 import styled from 'styled-components';
 import Toolbar from './Toolbar';
-import URLInput from './URLInput';
 
 
-export default function TextEditor() {
+export default function TextEditor(props) {
 
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
-    const [showURLInput, setShowURLInput] = useState(false);
-    const [URLvalue, setURLvalue] = useState('');
+
 
     const EditorContainer = styled.div`
-    width: 800px;
-    height: 400px;
     background-color: white;
-    min-height: 400px;
-    min-width: 800px;
     border: 1px solid black;
-    border-radius: 2px;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
     `
 
     const EditorWrapper = styled.div`
+    width: ${props => props.width ? props.width : 'auto'};
+    height: ${props => props.height ? props.height : 'auto'};
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -31,6 +28,8 @@ export default function TextEditor() {
     return (
         <EditorWrapper>
             <Toolbar
+                width={props.width}
+                height={props.height}
                 editorState={editorState}
                 setEditorState={setEditorState}
             />

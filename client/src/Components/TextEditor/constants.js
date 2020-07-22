@@ -4,6 +4,7 @@ import underlineIcon from '../../Images/Icons/format_underlined-24px.svg';
 import strikethroughIcon from '../../Images/Icons/strikethrough_s-24px.svg';
 import unorderedListIcon from '../../Images/Icons/format_list_bulleted-24px.svg';
 import orderedListIcon from '../../Images/Icons/format_list_numbered-24px.svg';
+import insertLink from '../../Images/Icons/insert_link-24px.svg';
 
 export const inlineStyles = [
     {
@@ -44,3 +45,10 @@ export const blockStyles = [
 
     }
 ]
+
+export const enableLink =
+{
+    name: 'link',
+    type: 'LINK',
+    icon: insertLink
+}

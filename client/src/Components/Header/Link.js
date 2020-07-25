@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function DropdownItem(props) {
+export default function StyledLink(props) {
 
     const StyledLink = styled(Link)`
     margin: 0.5rem;
@@ -16,6 +16,6 @@ export default function DropdownItem(props) {
     `
 
     return (
-        <StyledLink to={props.url}>{props.text}</StyledLink>
+        <StyledLink to={props.to}>{props.text}</StyledLink>
     );
 }

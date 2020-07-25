@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Editor, EditorState } from 'draft-js';
-import 'draft-js/dist/Draft.css';
 import styled from 'styled-components';
 import Toolbar from './Toolbar';
 
@@ -18,23 +17,21 @@ export default function TextEditor(props) {
     `
 
     const EditorWrapper = styled.div`
-    width: ${props => props.width ? props.width : 'auto'};
-    height: ${props => props.height ? props.height : 'auto'};
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+    width: 800px;
+    max-height: 400px;
     `
 
     return (
         <EditorWrapper>
             <Toolbar
-                width={props.width}
-                height={props.height}
                 editorState={editorState}
                 setEditorState={setEditorState}
             />
             <EditorContainer>
-                <Editor editorState={editorState} onChange={setEditorState} />
+                <Editor
+                    editorState={editorState}
+                    onChange={setEditorState}
+                />
             </EditorContainer>
         </EditorWrapper>
     );

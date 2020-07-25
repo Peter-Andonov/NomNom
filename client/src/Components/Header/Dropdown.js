@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import DropdownItem from './DropdownItem';
+import StyledLink from './Link';
 
 export default function DropdownMenu() {
 
@@ -19,9 +19,9 @@ export default function DropdownMenu() {
 
     return (
         <Container>
-            <DropdownItem url={'/admin'} text={'Admin'}/>
-            <DropdownItem url={'/profile'} text={'Profile'} />
-            <DropdownItem url={'/logout'} text={'Logout'} />
+            <StyledLink to={'/admin'} text={'Admin'} />
+            <StyledLink to={'/profile'} text={'Profile'} />
+            <StyledLink to={'/logout'} text={'Logout'} />
         </Container>
     );
 }

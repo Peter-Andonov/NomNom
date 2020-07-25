@@ -4,18 +4,18 @@ const jwt = require('jsonwebtoken');
 const saltRounds = 10;
 
 registerUser = async (req, res) => {
-    const username = req.body.username;
+    const email = req.body.email;
     const password = req.body.password;
     const repeatPassword = req.body.repeatPassword;
 
-    await validateUsername(username);
+    await validateEmail(email);
     validatePasswords(password, repeatPassword);
 
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPass = await bcrypt.hash(password, salt);
 
     const newUser = new User({
-        username,
+        email,
         password: hashedPass,
     });
 
@@ -29,15 +29,14 @@ registerUser = async (req, res) => {
 };
 
 loginUser = async (req, res) => {
-    const username = req.body.username;
+    console.log(req.body)
+    const email = req.body.email;
     const password = req.body.password;
 
-    const user = await User.findOne({
-        username
-    });
+    const user = await User.findOne({email});
 
     if (!user) {
-        const error = new Error("Invalid username or password");
+        const error = new Error("Invalid email or password");
         error.statusCode = 400;
         throw error;
     };
@@ -47,11 +46,12 @@ loginUser = async (req, res) => {
     if (result) {
         const token = signJWTtoken(user);
 
-        return res.status(200).json({
-            token: token
-        })
+        return res.status(200)
+        .header("Authorization", token)
+        .json(user)
+
     } else {
-        const error = new Error("Invalid username or password");
+        const error = new Error("Invalid email or password");
         error.statusCode = 400;
         throw error;
     }
@@ -81,30 +81,24 @@ checkUserAuth = (req, res, next) => {
 
 signJWTtoken = (user) => {
     const token = jwt.sign({
-        id: user._id.toString(),
-        username: user.username
+        id: user._id.toString()
     },process.env.JWT_SECRET_KEY);
 
     return token;
 }
 
-validateUsername = async (username) => {
-    if (username.length < 3) {
-        const error = new Error("Username must be at least 3 characters long");
+validateEmail = async (email) => {
+
+    if (!/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email)) {
+        const error = new Error("Invalid email format");
         error.statusCode = 400;
         throw error;
     }
 
-    if (!/^[A-Za-z0-9]+$/.test(username)) {
-        const error = new Error("Username must contain only English characters and digits");
-        error.statusCode = 400;
-        throw error;
-    }
+    dupEmail = await User.findOne({ email: email });
 
-    dupUsername = await User.findOne({ username: username });
-
-    if (dupUsername) {
-        const error = new Error("Username already exists");
+    if (dupEmail) {
+        const error = new Error("Email is already in use");
         error.statusCode = 400;
         throw error;
     }
@@ -117,8 +111,8 @@ validatePasswords = (password, repeatPassword) => {
         throw error;
     }
 
-    if (password.length < 3) {
-        const error = new Error("Password must be at least 3 characters long");
+    if (password.length < 6) {
+        const error = new Error("Password must be at least 6 characters long");
         error.statusCode = 400;
         throw error;
     }

@@ -4,11 +4,9 @@ import styled from 'styled-components';
 
 export default function ToolbarItem(props) {
 
-    const ToolbarItem = styled.div`
+    const ToolbarItem = styled.img`
     color: white;
-    font: caption;
-    font-size: 1.3rem;
-    margin: 1rem;
+    margin: 0.5rem;
     height: 60%;
     &:hover {
         cursor: pointer;
@@ -16,8 +14,6 @@ export default function ToolbarItem(props) {
     `;
 
     return (
-        <ToolbarItem onMouseDown={props.onClick} >{props.text}
-            {props.icon && <img src={props.icon} alt={props.name}/>}
-        </ToolbarItem>
+        <ToolbarItem src={props.icon} onMouseDown={props.onClick} alt={props.name} />
     );
 }

@@ -10,6 +10,8 @@ export default function TextEditor(props) {
 
 
     const EditorContainer = styled.div`
+    min-width: auto;
+    min-height: 200px;
     background-color: white;
     border: 1px solid black;
     border-bottom-left-radius: 10px;
@@ -18,7 +20,6 @@ export default function TextEditor(props) {
 
     const EditorWrapper = styled.div`
     width: 800px;
-    max-height: 400px;
     `
 
     return (

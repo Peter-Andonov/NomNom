@@ -1,4 +1,5 @@
 import React from 'react';
+import styled from 'styled-components';
 import HeaderImage from '../../Components/HeaderImage';
 import Header from '../../Components/Header';
 import TextEditor from '../../Components/TextEditor';
@@ -6,12 +7,19 @@ import ImageSelector from '../../Components/ImageSelector';
 
 
 export default function AdminPage() {
+
+    const PageLayout = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    `
+
     return (
-        <div>
+        <PageLayout>
             <HeaderImage />
             <Header />
-            <TextEditor width={800} height={400}/>
+            <TextEditor />
             <ImageSelector />
-        </div>
+        </PageLayout>
     );
 }

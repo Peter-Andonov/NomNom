@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import SelectorButton from './SelectorButton';
 import PreviewList from './PreviewsList';
+import styled from 'styled-components';
 
 
 export default function ImageUploader() {
@@ -9,8 +10,8 @@ export default function ImageUploader() {
     const [imageUrls, setImageUrls] = useState([]);
 
     const uploadImages = () => {
-        
-        previews.map( async (preview) => {
+
+        previews.map(async (preview) => {
             const data = new FormData();
 
             data.append('file', preview);
@@ -21,18 +22,24 @@ export default function ImageUploader() {
 
             setImageUrls([...imageUrls, res.data.secure_url])
         })
-        
+
     }
 
     function handleInput(newImage) {
         setPreviews([...previews, newImage])
-      }
+    }
+
+    const Wrapper = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    `
 
     return (
-        <div>
+        <Wrapper>
             <SelectorButton onChange={handleInput} />
-            <PreviewList previews={previews}/>
+            <PreviewList previews={previews} />
             <button onClick={uploadImages}>Upload images</button>
-        </div>
+        </Wrapper>
     );
 }

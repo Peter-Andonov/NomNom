@@ -1,8 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import ProfileNav from './ProfileNav';
 import Dropdown from './Dropdown';
+import StyledLink from './Link';
 
 export default function Header() {
 
@@ -12,30 +12,31 @@ export default function Header() {
     height: 100px;
     position: fixed;
     background-image: linear-gradient(rgba(0,0,0, .9),rgba(245,245,220, 0));
+    `;
+
+    const Navigation = styled.nav`
     display: flex;
     flex-direction: row;
     align-items: center;
-    `;
+    `
 
     const Spacer = styled.div`
     flex: 1;
     `
 
-    const StyledLink = styled(Link)`
-    margin: 1rem;
-    color: white;
-    text-decoration: none;
-    `
-
     return (
         <Header>
-            <StyledLink to={'/'}>Home</StyledLink>
-            <Spacer />
-            <StyledLink to={'/login'}>Login</StyledLink>
-            <StyledLink to={'/register'}>Register</StyledLink>
-            <ProfileNav>
-                <Dropdown />
-            </ProfileNav>
+            <Navigation>
+                <StyledLink to={'/'} text={'Home'} />
+                <StyledLink to={'/recipes'} text={'Recipes'} />
+                <StyledLink to={'/articles'} text={'Articles'} />
+                <Spacer />
+                <StyledLink to={'/login'} text={'Login'} />
+                <StyledLink to={'/register'} text={'Register'} />
+                <ProfileNav>
+                    <Dropdown />
+                </ProfileNav>
+            </Navigation>
         </Header>
     );
 }

@@ -30,10 +30,10 @@ export default function ProfileNav(props) {
     `
 
     return (
-            <Container onClick={() => setOpen(!open)}>
-                <Avatar src={avatar} alt='Avatar' />
-                <Text>Test user</Text>
-                {open && props.children}
-            </Container>
+        <Container onClick={() => setOpen(!open)}>
+            <Avatar src={avatar} alt='Avatar' />
+            <Text>Test user</Text>
+            {open && props.children}
+        </Container>
     );
 }

@@ -23,17 +23,14 @@ registerUser = async (req, res) => {
 
     const token = signJWTtoken(registeredUser);
 
-    return res.status(200).json({
-        token: token
-    });
+    return res.status(200).header("Authorization", token).json(registeredUser);
 };
 
 loginUser = async (req, res) => {
-    console.log(req.body)
     const email = req.body.email;
     const password = req.body.password;
 
-    const user = await User.findOne({email});
+    const user = await User.findOne({ email });
 
     if (!user) {
         const error = new Error("Invalid email or password");
@@ -46,9 +43,7 @@ loginUser = async (req, res) => {
     if (result) {
         const token = signJWTtoken(user);
 
-        return res.status(200)
-        .header("Authorization", token)
-        .json(user)
+        return res.status(200).header("Authorization", token).json(user);
 
     } else {
         const error = new Error("Invalid email or password");
@@ -82,7 +77,7 @@ checkUserAuth = (req, res, next) => {
 signJWTtoken = (user) => {
     const token = jwt.sign({
         id: user._id.toString()
-    },process.env.JWT_SECRET_KEY);
+    }, process.env.JWT_SECRET_KEY);
 
     return token;
 }

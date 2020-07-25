@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import Axios from 'axios';
 import styled from 'styled-components';
 import Input from './Input';
@@ -24,7 +25,7 @@ align-items: center;
 justify-content: space-around;
 `
 
-export default class RegisterForm extends Component {
+class RegisterForm extends Component {
 
     constructor(props) {
         super(props);
@@ -130,9 +131,18 @@ export default class RegisterForm extends Component {
         try {
             const res = await Axios.post('http://localhost:5000/api/register', data);
 
-            console.log(res);
+            console.log(res)
+
+            if (res.status === 200) {
+                document.cookie = `auth-token=${res.headers.authorization}`;
+                this.props.history.push('/');
+            } else if (res.status === 400) {
+                this.setEmailError(true)
+                this.setEmailErrorMessage(res.data.message)
+            }
         } catch (e) {
-            console.log(e)
+            this.setEmailError(true)
+            this.setEmailErrorMessage(e.message)
         }
 
     }
@@ -180,3 +190,5 @@ export default class RegisterForm extends Component {
         )
     };
 };
+
+export default withRouter(RegisterForm);

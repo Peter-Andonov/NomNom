@@ -10,11 +10,11 @@ import RegisterPage from './Pages/Register-page';
 import AdminPage from './Pages/Admin-page';
 
 
-function Navigation() {
+const Navigation = () => {
   return (
     <Router>
       <Switch>
-        <Route exact path={'/'} component={HomePage} />
+        <Route path={'/'} exact component={HomePage} />
         <Route path={'/login'} component={LoginPage} />
         <Route path={'/register'} component={RegisterPage} />
         <Route path={'/admin'} component={AdminPage} />

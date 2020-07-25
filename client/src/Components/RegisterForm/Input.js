@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -26,29 +26,25 @@ const ErrorMessage = styled.div`
     color: red;
     `
 
-export default class Input extends Component {
+const Input = (props) => {
 
-    constructor(props) {
-        super(props)
+    const handleChange = (e) => {
+        props.onChange(e.target.value);
     }
 
-    handleChange = (e) => {
-        this.props.onChange(e.target.value);
-    }
-    
-    render() {
-        return (
-            <Wrapper>
-                <Label htmlFor={this.props.id}>{this.props.label}</Label>
-                <StyledInput
-                    id={this.props.id}
-                    type={this.props.type}
-                    value={this.props.value}
-                    onChange={this.handleChange}
-                    onBlur={this.props.onBlur}
-                />
-                {this.props.error && <ErrorMessage>{this.props.errorMessage}</ErrorMessage>}
-            </Wrapper>
-        )
-    };
+    return (
+        <Wrapper>
+            <Label htmlFor={props.id}>{props.label}</Label>
+            <StyledInput
+                id={props.id}
+                type={props.type}
+                value={props.value}
+                onChange={handleChange}
+                onBlur={props.onBlur}
+            />
+            {props.error && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
+        </Wrapper>
+    );
 };
+
+export default Input;

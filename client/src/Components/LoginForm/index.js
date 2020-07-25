@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router';
 import Axios from 'axios';
 import styled from 'styled-components';
 import Input from '../RegisterForm/Input';
@@ -25,13 +26,15 @@ const Form = styled.form`
     `
 
 
-export default class LoginForm extends Component {
+class LoginForm extends Component {
 
     constructor(props) {
         super(props)
         this.state = {
             email: ``,
-            password: ``
+            password: ``,
+            error: false,
+            errorMessage: ``
         }
     }
 
@@ -47,6 +50,18 @@ export default class LoginForm extends Component {
         })
     }
 
+    setError = (errorValue) => {
+        this.setState({
+            error: errorValue
+        })
+    }
+
+    setErrorMessage = (message) => {
+        this.setState({
+            errorMessage: message
+        })
+    }
+
     handleSubmit = async (e) => {
         e.preventDefault();
         const data = {
@@ -57,9 +72,13 @@ export default class LoginForm extends Component {
         try {
             const res = await Axios.post('http://localhost:5000/api/login', data);
 
-            console.log(res);
+            if (res.status === 200) {
+                document.cookie = `auth-token=${res.headers.authorization}`;
+                this.props.history.push('/');
+            }
         } catch (e) {
-            console.log(e)
+            this.setError(true)
+            this.setErrorMessage(e.message)
         }
     }
 
@@ -72,6 +91,8 @@ export default class LoginForm extends Component {
                         label={'Email'}
                         type={'email'}
                         value={this.email}
+                        error={this.error}
+                        errorMessage={this.errorMessage}
                         onChange={this.setEmail}
                     />
                     <Input
@@ -87,3 +108,5 @@ export default class LoginForm extends Component {
         )
     };
 };
+
+export default withRouter(LoginForm);

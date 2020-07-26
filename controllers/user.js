@@ -52,24 +52,32 @@ loginUser = async (req, res) => {
     }
 }
 
-checkUserAuth = (req, res, next) => {
-    const token = req.cookies['aid'];
+verifyLogin = (req, res) => {
+    const token = req.body.token;
 
     if (!token) {
-        return res.redirect('/');
+        const error = new Error("Token must be provided");
+        error.statusCode = 400;
+        throw error;
     };
 
     jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
         if (err) {
-            return res.redirect('/');
+            const error = new Error("Invalid token");
+            error.statusCode = 400;
+            throw error;
         } else {
-            req.user = {
-                id: decoded.id,
-                username: decoded.username,
-                role: decoded.role,
-                isLoggedIn: true
-            }
-            next();
+            userId = decoded.id;
+
+            User.findOne({ _id: userId }, (err, user) => {
+                if (err) {
+                    const error = new Error("Cannot find user with the given id");
+                    error.statusCode = 400;
+                    throw error;
+                } else {
+                    return res.status(200).json(user);
+                }
+            });
         };
     });
 };
@@ -122,5 +130,5 @@ validatePasswords = (password, repeatPassword) => {
 module.exports = {
     registerUser,
     loginUser,
-    checkUserAuth,
+    verifyLogin,
 };

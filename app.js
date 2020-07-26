@@ -24,7 +24,7 @@ mongoose.connect(process.env.DB_URL, {
     routeConfig(app);
     errorHandler(app);
 
-    app.listen(PORT, console.log(`App listening on port ${PORT}`));
+    app.listen(PORT, console.log(`Server listening on port ${PORT}`));
 }).catch((err) => {
     console.log(err);
 })

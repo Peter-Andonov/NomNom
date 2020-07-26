@@ -1,13 +1,21 @@
-import React from 'react';
+import React, { Component } from 'react';
+import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
 import Header from '../../Components/Header';
+import LoginForm from '../../Components/LoginForm';
 
 
-export default function LoginPage() {
-    return (
-        <div>
-            <HeaderImage />
-            <Header />
-        </div>
-    );
-}
+class LoginPage extends Component {
+
+    render() {
+        return (
+            <PageLayout>
+                <HeaderImage />
+                <Header />
+                <LoginForm />
+            </PageLayout>
+        );
+    };
+};
+
+export default LoginPage;

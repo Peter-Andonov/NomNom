@@ -1,13 +1,10 @@
-import React, { useState } from 'react';
+import React, { Component } from 'react';
 import styled from 'styled-components';
+import UserContext from '../../Context';
 import avatar from '../../Images/avatar.jpg';
 
 
-export default function ProfileNav(props) {
-
-    const [open, setOpen] = useState(false);
-
-    const Container = styled.div`
+const Container = styled.div`
     margin: 1rem;
     color: white;
     text-decoration: none;
@@ -29,11 +26,33 @@ export default function ProfileNav(props) {
     margin-left: 1rem;
     `
 
-    return (
-        <Container onClick={() => setOpen(!open)}>
-            <Avatar src={avatar} alt='Avatar' />
-            <Text>Test user</Text>
-            {open && props.children}
-        </Container>
-    );
-}
+
+class ProfileNav extends Component {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            open: false
+        }
+    }
+
+    setOpen = () => {
+        this.setState({
+            open: !this.state.open
+        })
+    }
+
+    static contextType = UserContext;
+    
+    render() {
+        return (
+            <Container onClick={this.setOpen}>
+                <Avatar src={avatar} alt='Avatar' />
+                <Text>{this.context.user.email}</Text>
+                {this.state.open && this.props.children}
+            </Container>
+        );
+    };
+};
+
+export default ProfileNav;

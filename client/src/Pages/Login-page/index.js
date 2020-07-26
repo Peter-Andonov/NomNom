@@ -1,23 +1,21 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { Component } from 'react';
+import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
 import Header from '../../Components/Header';
 import LoginForm from '../../Components/LoginForm';
 
 
-export default function LoginPage() {
+class LoginPage extends Component {
 
-    const PageLayout = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    `
+    render() {
+        return (
+            <PageLayout>
+                <HeaderImage />
+                <Header />
+                <LoginForm />
+            </PageLayout>
+        );
+    };
+};
 
-    return (
-        <PageLayout>
-            <HeaderImage />
-            <Header />
-            <LoginForm />
-        </PageLayout>
-    );
-}
+export default LoginPage;

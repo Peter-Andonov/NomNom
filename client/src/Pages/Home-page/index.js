@@ -1,23 +1,24 @@
-import React from 'react';
-import styled from 'styled-components';
+import React, { Component } from 'react';
+import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
 import Header from '../../Components/Header';
 import RecipeList from '../../Components/RecipeList';
+import UserContext from '../../Context';
 
 
-export default function HomePage() {
+class HomePage extends Component {
 
-    const PageLayout = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    `
+    static contextType = UserContext;
 
-    return (
-        <PageLayout>
-            <HeaderImage />
-            <Header />
-            <RecipeList />
-        </PageLayout>
-    );
-}
+    render() {
+        return (
+            <PageLayout>
+                <HeaderImage />
+                <Header />
+                <RecipeList />
+            </PageLayout>
+        );
+    };
+};
+
+export default HomePage;

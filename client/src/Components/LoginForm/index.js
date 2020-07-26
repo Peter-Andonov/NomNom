@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import Axios from 'axios';
 import styled from 'styled-components';
+import UserContext from '../../Context';
 import Input from '../RegisterForm/Input';
 import Submit from '../RegisterForm/Submit';
 
@@ -14,7 +15,7 @@ const Wrapper = styled.div`
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
-    `
+`;
 
 const Form = styled.form`
     height: 100%;
@@ -23,7 +24,7 @@ const Form = styled.form`
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-    `
+`;
 
 
 class LoginForm extends Component {
@@ -37,6 +38,8 @@ class LoginForm extends Component {
             errorMessage: ``
         }
     }
+
+    static contextType = UserContext;
 
     setEmail = (newEmail) => {
         this.setState({
@@ -74,6 +77,12 @@ class LoginForm extends Component {
 
             if (res.status === 200) {
                 document.cookie = `auth-token=${res.headers.authorization}`;
+                const { _id, email, role } = res.data;
+                this.context.logIn({
+                    _id,
+                    email,
+                    role
+                });
                 this.props.history.push('/');
             }
         } catch (e) {
@@ -105,7 +114,7 @@ class LoginForm extends Component {
                     <Submit label={'Login'} />
                 </Form>
             </Wrapper>
-        )
+        );
     };
 };
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { withRouter } from 'react-router';
 import Axios from 'axios';
 import styled from 'styled-components';
+import UserContext from '../../Context';
 import Input from './Input';
 import Submit from './Submit';
 
@@ -40,6 +41,8 @@ class RegisterForm extends Component {
             repeatPasswordError: false
         }
     }
+
+    static contextType = UserContext;
 
     setEmail = (newEmail) => {
         this.setState({
@@ -131,18 +134,18 @@ class RegisterForm extends Component {
         try {
             const res = await Axios.post('http://localhost:5000/api/register', data);
 
-            console.log(res)
-
             if (res.status === 200) {
                 document.cookie = `auth-token=${res.headers.authorization}`;
+                const { _id, email, role } = res.data;
+                this.context.logIn({
+                    _id,
+                    email,
+                    role
+                });
                 this.props.history.push('/');
-            } else if (res.status === 400) {
-                this.setEmailError(true)
-                this.setEmailErrorMessage(res.data.message)
             }
         } catch (e) {
-            this.setEmailError(true)
-            this.setEmailErrorMessage(e.message)
+            console.log(e)
         }
 
     }

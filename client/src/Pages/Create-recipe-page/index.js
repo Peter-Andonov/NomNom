@@ -1,10 +1,11 @@
 import React from 'react';
 import styled from 'styled-components';
 import HeaderImage from '../../Components/HeaderImage';
-import Header from '../../Components/UserHeader';
-import RegisterForm from '../../Components/RegisterForm';
+import AdminHeader from '../../Components/AdminHeader';
+import RecipeEditor from '../../Components/RecipeEditor';
 
-export default function RegisterPage() {
+
+export default function CreateRecipePage() {
 
     const PageLayout = styled.div`
     display: flex;
@@ -15,8 +16,8 @@ export default function RegisterPage() {
     return (
         <PageLayout>
             <HeaderImage />
-            <Header />
-            <RegisterForm />
+            <RecipeEditor />
+            <AdminHeader />
         </PageLayout>
     );
-}
+};

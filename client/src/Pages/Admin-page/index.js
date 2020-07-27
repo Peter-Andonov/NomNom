@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import HeaderImage from '../../Components/HeaderImage';
-import Header from '../../Components/Header';
-import TextEditor from '../../Components/TextEditor';
-import ImageSelector from '../../Components/ImageSelector';
+import AdminHeader from '../../Components/AdminHeader';
 
 
 export default function AdminPage() {
@@ -17,9 +15,7 @@ export default function AdminPage() {
     return (
         <PageLayout>
             <HeaderImage />
-            <Header />
-            <TextEditor />
-            <ImageSelector />
+            <AdminHeader />
         </PageLayout>
     );
 };

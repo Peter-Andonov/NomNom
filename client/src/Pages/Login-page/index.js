@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
-import Header from '../../Components/Header';
+import Header from '../../Components/UserHeader';
 import LoginForm from '../../Components/LoginForm';
 
 

@@ -39,7 +39,6 @@ export default function ImageUploader() {
         <Wrapper>
             <SelectorButton onChange={handleInput} />
             <PreviewList previews={previews} />
-            <button onClick={uploadImages}>Upload images</button>
         </Wrapper>
     );
 }

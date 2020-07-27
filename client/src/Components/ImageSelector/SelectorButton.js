@@ -21,7 +21,7 @@ export default function SelectorButton(props) {
                 accept='image/*'
                 onChange={handleSelection}
             />
-            <label htmlFor="file">Add files to galery</label>
+            <label htmlFor="file"> + Select Image</label>
         </div>
     );
 }

@@ -3,8 +3,8 @@ const Schema = mongoose.Schema;
 const { String, Date, ObjectId} = Schema.Types
 
 
-const ingredientSchema = Schema({
-    name: {
+const articleSchema = Schema({
+    title: {
         type: String,
         required: true,
         unique: true
@@ -13,7 +13,7 @@ const ingredientSchema = Schema({
         type: String,
         required: true
     },
-    Description: {
+    body: {
         type: String,
     },
     createdOn: {
@@ -28,4 +28,4 @@ const ingredientSchema = Schema({
 });
 
 
-module.exports = mongoose.model("Ingredient", ingredientSchema);
+module.exports = mongoose.model("Article", articleSchema);

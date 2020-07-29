@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import TextEditor from '../TextEditor';
 import ImageSelector from '../ImageSelector';
 import Input from '../RegisterForm/Input';
-import IngredientsTable from './IngredientsTable';
 
 
 const Wrapper = styled.div`
@@ -18,7 +17,7 @@ const Wrapper = styled.div`
 `;
 
 
-class RecipeEditor extends Component {
+class IngredientEditor extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -35,20 +34,16 @@ class RecipeEditor extends Component {
     render() {
         return (
             <Wrapper>
-                <h1>Create Recipe</h1>
-                <h3>Add Recipe Title</h3>
+                <h1>Create Ingredient</h1>
+                <h3>Add Ingredient Title</h3>
                 <Input value={this.state.title} onChange={this.setTitle} />
-                <h3>Add Main Image</h3>
+                <h3>Add Cover Image</h3>
                 <ImageSelector />
-                <h3>Add Short Description</h3>
+                <h3>Add Description</h3>
                 <TextEditor />
-                <h3>Add Steps to create</h3>
-                <TextEditor />
-                <h3>Add Ingredients</h3>
-                <IngredientsTable />
             </Wrapper>
         )
     }
 }
 
-export default RecipeEditor;
+export default IngredientEditor;

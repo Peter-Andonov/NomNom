@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 
 
 const InputRow = (props) => {
@@ -22,14 +22,14 @@ const InputRow = (props) => {
             </td>
             <td>
                 <select defaultValue={""} onChange={setUnitInput}>
-                    <option value="" hidden>Select Ingredient</option>
+                    <option value="" hidden >Select Unit</option>
                     <option value='grams' >grams</option>
                     <option value='spoons' >spoons</option>
                 </select>
             </td>
             <td>
                 <select defaultValue={""} onChange={setIngredientInput}>
-                    <option value="" hidden>Select Ingredient</option>
+                    <option value="" hidden >Select Ingredient</option>
                     <option value='matcha' >matcha</option>
                     <option value='olive oil' >olive oil</option>
                 </select>

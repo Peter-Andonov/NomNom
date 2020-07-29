@@ -1,17 +1,11 @@
 import React from 'react';
-import styled from 'styled-components';
+import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
 import AdminHeader from '../../Components/AdminHeader';
 import RecipeEditor from '../../Components/RecipeEditor';
 
 
-export default function CreateRecipePage() {
-
-    const PageLayout = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    `
+const CreateRecipePage = () => {
 
     return (
         <PageLayout>
@@ -21,3 +15,6 @@ export default function CreateRecipePage() {
         </PageLayout>
     );
 };
+
+
+export default CreateRecipePage;

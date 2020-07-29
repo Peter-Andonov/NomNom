@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import { EditorState, convertToRaw } from 'draft-js';
+import UserContext from '../../Context';
 import TextEditor from '../TextEditor';
 import ImageSelector from '../ImageSelector';
 
@@ -26,11 +27,10 @@ const IngredientEditor = () => {
     const [deleteToken, setDeleteToken] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
+    const user = useContext(UserContext);
+
     const printState = () => {
-        console.log('title: ', title)
-        console.log('image: ', imageUrl)
-        console.log('delete token: ', deleteToken)
-        console.log()
+        console.log(user);
     }
 
     const saveIngredient = async () => {
@@ -38,15 +38,13 @@ const IngredientEditor = () => {
         const description = convertToRaw(editorState.getCurrentContent());
 
         const data = {
-            userId: "5efdf4325193bc2d10139168",
+            userId: user._id,
             name: title,
             imageUrl: imageUrl,
             description: description
         };
 
-        const res = await Axios.post('http://localhost:5000/api/ingredient', data);
-
-        console.log(res);
+        await Axios.post('http://localhost:5000/api/ingredient', data);
     }
 
     return (

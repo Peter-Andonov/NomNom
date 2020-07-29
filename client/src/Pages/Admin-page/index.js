@@ -1,16 +1,9 @@
 import React from 'react';
-import styled from 'styled-components';
+import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
 import AdminHeader from '../../Components/AdminHeader';
 
-
-export default function AdminPage() {
-
-    const PageLayout = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    `
+const AdminPage = () => {
 
     return (
         <PageLayout>
@@ -19,3 +12,6 @@ export default function AdminPage() {
         </PageLayout>
     );
 };
+
+
+export default AdminPage;

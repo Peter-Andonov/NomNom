@@ -14,7 +14,7 @@ const EditorContainer = styled.div`
 `;
 
 const EditorWrapper = styled.div`
-    width: 800px;
+    width: 70%;
 `;
 
 

@@ -5,6 +5,7 @@ import { EditorState, convertToRaw } from 'draft-js';
 import UserContext from '../../Context';
 import TextEditor from '../TextEditor';
 import ImageSelector from '../ImageSelector';
+import Input from '../RegisterForm/Input';
 
 
 const Wrapper = styled.div`
@@ -51,10 +52,9 @@ const IngredientEditor = () => {
         <Wrapper>
             <h1>Create Ingredient</h1>
             <h3>Add Ingredient Title</h3>
-            <input
+            <Input
                 value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                autoFocus
+                onChange={setTitle}
             />
             <h3>Add Cover Image</h3>
             <ImageSelector

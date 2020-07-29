@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { EditorState, convertToRaw } from 'draft-js';
 import TextEditor from '../TextEditor';
 import ImageSelector from '../ImageSelector';
 import Input from '../RegisterForm/Input';
@@ -18,37 +19,44 @@ const Wrapper = styled.div`
 `;
 
 
-class RecipeEditor extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-        }
-    }
+const RecipeEditor = () => {
 
-    setTitle = (newTitle) => {
-        this.setState({
-            title: newTitle
-        })
-    }
+    const [title, setTitle] = useState('');
+    const [coverImageUrl, setCoverImageUrl] = useState('');
+    const [deleteToken, setDeleteToken] = useState('');
+    const [shortDescriptionState, setShortDescriptionState] = useState(EditorState.createEmpty());
+    const [stepsState, setStepsState] = useState(EditorState.createEmpty());
 
-    render() {
-        return (
-            <Wrapper>
-                <h1>Create Recipe</h1>
-                <h3>Add Recipe Title</h3>
-                <Input value={this.state.title} onChange={this.setTitle} />
-                <h3>Add Main Image</h3>
-                <ImageSelector />
-                <h3>Add Short Description</h3>
-                <TextEditor />
-                <h3>Add Steps to create</h3>
-                <TextEditor />
-                <h3>Add Ingredients</h3>
-                <IngredientsTable />
-            </Wrapper>
-        )
-    }
-}
+
+    return (
+        <Wrapper>
+            <h1>Create Recipe</h1>
+            <h3>Add Recipe Title</h3>
+            <Input
+                value={title}
+                onChange={setTitle} />
+            <h3>Add Main Image</h3>
+            <ImageSelector
+                imageUrl={coverImageUrl}
+                setImageUrl={setCoverImageUrl}
+                deleteToken={deleteToken}
+                setDeleteToken={setDeleteToken}
+            />
+            <h3>Add Short Description</h3>
+            <TextEditor
+                editorState={shortDescriptionState}
+                setEditorState={setShortDescriptionState}
+            />
+            <h3>Add Steps to create</h3>
+            <TextEditor
+                editorState={stepsState}
+                setEditorState={setStepsState}
+            />
+            <h3>Add Ingredients</h3>
+            <IngredientsTable />
+        </Wrapper>
+    );
+};
+
 
 export default RecipeEditor;

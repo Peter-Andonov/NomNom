@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function SelectorButton(props) {
 
-    const Input = styled.input`
+const Input = styled.input`
     display: none;
-    `
+`;
+
+
+const SelectorButton = (props) => {
 
     function handleSelection(e) {
         props.onChange(e.target.files[0]);
@@ -24,4 +26,7 @@ export default function SelectorButton(props) {
             <label htmlFor="file"> + Select Image</label>
         </div>
     );
-}
+};
+
+
+export default SelectorButton;

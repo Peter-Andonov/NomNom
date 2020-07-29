@@ -5,14 +5,12 @@ const { ObjectId } = mongoose.Types;
 createIngredient = async (req, res) => {
     const name = req.body.name;
     const imageUrl = req.body.imageUrl;
-    const shortDescription = req.body.shortDescription;
-    const longDescription = req.body.longDescription;
+    const description = req.body.description;
 
     const newIngredient = new Ingredient({
         name,
         imageUrl,
-        shortDescription,
-        longDescription,
+        description,
         createdOn: new Date(),
         createdBy: ObjectId(req.body.userId)
     });
@@ -42,12 +40,8 @@ updateIngredient = async (req, res) => {
         updatedData.imageUrl = req.body.imageUrl;
     }
 
-    if (req.body.shortDescription) {
-        updatedData.shortDescription = req.body.shortDescription;
-    }
-
-    if (req.body.longDescription) {
-        updatedData.longDescription = req.body.longDescription;
+    if (req.body.description) {
+        updatedData.shortDescription = req.body.description;
     }
 
     const updated = await Ingredient.findByIdAndUpdate(id, updatedData);

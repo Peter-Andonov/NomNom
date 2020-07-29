@@ -2,9 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-export default function PreviewsCard(props) {
-
-    const Wrapper = styled.div`
+const Wrapper = styled.div`
     margin: 1rem;
     height: 10rem;
     width: 15rem;
@@ -17,14 +15,17 @@ export default function PreviewsCard(props) {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
         cursor: pointer;
     }
-    `
+`;
 
-    const Image = styled.img`
+const Image = styled.img`
     height: 100%;
     width: 100%;
     border-radius: 10%;
     object-fit: cover;
-    `
+`;
+
+
+export default function PreviewsCard(props) {
 
     return (
         <Wrapper key={props.index} >

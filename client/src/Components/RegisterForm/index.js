@@ -8,22 +8,22 @@ import Submit from './Submit';
 
 
 const Wrapper = styled.div`
-position: absolute;
-top: 30vh;
-height: 40rem;
-width: 40rem;
-background-color: white;
-border-radius: 20px;
-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
+    position: absolute;
+    top: 30vh;
+    height: 40rem;
+    width: 40rem;
+    background-color: white;
+    border-radius: 20px;
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
 `
 
 const Form = styled.form`
-height: 100%;
-width: 100%;
-display: flex;
-flex-direction: column;
-align-items: center;
-justify-content: space-around;
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
 `
 
 class RegisterForm extends Component {

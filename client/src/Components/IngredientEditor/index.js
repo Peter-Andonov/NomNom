@@ -1,12 +1,14 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
+import Axios from 'axios';
 import styled from 'styled-components';
+import { EditorState, convertToRaw } from 'draft-js';
 import TextEditor from '../TextEditor';
 import ImageSelector from '../ImageSelector';
-import Input from '../RegisterForm/Input';
 
 
 const Wrapper = styled.div`
     position: absolute;
+    padding-bottom: 5rem;
     top: 30vh;
     background-color: white;
     height: auto;
@@ -17,33 +19,62 @@ const Wrapper = styled.div`
 `;
 
 
-class IngredientEditor extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            title: '',
-        }
+const IngredientEditor = () => {
+
+    const [title, setTitle] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
+    const [deleteToken, setDeleteToken] = useState('');
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+
+    const printState = () => {
+        console.log('title: ', title)
+        console.log('image: ', imageUrl)
+        console.log('delete token: ', deleteToken)
+        console.log()
     }
 
-    setTitle = (newTitle) => {
-        this.setState({
-            title: newTitle
-        })
+    const saveIngredient = async () => {
+
+        const description = convertToRaw(editorState.getCurrentContent());
+
+        const data = {
+            userId: "5efdf4325193bc2d10139168",
+            name: title,
+            imageUrl: imageUrl,
+            description: description
+        };
+
+        const res = await Axios.post('http://localhost:5000/api/ingredient', data);
+
+        console.log(res);
     }
 
-    render() {
-        return (
-            <Wrapper>
-                <h1>Create Ingredient</h1>
-                <h3>Add Ingredient Title</h3>
-                <Input value={this.state.title} onChange={this.setTitle} />
-                <h3>Add Cover Image</h3>
-                <ImageSelector />
-                <h3>Add Description</h3>
-                <TextEditor />
-            </Wrapper>
-        )
-    }
-}
+    return (
+        <Wrapper>
+            <h1>Create Ingredient</h1>
+            <h3>Add Ingredient Title</h3>
+            <input
+                value={title}
+                onChange={(e) => setTitle(e.target.value)}
+                autoFocus
+            />
+            <h3>Add Cover Image</h3>
+            <ImageSelector
+                imageUrl={imageUrl}
+                setImageUrl={setImageUrl}
+                deleteToken={deleteToken}
+                setDeleteToken={setDeleteToken}
+            />
+            <h3>Add Description</h3>
+            <TextEditor
+                editorState={editorState}
+                setEditorState={setEditorState}
+            />
+            <button onClick={printState} >print state</button>
+            <button onClick={saveIngredient} >Save</button>
+        </Wrapper>
+    );
+};
+
 
 export default IngredientEditor;

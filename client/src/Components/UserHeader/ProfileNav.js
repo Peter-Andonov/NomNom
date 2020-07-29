@@ -14,17 +14,17 @@ const Container = styled.div`
     &:hover {
         cursor: pointer;
     }
-    `
+`;
 
     const Avatar = styled.img`
     height: 50%;
     max-height: 4rem;
     border-radius: 50%;
-    `
+`;
 
     const Text = styled.span`
     margin-left: 1rem;
-    `
+`;
 
 
 class ProfileNav extends Component {

@@ -1,18 +1,20 @@
 import React from 'react';
 import styled from 'styled-components';
 
-export default function PageInfo() {
 
-    const Title = styled.h1`
+const Title = styled.h1`
     margin: 0;
     padding: 0;
     text-align: center;
     color: rgba(237, 71, 59);
-    `
+    `;
 
-    const Description = styled.div`
+const Description = styled.div`
     padding: 1rem;
-    `
+`;
+
+
+export default function PageInfo() {
 
     return (
         <div>

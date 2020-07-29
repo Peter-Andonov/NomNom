@@ -1,13 +1,19 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import SelectorButton from './SelectorButton';
 import PreviewCard from './PreviewCard';
 
 
-export default function ImageUploader() {
-    const [imageUrl, setImageUrl] = useState('');
-    const [deleteToken, setDeleteToken] = useState('');
+const Wrapper = styled.div`
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+
+const ImageUploader = (props) => {
 
     const uploadImage = async (image) => {
         const data = new FormData();
@@ -18,22 +24,20 @@ export default function ImageUploader() {
 
         const res = await Axios.post(process.env.REACT_APP_CLOUDINARY_API_BASE_URL, data);
 
-        setImageUrl(res.data.secure_url);
+        props.setImageUrl(res.data.secure_url);
 
-        setDeleteToken(res.data.delete_token);
+        props.setDeleteToken(res.data.delete_token);
     };
 
     const deleteImage = async () => {
         
-        const data = `token=${deleteToken}`;
+        const data = `token=${props.deleteToken}`;
 
-        const res = await Axios.post('https://api.cloudinary.com/v1_1/nomnomapp/delete_by_token', data);
+        await Axios.post('https://api.cloudinary.com/v1_1/nomnomapp/delete_by_token', data);
 
-        console.log(res);
+        props.setImageUrl('');
 
-        setImageUrl('');
-
-        setDeleteToken('');
+        props.setDeleteToken('');
     };
 
     const handleInput = (image) => {
@@ -44,17 +48,12 @@ export default function ImageUploader() {
         deleteImage()
     };
 
-    const Wrapper = styled.div`
-    width: 60%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    `
-
     return (
         <Wrapper>
-            {!imageUrl && <SelectorButton onChange={handleInput} />}
-            {imageUrl && <PreviewCard imageUrl={imageUrl} handleDelete={handleDelete} />}
+            {!props.imageUrl && <SelectorButton onChange={handleInput} />}
+            {props.imageUrl && <PreviewCard imageUrl={props.imageUrl} handleDelete={handleDelete} />}
         </Wrapper>
     );
 }
+
+export default ImageUploader;

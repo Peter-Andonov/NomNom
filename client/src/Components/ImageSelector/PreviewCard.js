@@ -2,9 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 
-export default function PreviewCard(props) {
-
-    const Wrapper = styled.div`
+const Wrapper = styled.div`
     background-color: transparent;
     display: flex;
     flex-direction: column;
@@ -14,9 +12,9 @@ export default function PreviewCard(props) {
     width: 100%;
     min-height: 10rem;
     min-width: 15rem;
-    `
+`;
 
-    const Image = styled.img`
+const Image = styled.img`
     height: 100%;
     width: 100%;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
@@ -26,9 +24,9 @@ export default function PreviewCard(props) {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
         cursor: pointer;
     }
-    `
+`;
 
-    const Remove = styled.div`
+const Remove = styled.div`
     margin-bottom: 1rem;
     width: fit-content;
     padding: 0;
@@ -36,7 +34,10 @@ export default function PreviewCard(props) {
         color: rgba(237, 71, 59);
         cursor: pointer;
     }
-    `
+`;
+
+
+const PreviewCard = (props) => {
 
     return (
         <Wrapper >
@@ -44,4 +45,7 @@ export default function PreviewCard(props) {
             <Remove onClick={props.handleDelete} >Remove</Remove>
         </Wrapper>
     );
-}
+};
+
+
+export default PreviewCard;

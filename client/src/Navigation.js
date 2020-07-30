@@ -11,6 +11,8 @@ import RegisterPage from './Pages/Register-page';
 import AdminPage from './Pages/Admin-page';
 import CreateRecipePage from './Pages/Create-recipe-page';
 import CreateIngredientPage from './Pages/Create-ingredient-page';
+import CreateArticlePage from './Pages/Create-article-page';
+import CreateUnitPage from './Pages/Create-unit-page';
 
 
 class Navigation extends Component {
@@ -27,6 +29,8 @@ class Navigation extends Component {
           <Route path={'/admin'} component={AdminPage} />
           <Route path={'/create/recipe'} component={CreateRecipePage} />
           <Route path={'/create/ingredient'} component={CreateIngredientPage} />
+          <Route path={'/create/article'} component={CreateArticlePage} />
+          <Route path={'/create/unit'} component={CreateUnitPage} />
         </Switch>
       </Router>
     );

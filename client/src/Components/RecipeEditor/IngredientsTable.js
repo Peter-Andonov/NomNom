@@ -31,7 +31,7 @@ class IngredientsTable extends Component {
     addInput = () => {
         const newInput = `input-${this.state.inputs.length}`;
         this.setInputs(newInput);
-    }
+    };
 
     removeInput = () => {
 
@@ -71,7 +71,11 @@ class IngredientsTable extends Component {
     };
 
     render() {
-        console.log(this.state.quantityInputValues, this.state.unitInputValues, this.state.ingredientInputValues)
+        console.log(this.state.quantityInputValues, 
+            this.state.unitInputValues, 
+            this.state.ingredientInputValues,
+            this.props.units)
+
         return (
             <div>
                 <button onClick={this.addInput}>Add input</button>
@@ -89,6 +93,7 @@ class IngredientsTable extends Component {
                             <InputRow
                                 key={input}
                                 idx={idx}
+                                units={this.props.units}
                                 setQuantityInputValues={this.setQuantityInputValues}
                                 setUnitInputValues={this.setUnitInputValues}
                                 setIngredientInputValues={this.setIngredientInputValues}

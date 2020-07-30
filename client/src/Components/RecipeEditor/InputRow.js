@@ -15,16 +15,20 @@ const InputRow = (props) => {
         props.setIngredientInputValues(e.target.value, props.idx);
     }
 
+    const unitOptions = props.units.map((unit) => <option key={unit._id} value={unit._id} >{unit.name}</option>
+)
+
     return (
+        
         <tr>
+        {console.log(props.units)}
             <td>
                 <input onChange={setQuantityInput} type='number' />
             </td>
             <td>
                 <select defaultValue={""} onChange={setUnitInput}>
                     <option value="" hidden >Select Unit</option>
-                    <option value='grams' >grams</option>
-                    <option value='spoons' >spoons</option>
+                    {unitOptions}
                 </select>
             </td>
             <td>

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
 import styled from 'styled-components';
 import { EditorState, convertToRaw } from 'draft-js';
 import TextEditor from '../TextEditor';
@@ -26,7 +27,18 @@ const RecipeEditor = () => {
     const [deleteToken, setDeleteToken] = useState('');
     const [shortDescriptionState, setShortDescriptionState] = useState(EditorState.createEmpty());
     const [stepsState, setStepsState] = useState(EditorState.createEmpty());
+    //fix state update !!!
+    const [units, setUnits] = useState(null);
 
+
+    useEffect(() => {
+        const getUnits = async () => {
+            const res = await Axios.get('http://localhost:5000/api/unit/all');
+            console.log(res)
+            setUnits([...units, res.data]);
+        }
+        getUnits();
+    }, [])
 
     return (
         <Wrapper>
@@ -53,7 +65,7 @@ const RecipeEditor = () => {
                 setEditorState={setStepsState}
             />
             <h3>Add Ingredients</h3>
-            <IngredientsTable />
+            <IngredientsTable units={units} />
         </Wrapper>
     );
 };

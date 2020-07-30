@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { String, Date, ObjectId} = Schema.Types
+const { Mixed, String, Date, ObjectId} = Schema.Types;
 
 
 const articleSchema = Schema({
@@ -14,7 +14,7 @@ const articleSchema = Schema({
         required: true
     },
     body: {
-        type: String,
+        type: Mixed,
     },
     createdOn: {
         type: Date,

@@ -15,13 +15,13 @@ const InputRow = (props) => {
         props.setIngredientInputValues(e.target.value, props.idx);
     }
 
-    const unitOptions = props.units.map((unit) => <option key={unit._id} value={unit._id} >{unit.name}</option>
-)
+    const unitOptions = props.units.map((unit) => <option key={unit._id} value={unit._id} >{unit.name}</option>)
+
+    const ingredientOptions = props.ingredients.map((ingredient) => <option key={ingredient._id} value={ingredient._id} >{ingredient.name}</option>)
 
     return (
         
         <tr>
-        {console.log(props.units)}
             <td>
                 <input onChange={setQuantityInput} type='number' />
             </td>
@@ -34,8 +34,7 @@ const InputRow = (props) => {
             <td>
                 <select defaultValue={""} onChange={setIngredientInput}>
                     <option value="" hidden >Select Ingredient</option>
-                    <option value='matcha' >matcha</option>
-                    <option value='olive oil' >olive oil</option>
+                    {ingredientOptions}
                 </select>
             </td>
         </tr>

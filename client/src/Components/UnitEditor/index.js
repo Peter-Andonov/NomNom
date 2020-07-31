@@ -27,7 +27,7 @@ const UnitEditor = () => {
             name: name,
         };
 
-        const res = await Axios.post('http://localhost:5000/api/unit', data);
+        await Axios.post('http://localhost:5000/api/unit', data);
 
     };
 

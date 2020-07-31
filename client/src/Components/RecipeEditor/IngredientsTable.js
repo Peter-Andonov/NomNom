@@ -73,8 +73,7 @@ class IngredientsTable extends Component {
     render() {
         console.log(this.state.quantityInputValues, 
             this.state.unitInputValues, 
-            this.state.ingredientInputValues,
-            this.props.units)
+            this.state.ingredientInputValues)
 
         return (
             <div>
@@ -94,6 +93,7 @@ class IngredientsTable extends Component {
                                 key={input}
                                 idx={idx}
                                 units={this.props.units}
+                                ingredients={this.props.ingredients}
                                 setQuantityInputValues={this.setQuantityInputValues}
                                 setUnitInputValues={this.setUnitInputValues}
                                 setIngredientInputValues={this.setIngredientInputValues}

@@ -27,17 +27,24 @@ const RecipeEditor = () => {
     const [deleteToken, setDeleteToken] = useState('');
     const [shortDescriptionState, setShortDescriptionState] = useState(EditorState.createEmpty());
     const [stepsState, setStepsState] = useState(EditorState.createEmpty());
-    //fix state update !!!
-    const [units, setUnits] = useState(null);
+    const [units, setUnits] = useState([]);
+    const [ingredients, setIngredients] = useState([]);
 
 
     useEffect(() => {
         const getUnits = async () => {
             const res = await Axios.get('http://localhost:5000/api/unit/all');
-            console.log(res)
-            setUnits([...units, res.data]);
+            setUnits(res.data);
         }
         getUnits();
+    }, [])
+
+    useEffect(() => {
+        const getIngredients = async () => {
+            const res = await Axios.get('http://localhost:5000/api/ingredient/all');
+            setIngredients(res.data);
+        }
+        getIngredients();
     }, [])
 
     return (
@@ -65,7 +72,10 @@ const RecipeEditor = () => {
                 setEditorState={setStepsState}
             />
             <h3>Add Ingredients</h3>
-            <IngredientsTable units={units} />
+            <IngredientsTable
+                units={units}
+                ingredients={ingredients}
+            />
         </Wrapper>
     );
 };

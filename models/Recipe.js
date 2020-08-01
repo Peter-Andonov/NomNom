@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { String, Number, Date, ObjectId} = Schema.Types
+const { Mixed, String, Number, Date, ObjectId} = Schema.Types
 
 const recipeSchema = Schema({
     title: {
@@ -8,47 +8,31 @@ const recipeSchema = Schema({
         required: true,
         unique: true
     },
-    description: {
-        type: String,
-        required: true
+    shortDescription: {
+        type: Mixed
     },
-    imageUrl: {
-        type: String,
-        required: true
+    coverImageUrl: {
+        type: String
     },
-    steps: [{
-        type: String,
-    }],
-    ingredientSet: {
+    stepsToCreate: {
+        type: Mixed
+    },
+    ingredientSets: [{
         type: ObjectId,
         ref: 'IngredientSet'
-    },
-    servings: {
-        type: Number,
-    },
+    }],
     prepTime: {
         type: Number,
     },
     cookTime: {
         type: Number,
     },
-    calories: {
-        type: Number,
-    },
-    category: {
-        type: String,
-        required: true
-    },
-    createdOn: {
-        type: Date,
-        required: true
-    },
     createdBy: {
         type: ObjectId,
         ref: 'User',
         required: true
     }
-});
+},{ timestamps: true });
 
 
 module.exports = mongoose.model("Recipe", recipeSchema);

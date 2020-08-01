@@ -37,7 +37,9 @@ const RecipeList = () => {
             <PageInfo />
             <Container>
                 {recipes.map((recipe) =>
-                    <RecipeCard title={recipe.title}
+                    <RecipeCard
+                        key={recipe._id}
+                        title={recipe.title}
                         coverImageUrl={recipe.coverImageUrl}
                         prepTime={recipe.prepTime}
                         cookTime={recipe.cookTime}

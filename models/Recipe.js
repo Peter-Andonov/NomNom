@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { Mixed, String, Number, Date, ObjectId} = Schema.Types
+const { Mixed, String, Number, ObjectId} = Schema.Types
 
 const recipeSchema = Schema({
     title: {

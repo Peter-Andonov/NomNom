@@ -4,7 +4,7 @@ const IngredientSet = require('../models/IngredientSet');
 
 createRecipe = async (req, res) => {
     const title = req.body.title;
-    const coverImageUrl = req.body.imageUrl;
+    const coverImageUrl = req.body.coverImageUrl;
     const shortDescription = req.body.shortDescription;
     const stepsToCreate = req.body.stepsToCreate;
     const ingredientSections = req.body.ingredientSections;

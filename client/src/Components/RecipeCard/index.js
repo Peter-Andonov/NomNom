@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 
 
 const Wrapper = styled.div`
@@ -48,37 +49,44 @@ const PropValue = styled.div`
     text-align: center;
 `;
 
+const UnStyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+`;
+
 
 const RecipeCard = (props) => {
 
     return (
         <Wrapper>
-            <Image src={props.coverImageUrl} alt='Recipe' />
-            <Title>{props.title}</Title>
-            <Table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <PropTitle>Prep time</PropTitle>
-                            <PropValue>{`${props.prepTime} min` || 'n/a'}</PropValue>
-                        </td>
-                        <td>
-                            <PropTitle>Cook time</PropTitle>
-                            <PropValue>{`${props.cookTime} min` || 'n/a'}</PropValue>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <PropTitle>Serves</PropTitle>
-                            <PropValue>{props.serves || 'n/a'}</PropValue>
-                        </td>
-                        <td>
-                            <PropTitle>Difficulty</PropTitle>
-                            <PropValue>{props.difficulty || 'n/a'}</PropValue>
-                        </td>
-                    </tr>
-                </tbody>
-            </Table>
+            <UnStyledLink to={`/recipe/${props.id}`} >
+                <Image src={props.coverImageUrl} alt='Recipe' />
+                <Title>{props.title}</Title>
+                <Table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <PropTitle>Prep time</PropTitle>
+                                <PropValue>{`${props.prepTime} min` || 'n/a'}</PropValue>
+                            </td>
+                            <td>
+                                <PropTitle>Cook time</PropTitle>
+                                <PropValue>{`${props.cookTime} min` || 'n/a'}</PropValue>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <PropTitle>Serves</PropTitle>
+                                <PropValue>{props.serves || 'n/a'}</PropValue>
+                            </td>
+                            <td>
+                                <PropTitle>Difficulty</PropTitle>
+                                <PropValue>{props.difficulty || 'n/a'}</PropValue>
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </UnStyledLink>
         </Wrapper>
     );
 };

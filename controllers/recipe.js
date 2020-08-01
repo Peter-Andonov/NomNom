@@ -11,7 +11,6 @@ createRecipe = async (req, res) => {
     const prepTime = req.body.prepTime;
     const cookTime = req.body.cookTime;
 
-
     const newIngredientSets = await Promise.all(ingredientSections.map(async (section) => {
         return createIngredientSet(section);
     }));

@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import Axios from 'axios';
 import styled from 'styled-components';
 import RecipeCard from '../RecipeCard';
 import PageInfo from '../PageInfo';
@@ -17,22 +18,34 @@ const Container = styled.div`
 `;
 
 
-export default function RecipeList() {
+const RecipeList = () => {
+
+    const [recipes, setRecipes] = useState([]);
+
+    useEffect(() => {
+        const getRecipes = async () => {
+            const res = await Axios.get('http://localhost:5000/api/recipe/all');
+            setRecipes(res.data);
+        }
+        getRecipes();
+    }, []);
+
+
 
     return (
         <Main>
             <PageInfo />
             <Container>
-                <RecipeCard />
-                <RecipeCard />
-                <RecipeCard />
-                <RecipeCard />
-                <RecipeCard />
-                <RecipeCard />
-                <RecipeCard />
-                <RecipeCard />
-                <RecipeCard />
+                {recipes.map((recipe) =>
+                    <RecipeCard title={recipe.title}
+                        coverImageUrl={recipe.coverImageUrl}
+                        prepTime={recipe.prepTime}
+                        cookTime={recipe.cookTime}
+                    />)}
             </Container>
         </Main>
     );
-}
+};
+
+
+export default RecipeList;

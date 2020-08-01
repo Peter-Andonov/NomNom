@@ -102,8 +102,8 @@ const RecipeEditor = () => {
     };
 
     const saveRecipe = async () => {
-        const shortDescription = convertToRaw(shortDescriptionState.getCurrentContent());
-        const stepsToCreate = convertToRaw(stepsState.getCurrentContent());
+        const shortDescription = JSON.stringify(convertToRaw(shortDescriptionState.getCurrentContent()));
+        const stepsToCreate = JSON.stringify(convertToRaw(stepsState.getCurrentContent()));
         const data = {
             title,
             coverImageUrl,
@@ -121,7 +121,6 @@ const RecipeEditor = () => {
 
     return (
         <Wrapper>
-        {console.log(ingredientSections)}
             <h1>Create Recipe</h1>
             <h3>Add Recipe Title</h3>
             <Input

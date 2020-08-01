@@ -36,12 +36,12 @@ createRecipe = async (req, res) => {
 };
 
 getRecipeById = async (req, res) => {
-    const recipeId = req.body.id;
+    const recipeId = req.query.id;
 
     const recipe = Recipe.findById(recipeId)
         .populate(
             {
-                path: 'ingredientSet',
+                path: 'ingredientSets',
                 populate: {
                     path: 'units',
                     model: 'Unit',
@@ -50,14 +50,14 @@ getRecipeById = async (req, res) => {
         )
         .populate(
             {
-                path: 'ingredientSet',
+                path: 'ingredientSets',
                 populate: {
                     path: 'ingredients',
                     model: 'Ingredient',
                 }
             }
         ).lean();
-
+    
     return recipe;
 };
 

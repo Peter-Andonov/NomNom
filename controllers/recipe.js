@@ -3,34 +3,33 @@ const Recipe = require('../models/Recipe');
 const IngredientSet = require('../models/IngredientSet');
 
 createRecipe = async (req, res) => {
-    const title = req.body.title.trim();
-    const description = req.body.description.trim();
-    const imageUrl = req.body.imageUrl.trim();
-    const steps = req.body.steps;
-    const servings = req.body.servings;
+    const title = req.body.title;
+    const coverImageUrl = req.body.imageUrl;
+    const shortDescription = req.body.shortDescription;
+    const stepsToCreate = req.body.stepsToCreate;
+    const ingredientSections = req.body.ingredientSections;
     const prepTime = req.body.prepTime;
     const cookTime = req.body.cookTime;
-    const calories = req.body.calories;
-    const category = req.body.category;
 
 
-    const newIngredientSet = await createIngredientSet(req.body);
+    const newIngredientSets = await Promise.all(ingredientSections.map(async (section) => {
+        return createIngredientSet(section);
+    }));
+
+    const newIngredientSetIds = newIngredientSets.map((set) => {
+        return set._id;
+    });
 
     const newRecipe = new Recipe({
         title,
-        description,
-        imageUrl,
-        steps,
-        ingredientSet: newIngredientSet._id,
-        servings,
+        coverImageUrl,
+        shortDescription,
+        stepsToCreate,
+        ingredientSets: newIngredientSetIds,
         prepTime,
         cookTime,
-        calories,
-        category,
-        createdOn: new Date(),
         createdBy: mongoose.Types.ObjectId(req.body.createdBy)
     });
-
 
     const saved = await newRecipe.save();
 
@@ -80,11 +79,13 @@ getAllRecipes = async () => {
 };
 
 createIngredientSet = async (body) => {
+    const name = body.name;
     const quantities = body.quantities;
     const units = body.units;
     const ingredients = body.ingredients;
 
     const newIngredientSet = new IngredientSet({
+        name,
         quantities,
         units,
         ingredients

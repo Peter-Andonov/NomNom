@@ -18,7 +18,7 @@ ingredientRouter.get('/ingredient/all', async (req, res, next) => {
     };
 });
 
-ingredientRouter.post('/ingredient', async (req, res) => {
+ingredientRouter.post('/ingredient', async (req, res, next) => {
     try {
         const newIngredient = await createIngredient(req, res);
         return res.status(201).json(newIngredient);
@@ -27,7 +27,7 @@ ingredientRouter.post('/ingredient', async (req, res) => {
     };
 });
 
-ingredientRouter.get('/ingredient', async (req, res) => {
+ingredientRouter.get('/ingredient', async (req, res, next) => {
     try {
         const ingredient = await getIngredientById(req, res);
 
@@ -43,7 +43,7 @@ ingredientRouter.get('/ingredient', async (req, res) => {
     };
 });
 
-ingredientRouter.patch('/ingredient', async (req, res) => {
+ingredientRouter.patch('/ingredient', async (req, res, next) => {
     try {
         const updatedIngredient = await updateIngredient(req, res);
 
@@ -59,17 +59,17 @@ ingredientRouter.patch('/ingredient', async (req, res) => {
     };
 });
 
-ingredientRouter.delete('/ingredient', async (req, res) => {
+ingredientRouter.delete('/ingredient', async (req, res, next) => {
     try {
-        const deletedUnit = await deleteIngredient(req, res);
+        const deletedIngredient = await deleteIngredient(req, res);
 
-        if (!deletedUnit) {
+        if (!deletedIngredient) {
             return res.status(404).json({
                 message: "Ingredient with the requested id does not exist"
             });
         }
 
-        return res.status(200).json(deletedUnit);
+        return res.status(200).json(deletedIngredient);
     } catch (err) {
         next(err);
     };

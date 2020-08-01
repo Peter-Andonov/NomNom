@@ -1,16 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
+import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
-import Header from '../../Components/Header';
+import Header from '../../Components/UserHeader';
 import RegisterForm from '../../Components/RegisterForm';
 
-export default function RegisterPage() {
-
-    const PageLayout = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    `
+const RegisterPage = () => {
 
     return (
         <PageLayout>
@@ -19,4 +13,7 @@ export default function RegisterPage() {
             <RegisterForm />
         </PageLayout>
     );
-}
+};
+
+
+export default RegisterPage;

@@ -17,7 +17,7 @@ recipeRouter.get('/recipe/all', async (req, res, next) => {
     };
 });
 
-recipeRouter.post('/recipe', async (req, res) => {
+recipeRouter.post('/recipe', async (req, res, next) => {
     try {
         const newRecipe = await createRecipe(req, res);
         return res.status(201).json(newRecipe);
@@ -26,7 +26,7 @@ recipeRouter.post('/recipe', async (req, res) => {
     };
 });
 
-recipeRouter.get('/recipe', async (req, res) => {
+recipeRouter.get('/recipe', async (req, res, next) => {
     try {
         const recipe = await getRecipeById(req, res);
 
@@ -44,7 +44,7 @@ recipeRouter.get('/recipe', async (req, res) => {
 
 // TODO: Add update route for recipe
 
-recipeRouter.delete('/recipe', async (req, res) => {
+recipeRouter.delete('/recipe', async (req, res, next) => {
     try {
         const deletedRecipe = await deleteRecipe(req, res);
 

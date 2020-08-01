@@ -1,24 +1,19 @@
-import React, { Component } from 'react';
+import React from 'react';
 import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
-import Header from '../../Components/Header';
+import Header from '../../Components/UserHeader';
 import RecipeList from '../../Components/RecipeList';
-import UserContext from '../../Context';
 
 
-class HomePage extends Component {
+const HomePage = () => {
 
-    static contextType = UserContext;
-
-    render() {
-        return (
-            <PageLayout>
-                <HeaderImage />
-                <Header />
-                <RecipeList />
-            </PageLayout>
-        );
-    };
+    return (
+        <PageLayout>
+            <HeaderImage />
+            <Header />
+            <RecipeList />
+        </PageLayout>
+    );
 };
 
 export default HomePage;

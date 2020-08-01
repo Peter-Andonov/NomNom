@@ -18,3 +18,9 @@ body::-webkit-scrollbar-track {
 body::-webkit-scrollbar-thumb {
   background: #141418;
 }
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}

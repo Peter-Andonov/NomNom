@@ -2,9 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import matcha from '../../Images/matcha.jpg';
 
-export default function RecipeCard() {
 
-    const Wrapper = styled.div`
+const Wrapper = styled.div`
     margin: 1rem 1.5rem 1rem 1.5rem;
     height: 24rem;
     width: 18rem;
@@ -18,37 +17,40 @@ export default function RecipeCard() {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
         cursor: pointer;
     }
-    `
+`;
 
-    const Image = styled.img`
+const Image = styled.img`
     height: 50%;
     width: 100%;
     border-radius: 10% 10% 0 0;
     object-fit: cover;
-    `
+`;
 
-    const Title = styled.h4`
+const Title = styled.h4`
     margin: 0;
     padding: 0;
     text-align: center;
-    `
+`;
 
-    const Table = styled.table`
+const Table = styled.table`
     margin: 0;
     padding: 0;
     width: 100%;
-    `
+`;
 
-    const PropTitle = styled.div`
+const PropTitle = styled.div`
     font-size: 1.2rem;
     text-align: center;
     color: grey;
-    `
+`;
 
-    const PropValue = styled.div`
+const PropValue = styled.div`
     font-size: 1rem;
     text-align: center;
-    `
+`;
+
+
+export default function RecipeCard() {
 
     return (
         <Wrapper>

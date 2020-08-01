@@ -1,10 +1,10 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { Mixed, String, Date, ObjectId} = Schema.Types
+const { Mixed, String, Date, ObjectId} = Schema.Types;
 
 
-const ingredientSchema = Schema({
-    name: {
+const articleSchema = Schema({
+    title: {
         type: String,
         required: true,
         unique: true
@@ -13,7 +13,7 @@ const ingredientSchema = Schema({
         type: String,
         required: true
     },
-    description: {
+    body: {
         type: Mixed,
     },
     createdOn: {
@@ -28,4 +28,4 @@ const ingredientSchema = Schema({
 });
 
 
-module.exports = mongoose.model("Ingredient", ingredientSchema);
+module.exports = mongoose.model("Article", articleSchema);

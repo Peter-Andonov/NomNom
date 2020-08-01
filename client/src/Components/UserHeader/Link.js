@@ -2,9 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-export default function StyledLink(props) {
 
-    const StyledLink = styled(Link)`
+const StyledLink = styled(Link)`
     margin: 0.5rem;
     color: white;
     text-decoration: none;
@@ -13,9 +12,15 @@ export default function StyledLink(props) {
         color: rgba(237, 71, 59);
         cursor: pointer;
     }
-    `
+`;
+
+
+const NavLink = (props) => {
 
     return (
         <StyledLink to={props.to}>{props.text}</StyledLink>
     );
-}
+};
+
+
+export default NavLink;

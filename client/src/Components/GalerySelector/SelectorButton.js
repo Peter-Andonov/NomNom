@@ -9,7 +9,7 @@ const Input = styled.input`
 
 const SelectorButton = (props) => {
 
-    function handleSelection(e) {
+    const handleSelection = (e) => {
         props.onChange(e.target.files[0]);
     }
 

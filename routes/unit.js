@@ -9,7 +9,7 @@ const {
 const unitRouter = express.Router();
 
 
-unitRouter.get('/unit/all', async (req, res) => {
+unitRouter.get('/unit/all', async (req, res, next) => {
     try {
         const units = await getAllUnits();
         return res.status(200).json(units);
@@ -18,7 +18,7 @@ unitRouter.get('/unit/all', async (req, res) => {
     }
 });
 
-unitRouter.post('/unit', async (req, res) => {
+unitRouter.post('/unit', async (req, res, next) => {
     try {
         const newUnit = await createUnit(req, res);
         return res.status(201).json(newUnit);
@@ -27,7 +27,7 @@ unitRouter.post('/unit', async (req, res) => {
     }
 });
 
-unitRouter.get('/unit', async (req, res) => {
+unitRouter.get('/unit', async (req, res, next) => {
     try {
         const unit = await getUnitById(req, res);
 
@@ -43,7 +43,7 @@ unitRouter.get('/unit', async (req, res) => {
     }
 });
 
-unitRouter.patch('/unit', async (req, res) => {
+unitRouter.patch('/unit', async (req, res, next) => {
     try {
         const updatedUnit = await updateUnit(req, res);
 
@@ -59,7 +59,7 @@ unitRouter.patch('/unit', async (req, res) => {
     };
 });
 
-unitRouter.delete('/unit', async (req, res) => {
+unitRouter.delete('/unit', async (req, res, next) => {
     try {
         const deletedUnit = await deleteUnit(req, res);
 

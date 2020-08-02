@@ -7,7 +7,7 @@ import IngredientSection from './IngredientSection';
 
 
 const Wrapper = styled.div`
-    padding: 5rem;
+    padding: 3rem;
     position: absolute;
     top: 30vh;
     background-color: white;
@@ -26,6 +26,7 @@ const Container = styled.div`
 `;
 
 const Aside = styled.aside`
+    padding-right: 3rem;
     flex: 1;
     height: auto;
     display: flex;
@@ -34,11 +35,65 @@ const Aside = styled.aside`
 `;
 
 const Main = styled.main`
+    padding-left: 3rem;
+    border-left: 1px solid grey;
     flex: 2;
     display: flex;
     flex-direction: column;
     justify-content: left;
 `;
+
+const InfoList = styled.ul`
+    margin-top: 3rem;
+    margin-bottom: 6rem;
+    border: 1px solid grey;
+    list-style-type: none;
+    padding: 0;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-evenly;
+`;
+
+const InfoItem = styled.li`
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-right: 1px solid grey;
+    height: 100%;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &:last-child{
+        border: 0;
+    }
+`;
+
+const InfoItemLabel = styled.div`
+    font-size: 1.1rem;
+    color: grey;
+`;
+
+const InfoItemValue = styled.strong`
+    font-size: 2rem;
+`;
+
+const MainTitle = styled.h1`
+    margin: 0;
+`;
+
+const SubTitle = styled.h3`
+    margin: 0;
+    padding-bottom: 3rem;
+`;
+
+const Image = styled.img`
+    margin-bottom: 3rem;
+    object-fit: contain;
+`;
+
 
 const RecipeDetails = () => {
 
@@ -77,11 +132,29 @@ const RecipeDetails = () => {
 
     return (
         <Wrapper>
-            <h1>{title}</h1>
+            <MainTitle>{title}</MainTitle>
             <Editor editorState={shortDescription} readOnly={true} />
+            <InfoList>
+                <InfoItem>
+                    <InfoItemLabel>Time to prepare</InfoItemLabel>
+                    <InfoItemValue>120</InfoItemValue>
+                </InfoItem>
+                <InfoItem>
+                    <InfoItemLabel>Time to cook</InfoItemLabel>
+                    <InfoItemValue>120</InfoItemValue>
+                </InfoItem>
+                <InfoItem>
+                    <InfoItemLabel>Serves</InfoItemLabel>
+                    <InfoItemValue>120</InfoItemValue>
+                </InfoItem>
+                <InfoItem>
+                    <InfoItemLabel>Difficulty</InfoItemLabel>
+                    <InfoItemValue>Medium</InfoItemValue>
+                </InfoItem>
+            </InfoList>
             <Container>
                 <Aside>
-                    <h3>Ingredients</h3>
+                    <SubTitle>Ingredients</SubTitle>
                     {ingredients.map((ingredientSet) =>
                         <IngredientSection
                             key={ingredientSet._id}
@@ -92,8 +165,8 @@ const RecipeDetails = () => {
                         />)}
                 </Aside>
                 <Main>
-                    <h3>How to prepare</h3>
-                    <img src={coverImageUrl} alt='Recipe' />
+                    <SubTitle>Instructions</SubTitle>
+                    <Image src={coverImageUrl} alt='Recipe' />
                     <Editor editorState={stepsToCreate} readOnly={true} />
                 </Main>
             </Container>

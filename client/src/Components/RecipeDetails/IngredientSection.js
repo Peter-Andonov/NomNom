@@ -14,18 +14,27 @@ const Container = styled.div`
     align-items: left;
 `;
 
+const SectionHeading = styled.h4`
+    margin: 0;
+`;
+
+const SectionItem = styled.div`
+    padding-left: 1rem;
+`;
+
+
 const IngredientSection = (props) => {
 
     const { name, quantitiesArr, unitsArr, ingredientsArr } = props;
 
     return (
         <Wrapper>
-            <h4>{name}</h4>
+            <SectionHeading>{name}</SectionHeading>
             {ingredientsArr.map((ingredient, idx) =>
                 <Container key={idx}>
-                    <div>{quantitiesArr[idx]}</div>
-                    <div>{unitsArr[idx].name}</div>
-                    <div>{ingredient.name}</div>
+                    <SectionItem>{quantitiesArr[idx]}</SectionItem>
+                    <SectionItem>{unitsArr[idx].name}</SectionItem>
+                    <SectionItem>{ingredient.name}</SectionItem>
                 </Container>
             )}
         </Wrapper>

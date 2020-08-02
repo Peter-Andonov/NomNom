@@ -1,9 +1,12 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { Number, ObjectId} = Schema.Types
+const { String, Number, ObjectId} = Schema.Types
 
 
 const ingredientSetSchema = Schema({
+    name: {
+        type: String
+    },
     quantities: [{
         type: Number,
     }],

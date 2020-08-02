@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import matcha from '../../Images/matcha.jpg';
+import { Link } from 'react-router-dom';
 
 
 const Wrapper = styled.div`
@@ -49,37 +49,47 @@ const PropValue = styled.div`
     text-align: center;
 `;
 
+const UnStyledLink = styled(Link)`
+    text-decoration: none;
+    color: inherit;
+`;
 
-export default function RecipeCard() {
+
+const RecipeCard = (props) => {
 
     return (
         <Wrapper>
-            <Image src={matcha} alt='Recipe' />
-            <Title>Green matcha</Title>
-            <Table>
-                <tbody>
-                    <tr>
-                        <td>
-                            <PropTitle>Prep time</PropTitle>
-                            <PropValue>30 min</PropValue>
-                        </td>
-                        <td>
-                            <PropTitle>Cook time</PropTitle>
-                            <PropValue>20 min</PropValue>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <PropTitle>Serves</PropTitle>
-                            <PropValue>6</PropValue>
-                        </td>
-                        <td>
-                            <PropTitle>Difficulty</PropTitle>
-                            <PropValue>Medium</PropValue>
-                        </td>
-                    </tr>
-                </tbody>
-            </Table>
+            <UnStyledLink to={`/recipe/${props.id}`} >
+                <Image src={props.coverImageUrl} alt='Recipe' />
+                <Title>{props.title}</Title>
+                <Table>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <PropTitle>Prep time</PropTitle>
+                                <PropValue>{`${props.prepTime} min` || 'n/a'}</PropValue>
+                            </td>
+                            <td>
+                                <PropTitle>Cook time</PropTitle>
+                                <PropValue>{`${props.cookTime} min` || 'n/a'}</PropValue>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <PropTitle>Serves</PropTitle>
+                                <PropValue>{props.serves || 'n/a'}</PropValue>
+                            </td>
+                            <td>
+                                <PropTitle>Difficulty</PropTitle>
+                                <PropValue>{props.difficulty || 'n/a'}</PropValue>
+                            </td>
+                        </tr>
+                    </tbody>
+                </Table>
+            </UnStyledLink>
         </Wrapper>
-    )
-}
+    );
+};
+
+
+export default RecipeCard;

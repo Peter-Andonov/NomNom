@@ -6,6 +6,8 @@ import {
 } from 'react-router-dom';
 import UserContext from './Context';
 import HomePage from './Pages/Home-page';
+import RecipesPage from './Pages/Recipes-page';
+import RecipeDetailsPage from './Pages/Recipe-details-page';
 import LoginPage from './Pages/Login-page';
 import RegisterPage from './Pages/Register-page';
 import AdminPage from './Pages/Admin-page';
@@ -24,6 +26,8 @@ class Navigation extends Component {
       <Router>
         <Switch>
           <Route path={'/'} exact component={HomePage} />
+          <Route path={'/recipes'} component={RecipesPage} />
+          <Route path={'/recipe/:id'} component={RecipeDetailsPage} />
           <Route path={'/login'} component={LoginPage} />
           <Route path={'/register'} component={RegisterPage} />
           <Route path={'/admin'} component={AdminPage} />

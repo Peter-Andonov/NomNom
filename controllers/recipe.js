@@ -4,13 +4,14 @@ const IngredientSet = require('../models/IngredientSet');
 
 createRecipe = async (req, res) => {
     const title = req.body.title;
-    const coverImageUrl = req.body.imageUrl;
+    const coverImageUrl = req.body.coverImageUrl;
     const shortDescription = req.body.shortDescription;
     const stepsToCreate = req.body.stepsToCreate;
     const ingredientSections = req.body.ingredientSections;
     const prepTime = req.body.prepTime;
     const cookTime = req.body.cookTime;
-
+    const serves = req.body.serves;
+    const difficulty = req.body.difficulty;
 
     const newIngredientSets = await Promise.all(ingredientSections.map(async (section) => {
         return createIngredientSet(section);
@@ -28,6 +29,8 @@ createRecipe = async (req, res) => {
         ingredientSets: newIngredientSetIds,
         prepTime,
         cookTime,
+        serves,
+        difficulty,
         createdBy: mongoose.Types.ObjectId(req.body.createdBy)
     });
 
@@ -37,12 +40,12 @@ createRecipe = async (req, res) => {
 };
 
 getRecipeById = async (req, res) => {
-    const recipeId = req.body.id;
+    const recipeId = req.query.id;
 
     const recipe = Recipe.findById(recipeId)
         .populate(
             {
-                path: 'ingredientSet',
+                path: 'ingredientSets',
                 populate: {
                     path: 'units',
                     model: 'Unit',
@@ -51,14 +54,14 @@ getRecipeById = async (req, res) => {
         )
         .populate(
             {
-                path: 'ingredientSet',
+                path: 'ingredientSets',
                 populate: {
                     path: 'ingredients',
                     model: 'Ingredient',
                 }
             }
         ).lean();
-
+    
     return recipe;
 };
 

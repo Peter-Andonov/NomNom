@@ -44,6 +44,8 @@ const RecipeList = () => {
                         coverImageUrl={recipe.coverImageUrl}
                         prepTime={recipe.prepTime}
                         cookTime={recipe.cookTime}
+                        serves={recipe.serves}
+                        difficulty={recipe.difficulty}
                     />)}
             </Container>
         </Main>

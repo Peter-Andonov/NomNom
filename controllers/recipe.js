@@ -10,6 +10,8 @@ createRecipe = async (req, res) => {
     const ingredientSections = req.body.ingredientSections;
     const prepTime = req.body.prepTime;
     const cookTime = req.body.cookTime;
+    const serves = req.body.serves;
+    const difficulty = req.body.difficulty;
 
     const newIngredientSets = await Promise.all(ingredientSections.map(async (section) => {
         return createIngredientSet(section);
@@ -27,6 +29,8 @@ createRecipe = async (req, res) => {
         ingredientSets: newIngredientSetIds,
         prepTime,
         cookTime,
+        serves,
+        difficulty,
         createdBy: mongoose.Types.ObjectId(req.body.createdBy)
     });
 

@@ -104,6 +104,10 @@ const RecipeDetails = () => {
     const [coverImageUrl, setCoverImageUrl] = useState('');
     const [stepsToCreate, setStepsToCreate] = useState(EditorState.createEmpty());
     const [ingredients, setIngredients] = useState([]);
+    const [prepTime, setPrepTime] = useState('');
+    const [cookTime, setCookTime] = useState('');
+    const [serves, setServes] = useState('');
+    const [difficulty, setDifficulty] = useState('');
 
     useEffect(() => {
         const getRecipe = async () => {
@@ -126,6 +130,11 @@ const RecipeDetails = () => {
             setStepsToCreate(EditorState.createWithContent(stepsToCreateContentState));
 
             setIngredients(res.data.ingredientSets);
+
+            setPrepTime(res.data.prepTime);
+            setCookTime(res.data.cookTime);
+            setServes(res.data.serves);
+            setDifficulty(res.data.difficulty);
         };
         getRecipe();
     }, []);
@@ -137,19 +146,19 @@ const RecipeDetails = () => {
             <InfoList>
                 <InfoItem>
                     <InfoItemLabel>Time to prepare</InfoItemLabel>
-                    <InfoItemValue>120</InfoItemValue>
+                    <InfoItemValue>{`${prepTime} min`}</InfoItemValue>
                 </InfoItem>
                 <InfoItem>
                     <InfoItemLabel>Time to cook</InfoItemLabel>
-                    <InfoItemValue>120</InfoItemValue>
+                    <InfoItemValue>{`${cookTime} min`}</InfoItemValue>
                 </InfoItem>
                 <InfoItem>
                     <InfoItemLabel>Serves</InfoItemLabel>
-                    <InfoItemValue>120</InfoItemValue>
+                    <InfoItemValue>{serves}</InfoItemValue>
                 </InfoItem>
                 <InfoItem>
                     <InfoItemLabel>Difficulty</InfoItemLabel>
-                    <InfoItemValue>Medium</InfoItemValue>
+                    <InfoItemValue>{difficulty}</InfoItemValue>
                 </InfoItem>
             </InfoList>
             <Container>

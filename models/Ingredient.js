@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { Mixed, String, Date, ObjectId} = Schema.Types
+const { String, Date, ObjectId} = Schema.Types
 
 
 const ingredientSchema = Schema({
@@ -14,7 +14,7 @@ const ingredientSchema = Schema({
         required: true
     },
     description: {
-        type: Mixed,
+        type: String,
     },
     createdOn: {
         type: Date,

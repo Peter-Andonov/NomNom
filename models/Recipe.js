@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { Mixed, String, Number, ObjectId} = Schema.Types
+const { String, Number, ObjectId} = Schema.Types
 
 const recipeSchema = Schema({
     title: {
@@ -9,13 +9,13 @@ const recipeSchema = Schema({
         unique: true
     },
     shortDescription: {
-        type: Mixed
+        type: String
     },
     coverImageUrl: {
         type: String
     },
     stepsToCreate: {
-        type: Mixed
+        type: String
     },
     ingredientSets: [{
         type: ObjectId,
@@ -26,6 +26,13 @@ const recipeSchema = Schema({
     },
     cookTime: {
         type: Number,
+    },
+    serves: {
+        type: Number,
+    },
+    difficulty: {
+        type: String,
+        enum: ['easy', 'medium', 'hard']
     },
     createdBy: {
         type: ObjectId,

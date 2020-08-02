@@ -48,6 +48,8 @@ const RecipeEditor = () => {
     }]);
     const [prepTime, setPrepTime] = useState('');
     const [cookTime, setCookTime] = useState('');
+    const [serves, setServes] = useState('');
+    const [difficulty, setDifficulty] = useState('');
 
     const user = useContext(UserContext);
 
@@ -92,7 +94,7 @@ const RecipeEditor = () => {
     };
 
     const handleInput = (newSectionState) => {
-        const newIngredientSections = ingredientSections.map((section) =>{
+        const newIngredientSections = ingredientSections.map((section) => {
             if (section.id === newSectionState.id) {
                 return newSectionState
             }
@@ -112,6 +114,8 @@ const RecipeEditor = () => {
             ingredientSections,
             prepTime,
             cookTime,
+            serves,
+            difficulty,
             createdBy: user._id
         }
         const res = await Axios.post('http://localhost:5000/api/recipe', data);
@@ -122,23 +126,23 @@ const RecipeEditor = () => {
     return (
         <Wrapper>
             <h1>Create Recipe</h1>
-            <h3>Add Recipe Title</h3>
+            <h3>Recipe Title</h3>
             <Input
                 value={title}
                 onChange={setTitle} />
-            <h3>Add Main Image</h3>
+            <h3>Cover Image</h3>
             <ImageSelector
                 imageUrl={coverImageUrl}
                 setImageUrl={setCoverImageUrl}
                 deleteToken={deleteToken}
                 setDeleteToken={setDeleteToken}
             />
-            <h3>Add Short Description</h3>
+            <h3>Short Description</h3>
             <TextEditor
                 editorState={shortDescriptionState}
                 setEditorState={setShortDescriptionState}
             />
-            <h3>Add Steps to create</h3>
+            <h3>Steps to create</h3>
             <TextEditor
                 editorState={stepsState}
                 setEditorState={setStepsState}
@@ -158,20 +162,32 @@ const RecipeEditor = () => {
                         handleInput={handleInput}
                     />)}
             </Container>
-            <h3>Add time measurements</h3>
+            <h3>Additional recipe information</h3>
             <Container>
-            <input
-                placeholder='Time to prepare'
-                type='number'
-                value={prepTime}
-                onChange={(e) => setPrepTime(e.target.value)}
-            />
-            <input
-                placeholder='Time to cook'
-                type='number'
-                value={cookTime}
-                onChange={(e) => setCookTime(e.target.value)}
-            />
+                <input
+                    placeholder='Time to prepare'
+                    type='number'
+                    value={prepTime}
+                    onChange={(e) => setPrepTime(e.target.value)}
+                />
+                <input
+                    placeholder='Time to cook'
+                    type='number'
+                    value={cookTime}
+                    onChange={(e) => setCookTime(e.target.value)}
+                />
+                <input
+                    placeholder='Serves'
+                    type='number'
+                    value={serves}
+                    onChange={(e) => setServes(e.target.value)}
+                />
+                <select defaultValue={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+                    <option value="" hidden >Select Difficulty</option>
+                    <option value="easy" >Easy</option>
+                    <option value="medium" >Medium</option>
+                    <option value="hard" >Hard</option>
+                </select>
             </Container>
             <button onClick={saveRecipe} >Save recipe</button>
         </Wrapper>

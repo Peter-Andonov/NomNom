@@ -11,7 +11,7 @@ const Wrapper = styled.div`
     min-width: 18rem;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
     transition: 0.3s;
-    border-radius: 10%;
+    border-radius: 1rem;
     background-color: white;
     &:hover {
         box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
@@ -20,16 +20,26 @@ const Wrapper = styled.div`
 `;
 
 const Image = styled.img`
-    height: 50%;
+    height: 100%;
     width: 100%;
-    border-radius: 10% 10% 0 0;
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
     object-fit: cover;
 `;
 
-const Title = styled.h4`
-    margin: 0;
-    padding: 0;
+const Container = styled.div`
+    height: 60%;
+    position: relative;
+`;
+
+const Title = styled.div`
     text-align: center;
+    position: absolute;
+    bottom: 0;
+    background: rgb(0, 0, 0);
+    background: rgba(0, 0, 0, 0.5);
+    color: #f1f1f1;
+    width: 100%;
 `;
 
 const Table = styled.table`
@@ -60,8 +70,10 @@ const RecipeCard = (props) => {
     return (
         <Wrapper>
             <UnStyledLink to={`/recipe/${props.id}`} >
-                <Image src={props.coverImageUrl} alt='Recipe' />
-                <Title>{props.title}</Title>
+                <Container>
+                    <Image src={props.coverImageUrl} alt='Recipe' />
+                    <Title>{props.title}</Title>
+                </Container>
                 <Table>
                     <tbody>
                         <tr>

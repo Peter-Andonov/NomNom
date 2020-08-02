@@ -8,6 +8,7 @@ import UserContext from './Context';
 import HomePage from './Pages/Home-page';
 import RecipesPage from './Pages/Recipes-page';
 import RecipeDetailsPage from './Pages/Recipe-details-page';
+import ArticlesPage from './Pages/Articles-page';
 import LoginPage from './Pages/Login-page';
 import RegisterPage from './Pages/Register-page';
 import AdminPage from './Pages/Admin-page';
@@ -28,6 +29,7 @@ class Navigation extends Component {
           <Route path={'/'} exact component={HomePage} />
           <Route path={'/recipes'} component={RecipesPage} />
           <Route path={'/recipe/:id'} component={RecipeDetailsPage} />
+          <Route path={'/articles'} component={ArticlesPage} />
           <Route path={'/login'} component={LoginPage} />
           <Route path={'/register'} component={RegisterPage} />
           <Route path={'/admin'} component={AdminPage} />

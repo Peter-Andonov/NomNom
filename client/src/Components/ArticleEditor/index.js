@@ -32,7 +32,7 @@ const ArticleEditor = () => {
 
     const saveArticle = async () => {
 
-        const body = convertToRaw(editorState.getCurrentContent());
+        const body = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 
         const data = {
             userId: user._id,

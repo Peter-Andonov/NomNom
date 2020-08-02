@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
     margin: 1rem 1.5rem 1rem 1.5rem;
-    height: 24rem;
-    width: 18rem;
+    height: 25rem;
+    width: 20rem;
     min-height: 24rem;
     min-width: 18rem;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);

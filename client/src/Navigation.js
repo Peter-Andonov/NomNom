@@ -1,14 +1,11 @@
 import React, { Component } from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-} from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import UserContext from './Context';
 import HomePage from './Pages/Home-page';
 import RecipesPage from './Pages/Recipes-page';
 import RecipeDetailsPage from './Pages/Recipe-details-page';
 import ArticlesPage from './Pages/Articles-page';
+import ArticleDetailsPage from './Pages/Article-details-page';
 import LoginPage from './Pages/Login-page';
 import RegisterPage from './Pages/Register-page';
 import AdminPage from './Pages/Admin-page';
@@ -30,6 +27,7 @@ class Navigation extends Component {
           <Route path={'/recipes'} component={RecipesPage} />
           <Route path={'/recipe/:id'} component={RecipeDetailsPage} />
           <Route path={'/articles'} component={ArticlesPage} />
+          <Route path={'/article/:id'} component={ArticleDetailsPage} />
           <Route path={'/login'} component={LoginPage} />
           <Route path={'/register'} component={RegisterPage} />
           <Route path={'/admin'} component={AdminPage} />

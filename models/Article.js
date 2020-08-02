@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { String, Date, ObjectId} = Schema.Types;
+const { String, ObjectId } = Schema.Types;
 
 
 const articleSchema = Schema({
@@ -10,22 +10,17 @@ const articleSchema = Schema({
         unique: true
     },
     imageUrl: {
-        type: String,
-        required: true
+        type: String
     },
     body: {
-        type: String,
-    },
-    createdOn: {
-        type: Date,
-        required: true
+        type: String
     },
     createdBy: {
         type: ObjectId,
         ref: 'User',
         required: true
     }
-});
+},{ timestamps: true });
 
 
 module.exports = mongoose.model("Article", articleSchema);

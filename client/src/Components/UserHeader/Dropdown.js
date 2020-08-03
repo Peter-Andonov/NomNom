@@ -42,7 +42,7 @@ class DropdownMenu extends Component {
             <Container>
                 {this.context.user.role === 'admin' && <StyledLink to={'/admin'} text={'Admin'} />}
                 {this.context.user.role === 'user' && <StyledLink to={'/favourites'} text={'Favourites'} />}
-                <StyledLink to={'/profile'} text={'Profile'} />
+                <StyledLink to={`/profile/${this.context.user._id}`} text={'Profile'} />
                 <Div onClick={this.logOut}>Logout</Div>
             </Container>
         );

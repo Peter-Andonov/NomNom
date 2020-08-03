@@ -3,6 +3,19 @@ const Schema = mongoose.Schema;
 const { String, ObjectId} = Schema.Types
 
 const userSchema = new Schema({
+    firstName: {
+        type: String,
+        minlength: 2,
+        maxlength: 20
+    },
+    lastName: {
+        type: String,
+        minlength: 2,
+        maxlength: 20
+    },
+    profilePicUrl: {
+        type: String
+    },
     email: {
         type: String,
         required: true,

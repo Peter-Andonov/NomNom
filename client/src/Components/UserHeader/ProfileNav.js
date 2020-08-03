@@ -32,6 +32,7 @@ const ProfileNav = (props) => {
 
     const toggleOpen = () => {
         setOpen(!open)
+        console.log(userContext)
     }
 
     const userContext = useContext(UserContext);

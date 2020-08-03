@@ -21,7 +21,7 @@ createArticle = async (req, res) => {
 };
 
 getArticleById = async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const article = Article.findById(id).lean();
 

@@ -14,7 +14,12 @@ const Wrapper = styled.div`
     width: 80%;
     display: flex;
     flex-direction: column;
-    align-items: left;
+    align-items: center;
+`;
+
+const EditorContainer = styled.div`
+    margin-left: 5rem;
+    width: 100%;
 `;
 
 const Image = styled.img`
@@ -24,6 +29,7 @@ const Image = styled.img`
 
 const MainTitle = styled.h1`
     margin: 0;
+    margin-bottom: 2rem;
 `;
 
 
@@ -58,7 +64,9 @@ const RecipeDetails = () => {
         <Wrapper>
             <MainTitle>{title}</MainTitle>
             <Image src={imageUrl} alt='Article' />
-            <Editor editorState={body} readOnly={true} />
+            <EditorContainer>
+                <Editor editorState={body} readOnly={true} />
+            </EditorContainer>
         </Wrapper>
     );
 };

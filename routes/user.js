@@ -3,7 +3,9 @@ const {
     registerUser,
     loginUser,
     verifyLogin,
-    updateUser
+    updateUser,
+    getUser,
+    checkUserAuth
 } = require('../controllers/user');
 const userRouter = express.Router();
 
@@ -23,6 +25,14 @@ userRouter.post('/verifylogin', async (req, res, next) => {
         next(err);
     };
 });
+
+userRouter.get('/user', checkUserAuth, async (req, res, next) => {
+    try {
+        await getUser(req, res);
+    } catch (err) {
+        next(err);
+    }
+})
 
 userRouter.patch('/user', async (req, res, next) => {
     try {

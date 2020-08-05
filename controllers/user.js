@@ -52,6 +52,19 @@ loginUser = async (req, res) => {
     };
 };
 
+getUser = async (req, res) => {
+    const userId = req.userId;
+
+    const userData = await User.findById(userId).populate(
+        {
+            path: 'favouriteRecipes',
+            model: 'Recipe'
+        }
+    ).lean();
+
+    return res.status(200).json(userData);
+}
+
 updateUser = async (req, res) => {
     const id = req.body.id;
     const updatedData = {};
@@ -111,6 +124,28 @@ verifyLogin = (req, res) => {
     });
 };
 
+checkUserAuth = (req, res, next) => {
+    const token = req.get('Authorization');
+
+    if (!token) {
+        const error = new Error("Authorization token must be provided");
+        error.statusCode = 401;
+        throw error;
+    };
+
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+        if (err) {
+            const error = new Error("Invalid authorization token");
+            error.statusCode = 401;
+            throw error;
+        } else {
+            req.userId = decoded.id
+            next();
+        };
+    });
+};
+
+
 signJWTtoken = (user) => {
     const token = jwt.sign({
         id: user._id.toString()
@@ -161,4 +196,6 @@ module.exports = {
     loginUser,
     updateUser,
     verifyLogin,
+    getUser,
+    checkUserAuth
 };

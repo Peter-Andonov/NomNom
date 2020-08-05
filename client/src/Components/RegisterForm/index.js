@@ -136,11 +136,14 @@ class RegisterForm extends Component {
 
             if (res.status === 200) {
                 document.cookie = `auth-token=${res.headers.authorization}`;
-                const { _id, email, role } = res.data;
+                const { _id, email, role, firstName, lastName, profilePicUrl } = res.data;
                 this.context.logIn({
                     _id,
                     email,
-                    role
+                    role,
+                    firstName,
+                    lastName,
+                    profilePicUrl
                 });
                 this.props.history.push('/');
             }

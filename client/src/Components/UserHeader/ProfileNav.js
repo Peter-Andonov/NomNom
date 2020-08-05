@@ -1,7 +1,6 @@
-import React, { Component } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import UserContext from '../../Context';
-import avatar from '../../Images/avatar.jpg';
 
 
 const Container = styled.div`
@@ -16,43 +15,40 @@ const Container = styled.div`
     }
 `;
 
-    const Avatar = styled.img`
+const Avatar = styled.img`
     height: 50%;
+    max-width: 4rem;
     max-height: 4rem;
     border-radius: 50%;
+    object-fit: cover;
 `;
 
-    const Text = styled.span`
+const Text = styled.span`
     margin-left: 1rem;
 `;
 
 
-class ProfileNav extends Component {
+const ProfileNav = (props) => {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            open: false
-        }
+    const [open, setOpen] = useState(false);
+
+    const toggleOpen = () => {
+        setOpen(!open)
     }
 
-    setOpen = () => {
-        this.setState({
-            open: !this.state.open
-        })
-    }
-
-    static contextType = UserContext;
+    const userContext = useContext(UserContext);
+    const displayName = userContext.user.firstName ? `${userContext.user.firstName} ${userContext.user.lastName}` : userContext.user.email;
+    const displayPicture = userContext.user.profilePicUrl || 'https://res.cloudinary.com/nomnomapp/image/upload/v1596641498/Images/x5svb4l6kwcyiinazfqt.png';
     
-    render() {
-        return (
-            <Container onClick={this.setOpen}>
-                <Avatar src={avatar} alt='Avatar' />
-                <Text>{this.context.user.email}</Text>
-                {this.state.open && this.props.children}
-            </Container>
-        );
-    };
+    return (
+        <Container onClick={toggleOpen}>
+            <Avatar src={displayPicture} alt='Avatar' />
+            <Text>{displayName}</Text>
+            {open && props.children}
+        </Container>
+    );
+
 };
+
 
 export default ProfileNav;

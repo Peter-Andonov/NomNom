@@ -49,8 +49,37 @@ loginUser = async (req, res) => {
         const error = new Error("Invalid email or password");
         error.statusCode = 400;
         throw error;
-    }
-}
+    };
+};
+
+updateUser = async (req, res) => {
+    const id = req.body.id;
+    const updatedData = {};
+
+    if (req.body.firstName) {
+        updatedData.firstName = req.body.firstName;
+    };
+
+    if (req.body.lastName) {
+        updatedData.lastName = req.body.lastName;
+    };
+
+    if (req.body.profilePicUrl) {
+        updatedData.profilePicUrl = req.body.profilePicUrl;
+    };
+
+    const updated = await User.findByIdAndUpdate(id, updatedData, {new: true});
+
+    if (updated) {
+
+        return res.status(200).json(updated);
+
+    } else {
+        const error = new Error("No such user exists");
+        error.statusCode = 400;
+        throw error;
+    };
+};
 
 verifyLogin = (req, res) => {
     const token = req.body.token;
@@ -88,7 +117,7 @@ signJWTtoken = (user) => {
     }, process.env.JWT_SECRET_KEY);
 
     return token;
-}
+};
 
 validateEmail = async (email) => {
 
@@ -96,7 +125,7 @@ validateEmail = async (email) => {
         const error = new Error("Invalid email format");
         error.statusCode = 400;
         throw error;
-    }
+    };
 
     dupEmail = await User.findOne({ email: email });
 
@@ -104,31 +133,32 @@ validateEmail = async (email) => {
         const error = new Error("Email is already in use");
         error.statusCode = 400;
         throw error;
-    }
-}
+    };
+};
 
 validatePasswords = (password, repeatPassword) => {
     if (password !== repeatPassword) {
         const error = new Error("Passwords do not match");
         error.statusCode = 400;
         throw error;
-    }
+    };
 
     if (password.length < 6) {
         const error = new Error("Password must be at least 6 characters long");
         error.statusCode = 400;
         throw error;
-    }
+    };
 
     if (!/^[A-Za-z0-9]+$/.test(password)) {
         const error = new Error("Password must contain only English characters and digits");
         error.statusCode = 400;
         throw error;
-    }
-}
+    };
+};
 
 module.exports = {
     registerUser,
     loginUser,
+    updateUser,
     verifyLogin,
 };

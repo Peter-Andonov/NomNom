@@ -8,6 +8,7 @@ import ArticlesPage from './Pages/Articles-page';
 import ArticleDetailsPage from './Pages/Article-details-page';
 import LoginPage from './Pages/Login-page';
 import RegisterPage from './Pages/Register-page';
+import ProfilePage from './Pages/Profile-page';
 import AdminPage from './Pages/Admin-page';
 import CreateRecipePage from './Pages/Create-recipe-page';
 import CreateIngredientPage from './Pages/Create-ingredient-page';
@@ -30,6 +31,7 @@ class Navigation extends Component {
           <Route path={'/article/:id'} component={ArticleDetailsPage} />
           <Route path={'/login'} component={LoginPage} />
           <Route path={'/register'} component={RegisterPage} />
+          <Route path={'/profile/:id'} component={ProfilePage} />
           <Route path={'/admin'} component={AdminPage} />
           <Route path={'/create/recipe'} component={CreateRecipePage} />
           <Route path={'/create/ingredient'} component={CreateIngredientPage} />

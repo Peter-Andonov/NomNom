@@ -41,11 +41,14 @@ class App extends Component {
         Axios.post('http://localhost:5000/api/verifylogin',
             { token: token }
         ).then((res) => {
-            const { _id, email, role } = res.data;
+            const { _id, email, role, firstName, lastName, profilePicUrl } = res.data;
             this.logIn({
                 _id,
                 email,
-                role
+                role,
+                firstName,
+                lastName,
+                profilePicUrl
             })
         }).catch((err) => {
             this.logOut();

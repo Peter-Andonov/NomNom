@@ -2,7 +2,8 @@ const express = require('express');
 const {
     registerUser,
     loginUser,
-    verifyLogin
+    verifyLogin,
+    updateUser
 } = require('../controllers/user');
 const userRouter = express.Router();
 
@@ -12,7 +13,7 @@ userRouter.post('/login', async (req, res, next) => {
         await loginUser(req, res);
     } catch (err) {
         next(err);
-    }
+    };
 });
 
 userRouter.post('/verifylogin', async (req, res, next) => {
@@ -20,7 +21,15 @@ userRouter.post('/verifylogin', async (req, res, next) => {
         await verifyLogin(req, res);
     } catch (err) {
         next(err);
-    }
+    };
+});
+
+userRouter.patch('/user', async (req, res, next) => {
+    try {
+        await updateUser(req, res);
+    } catch (err) {
+        next(err);
+    };
 });
 
 userRouter.post('/register', async (req, res, next) => {
@@ -28,7 +37,7 @@ userRouter.post('/register', async (req, res, next) => {
         await registerUser(req, res);
     } catch (err) {
         next(err);
-    }
+    };
 });
 
 

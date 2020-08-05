@@ -119,7 +119,6 @@ const RecipeDetails = () => {
             });
 
             setTitle(res.data.title);
-            console.log(res.data)
 
             const shortDescriptionContentState = convertFromRaw(JSON.parse(res.data.shortDescription));
             setShortDescription(EditorState.createWithContent(shortDescriptionContentState));

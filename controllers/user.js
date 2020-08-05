@@ -81,6 +81,9 @@ updateUser = async (req, res) => {
         updatedData.profilePicUrl = req.body.profilePicUrl;
     };
 
+    validateName(updatedData.firstName);
+    validateName(updatedData.lastName);
+
     const updated = await User.findByIdAndUpdate(id, updatedData, {new: true});
 
     if (updated) {
@@ -186,6 +189,14 @@ validatePasswords = (password, repeatPassword) => {
 
     if (!/^[A-Za-z0-9]+$/.test(password)) {
         const error = new Error("Password must contain only English characters and digits");
+        error.statusCode = 400;
+        throw error;
+    };
+};
+
+validateName = (name) => {
+    if(name.length < 2 || name.length > 20) {
+        const error = new Error("Name must be between 2 and 20 characters long");
         error.statusCode = 400;
         throw error;
     };

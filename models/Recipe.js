@@ -34,6 +34,10 @@ const recipeSchema = Schema({
         type: String,
         enum: ['easy', 'medium', 'hard']
     },
+    usersLiked: [{
+        type: ObjectId,
+        ref: 'User'
+    }],
     createdBy: {
         type: ObjectId,
         ref: 'User',

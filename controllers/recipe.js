@@ -1,6 +1,8 @@
 const mongoose = require('mongoose');
+const User = require('../models/User');
 const Recipe = require('../models/Recipe');
 const IngredientSet = require('../models/IngredientSet');
+const { ObjectId } = mongoose.Types;
 
 createRecipe = async (req, res) => {
     const title = req.body.title;
@@ -61,7 +63,7 @@ getRecipeById = async (req, res) => {
                 }
             }
         ).lean();
-    
+
     return recipe;
 };
 
@@ -79,6 +81,33 @@ getAllRecipes = async () => {
     const recipes = await Recipe.find({}).lean();
 
     return recipes;
+};
+
+addRecipeToFavourites = async (req, res) => {
+    const userId = req.userId;
+
+    const recipeId = req.body.recipeId;
+
+    const updatedUser = await User.findByIdAndUpdate(ObjectId(userId),
+        {
+            $addToSet: {
+                favouriteRecipes: [ObjectId(recipeId)]
+            }
+        },
+        {
+            new: true
+        }
+    );
+
+    await Recipe.findByIdAndUpdate(ObjectId(recipeId),
+        {
+            $addToSet: {
+                usersLiked: [ObjectId(userId)]
+            }
+        }
+    );
+
+    return updatedUser;
 };
 
 createIngredientSet = async (body) => {
@@ -107,4 +136,5 @@ module.exports = {
     getAllRecipes,
     deleteRecipe,
     getRecipeById,
+    addRecipeToFavourites,
 }

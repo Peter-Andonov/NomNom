@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
+import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
 import Header from '../../Components/UserHeader';
@@ -11,23 +12,33 @@ import RecipeCard from '../../Components/RecipeCard';
 
 const FavouritesPage = () => {
 
-    const [recipes, setRecipes] = useState([]);
+    const [favouriteRecipes, setFavouriteRecipes] = useState([]);
 
     useEffect(() => {
-        const getRecipes = async () => {
-            const res = await Axios.get('http://localhost:5000/api/recipe/all');
-            setRecipes(res.data);
+        const getUserInfo = async () => {
+
+            const token = utils.getCookieByName('auth-token');
+
+            const res = await Axios('http://localhost:5000/api/user', {
+            method: 'GET',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': token
+            }
+        });
+            
+            setFavouriteRecipes(res.data.favouriteRecipes);
         }
-        getRecipes();
+        getUserInfo();
     }, []);
 
     return (
         <PageLayout>
             <HeaderImage />
             <Header />
-            <PageInfo title='Recipes' />
+            <PageInfo title='Your Favourite Recipes' />
             <FlexLister>
-            {recipes.map((recipe) =>
+            {favouriteRecipes.map((recipe) =>
                 <RecipeCard
                     key={recipe._id}
                     id={recipe._id}

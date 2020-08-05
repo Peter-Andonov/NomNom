@@ -12,7 +12,20 @@ const Wrapper = styled.div`
     top: 30vh;
     background-color: white;
     height: auto;
-    width: 80%;
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const Form = styled.form`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+`;
+
+const Container = styled.div`
+    margin-top: 2rem;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,13 +36,15 @@ const ProfileEditor = () => {
 
     const userContext = useContext(UserContext);
 
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
+    const [firstName, setFirstName] = useState(userContext.user.firstName);
+    const [lastName, setLastName] = useState(userContext.user.lastName);
     const [profilePicUrl, setProfilePicUrl] = useState('');
     const [deleteToken, setDeleteToken] = useState('');
 
 
     const saveProfile = async (e) => {
+
+        console.log(firstName, lastName, profilePicUrl)
 
         e.preventDefault();
 
@@ -40,20 +55,28 @@ const ProfileEditor = () => {
             headers: {
                 'content-type': 'application/json',
                 'Authorization': id
-            },
-            data: {
+            }, data: {
                 id: userContext.user._id,
                 profilePicUrl,
                 firstName,
                 lastName
             }
         });
+
+        userContext.logIn({
+            _id: res.data._id,
+            email: res.data.email,
+            role: res.data.role,
+            firstName: res.data.firstName,
+            lastName: res.data.lastName,
+            profilePicUrl: res.data.profilePicUrl
+        });
     };
 
     return (
         <Wrapper>
-            <h1>Profile</h1>
-            <form onSubmit={saveProfile}>
+            <h1>View Your Profile</h1>
+            <Form onSubmit={saveProfile}>
                 <h3>Profile picture</h3>
                 <ImageSelector
                     imageUrl={profilePicUrl}
@@ -61,18 +84,25 @@ const ProfileEditor = () => {
                     deleteToken={deleteToken}
                     setDeleteToken={setDeleteToken}
                 />
-                <Input
-                    type='text'
-                    value={firstName}
-                    onChange={setFirstName}
-                />
-                <Input
-                    type='text'
-                    value={lastName}
-                    onChange={setLastName}
-                />
+                <Container>
+                    <label>First name</label>
+                    <Input
+                        type='text'
+                        value={firstName}
+                        onChange={setFirstName}
+                    />
+
+
+                    <label>Last name</label>
+                    <Input
+                        type='text'
+                        value={lastName}
+                        onChange={setLastName}
+                    />
+                </Container>
+
                 <button type='submit' >Save</button>
-            </form>
+            </Form>
         </Wrapper>
     );
 };

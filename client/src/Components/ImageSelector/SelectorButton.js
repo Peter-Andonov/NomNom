@@ -6,6 +6,13 @@ const Input = styled.input`
     display: none;
 `;
 
+const Label = styled.label`
+    &:hover {
+        color: rgba(237, 71, 59);
+        cursor: pointer;
+    };
+`;
+
 
 const SelectorButton = (props) => {
 
@@ -23,7 +30,7 @@ const SelectorButton = (props) => {
                 accept='image/*'
                 onChange={handleSelection}
             />
-            <label htmlFor="file"> + Select Image</label>
+            <Label htmlFor="file"> + Select Image</Label>
         </div>
     );
 };

@@ -68,7 +68,7 @@ updateUser = async (req, res) => {
         updatedData.profilePicUrl = req.body.profilePicUrl;
     };
 
-    const updated = await User.findByIdAndUpdate(id, updatedData);
+    const updated = await User.findByIdAndUpdate(id, updatedData, {new: true});
 
     if (updated) {
 

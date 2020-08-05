@@ -17,8 +17,10 @@ const Container = styled.div`
 
 const Avatar = styled.img`
     height: 50%;
+    max-width: 4rem;
     max-height: 4rem;
     border-radius: 50%;
+    object-fit: cover;
 `;
 
 const Text = styled.span`
@@ -32,19 +34,21 @@ const ProfileNav = (props) => {
 
     const toggleOpen = () => {
         setOpen(!open)
-        console.log(userContext)
     }
 
     const userContext = useContext(UserContext);
-
+    const displayName = userContext.user.firstName ? `${userContext.user.firstName} ${userContext.user.lastName}` : userContext.user.email;
+    const displayPicture = userContext.user.profilePicUrl || 'https://res.cloudinary.com/nomnomapp/image/upload/v1596641498/Images/x5svb4l6kwcyiinazfqt.png';
+    
     return (
         <Container onClick={toggleOpen}>
-            <Avatar src={userContext.user.profilePicUrl} alt='Avatar' />
-            <Text>{userContext.user.email}</Text>
+            <Avatar src={displayPicture} alt='Avatar' />
+            <Text>{displayName}</Text>
             {open && props.children}
         </Container>
     );
 
 };
+
 
 export default ProfileNav;

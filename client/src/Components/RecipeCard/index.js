@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 
 
 const Wrapper = styled.div`
-    margin: 1rem 1.5rem 1rem 1.5rem;
+    margin: 1rem;
     height: 25rem;
     width: 20rem;
     min-height: 24rem;

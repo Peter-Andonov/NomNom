@@ -22,26 +22,23 @@ const RecipesPage = () => {
         const getRecipes = async () => {
             const res = await Axios.get(`http://localhost:5000/api/recipe/all?page=${currentPage}&perPage=${perPage}`);
             setRecipes(res.data.recipes);
-            setTotalRecipes(res.data.recipesCount);
+            setTotalRecipes(res.data.totalRecipesCount);
         }
         getRecipes();
-    }, []);
+    }, [currentPage]);
 
     const changePage = async (pageNumber) => {
 
-        if(pageNumber < 1 || pageNumber > totalPages) {
+        if (pageNumber < 1 || pageNumber > totalPages) {
             return;
         }
 
-        const res = await Axios.get(`http://localhost:5000/api/recipe/all?page=${pageNumber}&perPage=${perPage}`);
-        setRecipes(res.data.recipes);
         setCurrentPage(pageNumber);
     };
 
     return (
         <PageLayout>
             <HeaderImage />
-            <Header />
             <PageInfo title='Recipes' />
             <FlexLister>
                 {recipes.map((recipe) =>
@@ -56,12 +53,13 @@ const RecipesPage = () => {
                         difficulty={recipe.difficulty}
                     />)}
             </FlexLister>
-            {totalRecipes > 5 ?
+            {totalRecipes > perPage ?
                 <Pagination
                     currentPage={currentPage}
                     totalPages={totalPages}
                     changePage={changePage}
                 /> : ''}
+            <Header />
         </PageLayout>
     );
 };

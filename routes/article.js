@@ -11,7 +11,7 @@ const articleRouter = express.Router();
 
 articleRouter.get('/article/all', async (req, res, next) => {
     try {
-        const articles = await getAllArticles();
+        const articles = await getAllArticles(req, res);
         return res.status(200).json(articles);
     } catch (err) {
         next(err);

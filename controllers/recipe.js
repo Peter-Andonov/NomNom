@@ -83,9 +83,9 @@ getAllRecipes = async (req, res) => {
 
     const recipes = await Recipe.find({}).skip((page - 1) * perPage).limit(perPage).lean();
 
-    const recipesCount = await Recipe.countDocuments();
+    const totalRecipesCount = await Recipe.countDocuments();
 
-    return data = {recipes, recipesCount};
+    return data = {recipes, totalRecipesCount};
 };
 
 addRecipeToFavourites = async (req, res) => {

@@ -44,17 +44,13 @@ const ProfileEditor = () => {
 
     const saveProfile = async (e) => {
 
-        console.log(firstName, lastName, profilePicUrl)
-
         e.preventDefault();
-
-        const id = userContext.user._id;
 
         const res = await Axios('http://localhost:5000/api/user', {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
-                'Authorization': id
+                'Authorization': userContext.user._id
             }, data: {
                 id: userContext.user._id,
                 profilePicUrl,

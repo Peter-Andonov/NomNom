@@ -4,7 +4,11 @@ const {
     getRecipeById,
     deleteRecipe,
     getAllRecipes,
+    addRecipeToFavourites,
 } = require('../controllers/recipe');
+const {
+    checkUserAuth
+} = require('../controllers/user');
 const recipeRouter = express.Router();
 
 
@@ -21,6 +25,15 @@ recipeRouter.post('/recipe', async (req, res, next) => {
     try {
         const newRecipe = await createRecipe(req, res);
         return res.status(201).json(newRecipe);
+    } catch (err) {
+        next(err);
+    };
+});
+
+recipeRouter.post('/recipe/favourites', checkUserAuth, async (req, res, next) => {
+    try {
+        const updatedUser = await addRecipeToFavourites(req, res);
+        return res.status(200).json(updatedUser);
     } catch (err) {
         next(err);
     };

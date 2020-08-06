@@ -3,6 +3,7 @@ import Axios from 'axios';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { Editor, EditorState, convertFromRaw } from "draft-js";
+import * as utils from '../../Utils/user';
 import IngredientSection from './IngredientSection';
 
 
@@ -80,8 +81,25 @@ const InfoItemValue = styled.strong`
     font-size: 2rem;
 `;
 
+const TitleContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+`;
+
 const MainTitle = styled.h1`
+    flex: 1;
     margin: 0;
+`;
+
+const LikeBtn = styled.button`
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    font-size: 2rem;
 `;
 
 const SubTitle = styled.h3`
@@ -138,9 +156,29 @@ const RecipeDetails = () => {
         getRecipe();
     }, []);
 
+    const addToFavorites = async (e) => {
+        e.preventDefault();
+
+
+        const token = utils.getCookieByName('auth-token');
+
+        const res = await Axios('http://localhost:5000/api/recipe/favourites', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': token
+            }, data: {
+                recipeId: recipeId.id
+            }
+        });
+    };
+
     return (
         <Wrapper>
-            <MainTitle>{title}</MainTitle>
+            <TitleContainer>
+                <MainTitle>{title}</MainTitle>
+                <LikeBtn onClick={addToFavorites} >Add to Favourites</LikeBtn>
+            </TitleContainer>
             <Editor editorState={shortDescription} readOnly={true} />
             <InfoList>
                 <InfoItem>

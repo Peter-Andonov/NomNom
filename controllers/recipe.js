@@ -77,10 +77,14 @@ deleteRecipe = async (req, res) => {
     return deleted;
 };
 
-getAllRecipes = async () => {
-    const recipes = await Recipe.find({}).lean();
+getAllRecipes = async (req, res) => {
+    const page = req.query.page;
 
-    return recipes;
+    const recipes = await Recipe.find({}).skip((page - 1) * 5).limit(5).lean();
+
+    const recipesCount = await Recipe.countDocuments();
+
+    return data = {recipes, recipesCount};
 };
 
 addRecipeToFavourites = async (req, res) => {

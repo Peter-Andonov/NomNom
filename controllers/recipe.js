@@ -79,8 +79,9 @@ deleteRecipe = async (req, res) => {
 
 getAllRecipes = async (req, res) => {
     const page = req.query.page;
+    const perPage = Number(req.query.perPage);
 
-    const recipes = await Recipe.find({}).skip((page - 1) * 5).limit(5).lean();
+    const recipes = await Recipe.find({}).skip((page - 1) * perPage).limit(perPage).lean();
 
     const recipesCount = await Recipe.countDocuments();
 

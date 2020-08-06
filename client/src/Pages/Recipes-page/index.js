@@ -15,9 +15,12 @@ const RecipesPage = () => {
     const [totalRecipes, setTotalRecipes] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
 
+    const perPage = 10;
+    const totalPages = Math.ceil(totalRecipes / perPage);
+
     useEffect(() => {
         const getRecipes = async () => {
-            const res = await Axios.get('http://localhost:5000/api/recipe/all');
+            const res = await Axios.get(`http://localhost:5000/api/recipe/all?page=${currentPage}&perPage=${perPage}`);
             setRecipes(res.data.recipes);
             setTotalRecipes(res.data.recipesCount);
         }
@@ -25,12 +28,15 @@ const RecipesPage = () => {
     }, []);
 
     const changePage = async (pageNumber) => {
-        const res = await Axios.get(`http://localhost:5000/api/recipe/all&page=${pageNumber}`);
-        setRecipes(res.data);
-        setCurrentPage(pageNumber)
-    };
 
-    const totalPages = Math.ceil(totalRecipes / 5);
+        if(pageNumber < 1 || pageNumber > totalPages) {
+            return;
+        }
+
+        const res = await Axios.get(`http://localhost:5000/api/recipe/all?page=${pageNumber}&perPage=${perPage}`);
+        setRecipes(res.data.recipes);
+        setCurrentPage(pageNumber);
+    };
 
     return (
         <PageLayout>

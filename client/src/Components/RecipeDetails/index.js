@@ -5,6 +5,8 @@ import { useParams } from 'react-router';
 import { Editor, EditorState, convertFromRaw } from "draft-js";
 import * as utils from '../../Utils/user';
 import IngredientSection from './IngredientSection';
+import CommentsSection from '../CommentsSection';
+import Comment from '../CommentsSection/Comment';
 
 
 const Wrapper = styled.div`
@@ -216,6 +218,9 @@ const RecipeDetails = () => {
                     <Editor editorState={stepsToCreate} readOnly={true} />
                 </Main>
             </Container>
+            <CommentsSection>
+                <Comment></Comment>
+            </CommentsSection>
         </Wrapper>
     );
 };

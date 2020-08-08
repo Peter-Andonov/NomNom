@@ -7,7 +7,7 @@ const Container = styled.div`
     display: flex;
     flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: left;
 `;
 
 

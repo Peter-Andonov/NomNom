@@ -53,13 +53,31 @@ getRecipeById = async (req, res) => {
                     model: 'Unit',
                 }
             }
-        )
-        .populate(
+        ).populate(
             {
                 path: 'ingredientSets',
                 populate: {
                     path: 'ingredients',
                     model: 'Ingredient',
+                }
+            }
+        ).populate(
+            {
+                path: 'comments',
+                populate: {
+                    path: 'createdBy',
+                    model: 'User',
+                }
+            }
+        ).populate(
+            {
+                path: 'comments',
+                populate: {
+                    path: 'replies',
+                    populate: {
+                        path: 'createdBy',
+                        model: 'User',
+                    }
                 }
             }
         ).lean();

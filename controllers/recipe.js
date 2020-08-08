@@ -85,7 +85,7 @@ getAllRecipes = async (req, res) => {
 
     const totalRecipesCount = await Recipe.countDocuments();
 
-    return data = {recipes, totalRecipesCount};
+    return data = { recipes, totalRecipesCount };
 };
 
 addRecipeToFavourites = async (req, res) => {
@@ -93,24 +93,19 @@ addRecipeToFavourites = async (req, res) => {
 
     const recipeId = req.body.recipeId;
 
-    const updatedUser = await User.findByIdAndUpdate(ObjectId(userId),
-        {
-            $addToSet: {
-                favouriteRecipes: [ObjectId(recipeId)]
-            }
-        },
-        {
-            new: true
+    const updatedUser = await User.findByIdAndUpdate(ObjectId(userId), {
+        $addToSet: {
+            favouriteRecipes: [ObjectId(recipeId)]
         }
-    );
+    }, {
+        new: true
+    });
 
-    await Recipe.findByIdAndUpdate(ObjectId(recipeId),
-        {
-            $addToSet: {
-                usersLiked: [ObjectId(userId)]
-            }
+    await Recipe.findByIdAndUpdate(ObjectId(recipeId), {
+        $addToSet: {
+            usersLiked: [ObjectId(userId)]
         }
-    );
+    });
 
     return updatedUser;
 };
@@ -126,13 +121,13 @@ createIngredientSet = async (body) => {
         quantities,
         units,
         ingredients
-    })
+    });
 
     try {
         return await newIngredientSet.save();
     } catch (err) {
         console.error(err);
-    }
+    };
 };
 
 
@@ -142,4 +137,4 @@ module.exports = {
     deleteRecipe,
     getRecipeById,
     addRecipeToFavourites,
-}
+};

@@ -42,7 +42,11 @@ const recipeSchema = Schema({
         type: ObjectId,
         ref: 'User',
         required: true
-    }
+    },
+    comments: [{
+        type: ObjectId,
+        ref: 'Comment'
+    }]
 },{ timestamps: true });
 
 

@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { Editor, EditorState, convertFromRaw } from "draft-js";
+import UserContext from '../../Context';
 import * as utils from '../../Utils/user';
 import IngredientSection from './IngredientSection';
 import CommentsSection from '../CommentsSection';
@@ -118,6 +119,7 @@ const Image = styled.img`
 const RecipeDetails = () => {
 
     const recipeId = useParams();
+    const userContext = useContext(UserContext);
 
     const [title, setTitle] = useState('');
     const [shortDescription, setShortDescription] = useState(EditorState.createEmpty());
@@ -128,6 +130,7 @@ const RecipeDetails = () => {
     const [cookTime, setCookTime] = useState('');
     const [serves, setServes] = useState('');
     const [difficulty, setDifficulty] = useState('');
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
         const getRecipe = async () => {
@@ -154,13 +157,13 @@ const RecipeDetails = () => {
             setCookTime(res.data.cookTime);
             setServes(res.data.serves);
             setDifficulty(res.data.difficulty);
+            setComments(res.data.comments);
         };
         getRecipe();
     }, []);
 
     const addToFavorites = async (e) => {
         e.preventDefault();
-
 
         const token = utils.getCookieByName('auth-token');
 
@@ -218,9 +221,16 @@ const RecipeDetails = () => {
                     <Editor editorState={stepsToCreate} readOnly={true} />
                 </Main>
             </Container>
-            <CommentsSection>
-                <Comment></Comment>
-            </CommentsSection>
+            {userContext.loggedIn && <CommentsSection>
+                {comments.map((comment) =>
+                    <Comment
+                        key={comment._id}
+                        body={comment.body}
+                        createdBy={comment.createdBy}
+                        createdAt={comment.createdAt}
+                        replies={comment.replies}
+                    />)}
+            </CommentsSection>}
         </Wrapper>
     );
 };

@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import styled from 'styled-components';
+import UserContext from '../../Context';
 import AvatarPic from './AvatarPic';
 
 
@@ -23,10 +24,17 @@ const Input = styled.input`
 `;
 
 const CommentInput = (props) => {
+
+    const userContext = useContext(UserContext);
+
     return (
         <Wrapper>
-            <AvatarPic />
-            <Input placeholder="Write a comment..." type='text' />
+            <AvatarPic src={userContext.user.profilePicUrl} />
+            <Input
+                value={props.value}
+                onChange={(e) => props.setNewComment(e.target.value)}
+                placeholder="Write a comment..."
+                type='text' />
         </Wrapper>
     );
 };

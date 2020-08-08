@@ -28,6 +28,7 @@ const ToggleDiv = styled.div`
 const CommentsSection = (props) => {
 
     const [open, setOpen] = useState(false);
+    const [newComment, setNewComment] = useState('')
 
     const toggleOpen = () => {
         setOpen(!open);
@@ -38,7 +39,7 @@ const CommentsSection = (props) => {
             <HeadingContainer>
                 <ToggleDiv onClick={toggleOpen} >{open ? 'Hide comments' : 'Show comments'}</ToggleDiv>
             </HeadingContainer>
-            {open && <CommentInput />}
+            {open && <CommentInput value={newComment} setNewComment={setNewComment} />}
             {open && props.children}
         </Wrapper>
     );

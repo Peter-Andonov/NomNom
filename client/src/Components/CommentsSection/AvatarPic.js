@@ -10,7 +10,7 @@ const Avatar = styled.img`
 `;
 
 const AvatarPic = (props) => {
-    return(<Avatar src='https://res.cloudinary.com/nomnomapp/image/upload/v1596640925/Images/lpgdlmuinbz5ri2c9gt2.jpg' alt='Avatar' />);
+    return(<Avatar src={props.src} alt='Avatar' />);
 };
 
 

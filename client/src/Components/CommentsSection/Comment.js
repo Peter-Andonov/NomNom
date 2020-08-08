@@ -15,13 +15,13 @@ const Wrapper = styled.div`
 const Row = styled.div`
     display: flex;
     flex-direction: row;
-    align-items: center;
+    align-items: left;
 `;
 
 const Column = styled.div`
     display: flex;
     flex-direction: column;
-    align-items: center;
+    align-items: left;
 `;
 
 const PosterName = styled.div`
@@ -60,21 +60,31 @@ const Comment = (props) => {
 
     const [showReplies, setShowReplies] = useState(false);
 
+    const toggleOpen = () => {
+        setShowReplies(!showReplies);
+    };
+
+    const { email, firstName, lastName, profilePicUrl } = props.createdBy;
+    const displayName = firstName ? `${firstName} ${lastName}` : email;
+    const body = props.body;
+    const replies = props.replies;
+    const date = new Date(props.createdAt)
+
     return (
         <Wrapper>
             <Row>
-                <AvatarPic />
+                <AvatarPic src={profilePicUrl} />
                 <Column>
-                    <PosterName>Peter Andonov</PosterName>
+                    <PosterName>{displayName}</PosterName>
                     <Row>
                         <Icon src={timeIcon} />
-                        <PostedOn>January 1 2020</PostedOn>
+                        <PostedOn>{`${date.getDate()} ${date.toLocaleString('default', { month: 'long' })} ${date.getFullYear()}`}</PostedOn>
                     </Row>
                 </Column>
             </Row>
-            <CommentBody>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus vel volutpat nisl, nec tincidunt risus. Nam faucibus, odio cursus gravida euismod, elit justo pharetra mauris, eget blandit magna purus sed magna. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia curae; Aliquam non velit vitae mauris blandit lacinia. Suspendisse potenti.</CommentBody>
+            <CommentBody>{body}</CommentBody>
             <Row>
-                <Reply>6 Replies</Reply>
+                <Reply onClick={toggleOpen} >{replies.length} Replies</Reply>
                 <ReplyBtn>
                     <Icon src={replyIcon} />
                     <Reply>Reply</Reply>

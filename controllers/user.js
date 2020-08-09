@@ -84,7 +84,7 @@ updateUser = async (req, res) => {
     validateName(updatedData.firstName);
     validateName(updatedData.lastName);
 
-    const updated = await User.findByIdAndUpdate(id, updatedData, {new: true});
+    const updated = await User.findByIdAndUpdate(id, updatedData, { new: true });
 
     if (updated) {
 
@@ -148,6 +148,35 @@ checkUserAuth = (req, res, next) => {
     });
 };
 
+checkAdminAuth = (req, res, next) => {
+    const token = req.get('Authorization');
+
+    if (!token) {
+        const error = new Error("Authorization token must be provided");
+        error.statusCode = 401;
+        throw error;
+    };
+
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+        if (err) {
+            const error = new Error("Invalid authorization token");
+            error.statusCode = 401;
+            throw error;
+        } else {
+            User.findOne({ _id: decoded.id }, (err, user) => {
+                if (err) {
+                    const error = new Error("Invalid authorization token");
+                    error.statusCode = 401;
+                    throw error;
+                } else {
+                    req.userId = decoded.id
+                    next();
+                };
+            });
+        };
+    });
+};
+
 
 signJWTtoken = (user) => {
     const token = jwt.sign({
@@ -195,7 +224,7 @@ validatePasswords = (password, repeatPassword) => {
 };
 
 validateName = (name) => {
-    if(name.length < 2 || name.length > 20) {
+    if (name.length < 2 || name.length > 20) {
         const error = new Error("Name must be between 2 and 20 characters long");
         error.statusCode = 400;
         throw error;
@@ -208,5 +237,6 @@ module.exports = {
     updateUser,
     verifyLogin,
     getUser,
-    checkUserAuth
+    checkUserAuth,
+    checkAdminAuth,
 };

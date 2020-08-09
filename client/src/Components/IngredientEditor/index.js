@@ -1,16 +1,17 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import Axios from 'axios';
 import styled from 'styled-components';
 import { EditorState, convertToRaw } from 'draft-js';
-import UserContext from '../../Context';
+import * as utils from '../../Utils/user';
 import TextEditor from '../TextEditor';
 import ImageSelector from '../ImageSelector';
 import Input from '../RegisterForm/Input';
+import Submit from '../RegisterForm/Submit';
 
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
     position: absolute;
-    padding-bottom: 5rem;
     top: 30vh;
     background-color: white;
     height: auto;
@@ -20,6 +21,11 @@ const Wrapper = styled.div`
     align-items: center;
 `;
 
+const ErrorMessage = styled.div`
+    font-size: 1rem;
+    color: red;
+`;
+
 
 const IngredientEditor = () => {
 
@@ -27,44 +33,61 @@ const IngredientEditor = () => {
     const [imageUrl, setImageUrl] = useState('');
     const [deleteToken, setDeleteToken] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const user = useContext(UserContext);
+    const history = useHistory();
 
-    const saveIngredient = async () => {
+    const saveIngredient = (e) => {
 
-        const description = convertToRaw(editorState.getCurrentContent());
+        e.preventDefault();
+
+        const authToken = utils.getCookieByName('auth-token');
+
+        const description = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 
         const data = {
-            userId: user._id,
             name: title,
             imageUrl: imageUrl,
             description: description
         };
 
-        await Axios.post('http://localhost:5000/api/ingredient', data);
-    }
+        Axios('http://localhost:5000/api/ingredient', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, data: data
+        }).then(() => {
+            history.push('/admin');
+        }).catch((err) => {
+            setError(true);
+            setErrorMessage('Something went wrong');
+        });
+    };
 
     return (
-        <Wrapper>
+        <Wrapper onSubmit={saveIngredient}>
             <h1>Create Ingredient</h1>
-            <h3>Add Ingredient Title</h3>
+            <h3>Name</h3>
             <Input
                 value={title}
                 onChange={setTitle}
             />
-            <h3>Add Cover Image</h3>
+            <h3>Cover Image</h3>
             <ImageSelector
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
                 deleteToken={deleteToken}
                 setDeleteToken={setDeleteToken}
             />
-            <h3>Add Description</h3>
+            <h3>Description</h3>
             <TextEditor
                 editorState={editorState}
                 setEditorState={setEditorState}
             />
-            <button onClick={saveIngredient} >Save</button>
+            {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            <Submit label={'Save Ingredient'} />
         </Wrapper>
     );
 };

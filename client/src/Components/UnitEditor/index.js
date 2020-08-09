@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
 import Axios from 'axios';
 import styled from 'styled-components';
+import * as utils from '../../Utils/user';
 import Input from '../RegisterForm/Input';
 import Submit from '../RegisterForm/Submit';
 
@@ -34,11 +35,19 @@ const UnitEditor = () => {
 
         e.preventDefault();
 
+        const authToken = utils.getCookieByName('auth-token');
+
         const data = {
             name: name,
         };
 
-        Axios.post('http://localhost:5000/api/unit', data).then(() => {
+        Axios('http://localhost:5000/api/unit', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, data: data
+        }).then(() => {
             history.push('/admin');
         }).catch((err) => {
             setError(true);

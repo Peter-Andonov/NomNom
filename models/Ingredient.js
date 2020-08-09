@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
-const { String, Date, ObjectId} = Schema.Types
+const { String, ObjectId} = Schema.Types
 
 
 const ingredientSchema = Schema({
@@ -11,21 +11,16 @@ const ingredientSchema = Schema({
     },
     imageUrl: {
         type: String,
-        required: true
     },
     description: {
         type: String,
-    },
-    createdOn: {
-        type: Date,
-        required: true
     },
     createdBy: {
         type: ObjectId,
         ref: 'User',
         required: true
     }
-});
+},{ timestamps: true });
 
 
 module.exports = mongoose.model("Ingredient", ingredientSchema);

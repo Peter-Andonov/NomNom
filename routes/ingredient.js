@@ -6,6 +6,9 @@ const {
     deleteIngredient,
     getAllIngredients,
 } = require('../controllers/ingredient');
+const {
+    checkAdminAuth,
+} = require('../controllers/user');
 const ingredientRouter = express.Router();
 
 
@@ -18,7 +21,7 @@ ingredientRouter.get('/ingredient/all', async (req, res, next) => {
     };
 });
 
-ingredientRouter.post('/ingredient', async (req, res, next) => {
+ingredientRouter.post('/ingredient', checkAdminAuth, async (req, res, next) => {
     try {
         const newIngredient = await createIngredient(req, res);
         return res.status(201).json(newIngredient);
@@ -43,7 +46,7 @@ ingredientRouter.get('/ingredient', async (req, res, next) => {
     };
 });
 
-ingredientRouter.patch('/ingredient', async (req, res, next) => {
+ingredientRouter.patch('/ingredient', checkAdminAuth, async (req, res, next) => {
     try {
         const updatedIngredient = await updateIngredient(req, res);
 
@@ -59,7 +62,7 @@ ingredientRouter.patch('/ingredient', async (req, res, next) => {
     };
 });
 
-ingredientRouter.delete('/ingredient', async (req, res, next) => {
+ingredientRouter.delete('/ingredient', checkAdminAuth, async (req, res, next) => {
     try {
         const deletedIngredient = await deleteIngredient(req, res);
 

@@ -10,21 +10,18 @@ import Submit from './Submit';
 const Wrapper = styled.div`
     position: absolute;
     top: 30vh;
-    height: 40rem;
     width: 40rem;
     background-color: white;
     border-radius: 20px;
     box-shadow: 0 8px 16px 0 rgba(0,0,0,0.5);
-`
+`;
 
 const Form = styled.form`
-    height: 100%;
-    width: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: space-around;
-`
+`;
 
 class RegisterForm extends Component {
 
@@ -39,63 +36,63 @@ class RegisterForm extends Component {
             passwordErrorMessage: '',
             repeatPassword: '',
             repeatPasswordError: false
-        }
-    }
+        };
+    };
 
     static contextType = UserContext;
 
     setEmail = (newEmail) => {
         this.setState({
             email: newEmail
-        })
-    }
+        });
+    };
 
     setEmailError = (newEmailError) => {
         this.setState({
             emailError: newEmailError
-        })
-    }
+        });
+    };
 
     setEmailErrorMessage = (newEmailErrorMessage) => {
         this.setState({
             emailErrorMessage: newEmailErrorMessage
-        })
-    }
+        });
+    };
 
     setPassword = (newPassword) => {
         this.setState({
             password: newPassword
-        })
-    }
+        });
+    };
 
     setPasswordError = (newPasswordError) => {
         this.setState({
             passwordError: newPasswordError
-        })
-    }
+        });
+    };
 
     setPasswordErrorMessage = (newPasswordErrorMessage) => {
         this.setState({
             passwordErrorMessage: newPasswordErrorMessage
-        })
-    }
+        });
+    };
 
     setRepeatPassword = (newRepeatPassword) => {
         this.setState({
             repeatPassword: newRepeatPassword
-        })
-    }
+        });
+    };
 
     setRepeatPasswordError = (newRepeatPasswordError) => {
         this.setState({
             repeatPasswordError: newRepeatPasswordError
-        })
-    }
+        });
+    };
 
     validateEmail = () => {
-        if (!/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(this.state.email)) {
+        if (!/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(this.state.email)) {
             this.setEmailError(true);
-            this.setEmailErrorMessage('This should look like an email');
+            this.setEmailErrorMessage('* This should look like an email');
         } else if (this.state.emailError) {
             this.setEmailError(false);
             this.setEmailErrorMessage('');
@@ -105,10 +102,10 @@ class RegisterForm extends Component {
     validatePassword = () => {
         if (this.state.password.length < 6) {
             this.setPasswordError(true);
-            this.setPasswordErrorMessage('*Password must be at least 6 characters long');
+            this.setPasswordErrorMessage('* Password must be at least 6 characters long');
         } else if ((!/^[A-Za-z0-9]+$/.test(this.state.password))) {
             this.setPasswordError(true);
-            this.setPasswordErrorMessage('*Password must contain only digits and english letters');
+            this.setPasswordErrorMessage('* Password must contain only digits and english letters');
         }
         else if (this.state.passwordError) {
             this.setPasswordError(false);
@@ -124,34 +121,40 @@ class RegisterForm extends Component {
         }
     };
 
-    handleSubmit = async (e) => {
+    handleSubmit = (e) => {
         e.preventDefault();
+
+        this.validateEmail();
+        this.validatePassword();
+        this.validateRepeatPassword();
+
+        if (this.state.emailError || this.state.passwordError || this.state.repeatPasswordError) {
+            return;
+        };
+
         const data = {
             email: this.state.email,
             password: this.state.password,
             repeatPassword: this.state.repeatPassword
-        }
-        try {
-            const res = await Axios.post('http://localhost:5000/api/register', data);
+        };
 
-            if (res.status === 200) {
-                document.cookie = `auth-token=${res.headers.authorization}`;
-                const { _id, email, role, firstName, lastName, profilePicUrl } = res.data;
-                this.context.logIn({
-                    _id,
-                    email,
-                    role,
-                    firstName,
-                    lastName,
-                    profilePicUrl
-                });
-                this.props.history.push('/');
-            }
-        } catch (e) {
-            console.log(e)
-        }
-
-    }
+        Axios.post('http://localhost:5000/api/register', data).then((res) => {
+            document.cookie = `auth-token=${res.headers.authorization}`;
+            const { _id, email, role, firstName, lastName, profilePicUrl } = res.data;
+            this.context.logIn({
+                _id,
+                email,
+                role,
+                firstName,
+                lastName,
+                profilePicUrl
+            });
+            this.props.history.push('/');
+        }).catch((error) => {
+            this.setEmailError(true);
+            this.setEmailErrorMessage(error.response.data.message);
+        });
+    };
 
     render() {
         return (
@@ -186,7 +189,7 @@ class RegisterForm extends Component {
                         type={'password'}
                         value={this.state.repeatPassword}
                         error={this.state.repeatPasswordError}
-                        errorMessage={'*Passwords don`t match'}
+                        errorMessage={'* Passwords don`t match'}
                         onChange={this.setRepeatPassword}
                         onBlur={this.validateRepeatPassword}
                     />
@@ -196,5 +199,6 @@ class RegisterForm extends Component {
         )
     };
 };
+
 
 export default withRouter(RegisterForm);

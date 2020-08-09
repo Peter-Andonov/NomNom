@@ -36,63 +36,60 @@ class LoginForm extends Component {
             password: ``,
             error: false,
             errorMessage: ``
-        }
-    }
+        };
+    };
 
     static contextType = UserContext;
 
     setEmail = (newEmail) => {
         this.setState({
             email: newEmail
-        })
-    }
+        });
+    };
 
     setPassword = (newPassword) => {
         this.setState({
             password: newPassword
-        })
-    }
+        });
+    };
 
     setError = (errorValue) => {
         this.setState({
             error: errorValue
-        })
-    }
+        });
+    };
 
     setErrorMessage = (message) => {
         this.setState({
             errorMessage: message
-        })
-    }
+        });
+    };
 
     handleSubmit = async (e) => {
         e.preventDefault();
+
         const data = {
             email: this.state.email,
             password: this.state.password
-        }
+        };
 
-        try {
-            const res = await Axios.post('http://localhost:5000/api/login', data);
-
-            if (res.status === 200) {
-                document.cookie = `auth-token=${res.headers.authorization}`;
-                const { _id, email, role, firstName, lastName, profilePicUrl } = res.data;
-                this.context.logIn({
-                    _id,
-                    email,
-                    role,
-                    firstName,
-                    lastName,
-                    profilePicUrl
-                });
-                this.props.history.push('/');
-            }
-        } catch (e) {
-            this.setError(true)
-            this.setErrorMessage(e.message)
-        }
-    }
+        Axios.post('http://localhost:5000/api/login', data).then((res) => {
+            document.cookie = `auth-token=${res.headers.authorization}`;
+            const { _id, email, role, firstName, lastName, profilePicUrl } = res.data;
+            this.context.logIn({
+                _id,
+                email,
+                role,
+                firstName,
+                lastName,
+                profilePicUrl
+            });
+            this.props.history.push('/');
+        }).catch((error) => {
+            this.setError(true);
+            this.setErrorMessage(error.response.data.message);
+        });
+    };
 
     render() {
         return (
@@ -102,16 +99,16 @@ class LoginForm extends Component {
                         id={'email'}
                         label={'Email'}
                         type={'email'}
-                        value={this.email}
-                        error={this.error}
-                        errorMessage={this.errorMessage}
+                        value={this.state.email}
+                        error={this.state.error}
+                        errorMessage={this.state.errorMessage}
                         onChange={this.setEmail}
                     />
                     <Input
                         id={'password'}
                         label={'Password'}
                         type={'password'}
-                        value={this.password}
+                        value={this.state.password}
                         onChange={this.setPassword}
                     />
                     <Submit label={'Login'} />
@@ -120,5 +117,6 @@ class LoginForm extends Component {
         );
     };
 };
+
 
 export default withRouter(LoginForm);

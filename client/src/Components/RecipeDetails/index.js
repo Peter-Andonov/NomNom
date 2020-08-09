@@ -171,7 +171,7 @@ const RecipeDetails = () => {
 
         const token = utils.getCookieByName('auth-token');
 
-        const res = await Axios('http://localhost:5000/api/recipe/favourites', {
+        await Axios('http://localhost:5000/api/recipe/favourites', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',

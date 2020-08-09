@@ -5,14 +5,10 @@ import timeIcon from '../../Images/Icons/access_time-24px.svg';
 
 
 const Wrapper = styled.div`
-    margin-left: 3rem;
-    margin-bottom: 1.5rem;
+    padding-top: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: left;
-    &:first-child{
-        margin-top: 1.5rem;
-    }
 `;
 
 const Row = styled.div`

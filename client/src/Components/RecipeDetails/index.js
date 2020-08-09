@@ -232,6 +232,7 @@ const RecipeDetails = () => {
                 {comments.map((comment) =>
                     <Comment
                         key={comment._id}
+                        commentId={comment._id}
                         body={comment.body}
                         createdBy={comment.createdBy}
                         createdAt={comment.createdAt}

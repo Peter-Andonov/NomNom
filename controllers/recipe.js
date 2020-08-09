@@ -77,7 +77,8 @@ getRecipeById = async (req, res) => {
                     populate: {
                         path: 'createdBy',
                         model: 'User',
-                    }
+                    },
+                    options: { sort: { 'createdAt': 'desc' }}
                 },
                 options: { sort: { 'createdAt': 'desc' }}
             }

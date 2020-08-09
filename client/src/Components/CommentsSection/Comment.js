@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
+import Axios from 'axios';
+import * as utils from '../../Utils/user';
 import styled from 'styled-components';
 import AvatarPic from './AvatarPic';
 import Reply from './Reply';
+import CommentInput from './CommentInput';
 import timeIcon from '../../Images/Icons/access_time-24px.svg';
-import replyIcon from '../../Images/Icons/reply-24px.svg';
 
 
 const Wrapper = styled.div`
-    padding: 3rem, 1.5rem, 3rem, 1.5rem;
+    padding-top: 1.5rem;
     display: flex;
     flex-direction: column;
     align-items: left;
@@ -51,29 +53,51 @@ const ReplyCount = styled.strong`
     };
 `;
 
-const ReplyBtn = styled.div`
+const ReplyWrapper = styled.div`
+    padding-left: 3rem;
     display: flex;
-    flex-direction: row;
-    align-items: center;
-    &:hover {
-        color: rgba(237, 71, 59);
-        cursor: pointer;
-    };
+    flex-direction: column;
+    align-items: left;
 `;
 
 const Comment = (props) => {
 
     const [showReplies, setShowReplies] = useState(false);
+    const [replies, setReplies] = useState(props.replies);
+    const [newReply, setNewReply] = useState('');
+
+    const { email, firstName, lastName, profilePicUrl } = props.createdBy;
+    const displayName = firstName ? `${firstName} ${lastName}` : email;
+    const body = props.body;
+    const date = new Date(props.createdAt);
 
     const toggleOpen = () => {
         setShowReplies(!showReplies);
     };
 
-    const { email, firstName, lastName, profilePicUrl } = props.createdBy;
-    const displayName = firstName ? `${firstName} ${lastName}` : email;
-    const body = props.body;
-    const replies = props.replies;
-    const date = new Date(props.createdAt)
+    const postReply = async () => {
+
+        if (!newReply) {
+            return
+        };
+
+        const authToken = utils.getCookieByName('auth-token');
+
+        const res = await Axios('http://localhost:5000/api/comment/reply', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, data: {
+                commentId: props.commentId,
+                replyBody: newReply
+            }
+        });
+
+        setNewReply('');
+
+        setReplies([res.data, ...replies]);
+    };
 
     return (
         <Wrapper>
@@ -88,14 +112,14 @@ const Comment = (props) => {
                 </Column>
             </Row>
             <CommentBody>{body}</CommentBody>
-            <Row>
-                <ReplyCount onClick={toggleOpen} >{replies.length} Replies</ReplyCount>
-                <ReplyBtn>
-                    <Icon src={replyIcon} />
-                    <ReplyCount>Reply</ReplyCount>
-                </ReplyBtn>
-            </Row>
-            {showReplies && <Column>
+            <ReplyCount onClick={toggleOpen} >{replies.length} Replies</ReplyCount>
+            {showReplies && <ReplyWrapper>
+                <CommentInput
+                    hint="Write a reply..."
+                    actionName="Reply"
+                    value={newReply}
+                    setNewInput={setNewReply}
+                    confirmInput={postReply} />
                 {replies.map((reply) =>
                     <Reply
                         key={reply._id}
@@ -103,7 +127,7 @@ const Comment = (props) => {
                         createdBy={reply.createdBy}
                         createdAt={reply.createdAt}
                     />)}
-                </Column>}
+            </ReplyWrapper>}
         </Wrapper>
     );
 };

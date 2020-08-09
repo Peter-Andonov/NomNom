@@ -69,7 +69,7 @@ replyToComment = async (req, res) => {
         }
     });
 
-    return created;
+    return Reply.findById(created._id).populate({path: "createdBy"});
 };
 
 

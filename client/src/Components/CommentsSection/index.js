@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState } from 'react';
 import Axios from 'axios';
 import * as utils from '../../Utils/user';
 import styled from 'styled-components';
@@ -66,9 +66,11 @@ const CommentsSection = (props) => {
                 <ToggleDiv onClick={toggleOpen} >{open ? 'Hide comments' : 'Show comments'}</ToggleDiv>
             </HeadingContainer>
             {open && <CommentInput
+                hint="Write a comment..."
+                actionName="Comment"
                 value={newComment}
-                setNewComment={setNewComment}
-                postComment={postComment}
+                setNewInput={setNewComment}
+                confirmInput={postComment}
             />}
             {open && props.children}
         </Wrapper>

@@ -5,8 +5,8 @@ import AvatarPic from './AvatarPic';
 
 
 const Wrapper = styled.div`
-    padding-top: 3rem;
-    padding-bottom: 3rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
 `;
@@ -52,8 +52,13 @@ const CommentInput = (props) => {
 
     const [showActions, setShowActions] = useState(false);
 
-    const declineComment = () => {
-        props.setNewComment("");
+    const declineInput = () => {
+        props.setNewInput("");
+        setShowActions(false);
+    }
+
+    const confirmInput = () => {
+        props.confirmInput()
         setShowActions(false);
     }
 
@@ -63,15 +68,15 @@ const CommentInput = (props) => {
                 <AvatarPic src={userContext.user.profilePicUrl} />
                 <Input
                     value={props.value}
-                    onChange={(e) => props.setNewComment(e.target.value)}
+                    onChange={(e) => props.setNewInput(e.target.value)}
                     onFocus={(e) => setShowActions(true)}
-                    placeholder="Write a comment..."
+                    placeholder={props.hint}
                     type='text' />
             </Row>
             {showActions && <Actions>
                 <Spacer />
-                <Action onClick={declineComment} >Cancel</Action>
-                <Action onClick={props.postComment} >Comment</Action>
+                <Action onClick={declineInput} >Cancel</Action>
+                <Action onClick={confirmInput} >{props.actionName}</Action>
             </Actions>}
         </Wrapper>
     );

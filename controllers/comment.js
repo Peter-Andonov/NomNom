@@ -12,6 +12,8 @@ commentRecipe = async (req, res) => {
     const recipeId = ObjectId(req.body.recipeId);
     const commentBody = req.body.commentBody;
 
+    validateCommentLength(commentBody);
+
     const newComment = new Comment({
         body: commentBody,
         createdBy: userId
@@ -33,6 +35,8 @@ commentArticle = async (req, res) => {
 
     const articleId = ObjectId(req.body.articleId);
     const commentBody = req.body.commentBody;
+
+    validateCommentLength(commentBody);
 
     const newComment = new Comment({
         body: commentBody,
@@ -56,6 +60,8 @@ replyToComment = async (req, res) => {
     const commentId = ObjectId(req.body.commentId);
     const replyBody = req.body.replyBody;
 
+    validateReplyLength(replyBody);
+
     const newReply = new Reply({
         body: replyBody,
         createdBy: userId
@@ -72,6 +78,21 @@ replyToComment = async (req, res) => {
     return Reply.findById(created._id).populate({path: "createdBy"});
 };
 
+validateCommentLength = (comment) => {
+    if(!comment || comment.length > 300) {
+        const error = new Error("Comment must be between 1 and 300 characters long");
+        error.statusCode = 400;
+        throw error;
+    };
+};
+
+validateReplyLength = (reply) => {
+    if(!reply || reply.length > 300) {
+        const error = new Error("Reply must be between 1 and 300 characters long");
+        error.statusCode = 400;
+        throw error;
+    };
+};
 
 module.exports = {
     commentRecipe,

@@ -30,7 +30,23 @@ const ToggleDiv = styled.div`
 const CommentsSection = (props) => {
 
     const [open, setOpen] = useState(false);
-    const [newComment, setNewComment] = useState('')
+    const [newComment, setNewComment] = useState('');
+    const [exceedsLimit, setExceedsLimit] = useState(false);
+    
+    const commentCharLimit = 10;
+
+    const checkLimit = (comment) => {
+        if (comment.length > commentCharLimit) {
+            setExceedsLimit(true);
+        } else {
+            setExceedsLimit(false);
+        };
+    };
+
+    const handleInput = (newValue) => {
+        setNewComment(newValue);
+        checkLimit(newValue);
+    }
 
     const toggleOpen = () => {
         setOpen(!open);
@@ -38,7 +54,7 @@ const CommentsSection = (props) => {
 
     const postComment = async () => {
 
-        if (!newComment) {
+        if (!newComment || newComment.length > commentCharLimit) {
             return
         };
 
@@ -69,7 +85,9 @@ const CommentsSection = (props) => {
                 hint="Write a comment..."
                 actionName="Comment"
                 value={newComment}
-                setNewInput={setNewComment}
+                exceedsLimit={exceedsLimit}
+                commentCharLimit={commentCharLimit}
+                setNewInput={handleInput}
                 confirmInput={postComment}
             />}
             {open && props.children}

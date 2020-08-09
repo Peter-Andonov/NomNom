@@ -65,11 +65,27 @@ const Comment = (props) => {
     const [showReplies, setShowReplies] = useState(false);
     const [replies, setReplies] = useState(props.replies);
     const [newReply, setNewReply] = useState('');
+    const [exceedsLimit, setExceedsLimit] = useState(false);
 
     const { email, firstName, lastName, profilePicUrl } = props.createdBy;
     const displayName = firstName ? `${firstName} ${lastName}` : email;
     const body = props.body;
     const date = new Date(props.createdAt);
+    
+    const replyCharLimit = 10;
+
+    const checkLimit = (reply) => {
+        if (reply.length > replyCharLimit) {
+            setExceedsLimit(true);
+        } else {
+            setExceedsLimit(false);
+        };
+    };
+
+    const handleInput = (newValue) => {
+        setNewReply(newValue);
+        checkLimit(newValue);
+    }
 
     const toggleOpen = () => {
         setShowReplies(!showReplies);
@@ -77,7 +93,7 @@ const Comment = (props) => {
 
     const postReply = async () => {
 
-        if (!newReply) {
+        if (!newReply || newReply.length > replyCharLimit) {
             return
         };
 
@@ -118,7 +134,9 @@ const Comment = (props) => {
                     hint="Write a reply..."
                     actionName="Reply"
                     value={newReply}
-                    setNewInput={setNewReply}
+                    exceedsLimit={exceedsLimit}
+                    commentCharLimit={replyCharLimit}
+                    setNewInput={handleInput}
                     confirmInput={postReply} />
                 {replies.map((reply) =>
                     <Reply

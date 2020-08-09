@@ -34,6 +34,13 @@ const Actions = styled.div`
     flex-direction: row;
 `;
 
+const CharCounter = styled.div`
+    color: inherit;
+    ${({exceedsLimit}) => exceedsLimit && `
+        color: red;
+    `}
+`;
+
 const Spacer = styled.div`
     flex: 1;
 `;
@@ -55,12 +62,11 @@ const CommentInput = (props) => {
     const declineInput = () => {
         props.setNewInput("");
         setShowActions(false);
-    }
+    };
 
     const confirmInput = () => {
-        props.confirmInput()
-        setShowActions(false);
-    }
+        props.confirmInput();
+    };
 
     return (
         <Wrapper>
@@ -75,6 +81,9 @@ const CommentInput = (props) => {
             </Row>
             {showActions && <Actions>
                 <Spacer />
+                <CharCounter exceedsLimit={props.exceedsLimit} >
+                    {`${props.value.length}/${props.commentCharLimit}`}
+                </CharCounter>
                 <Action onClick={declineInput} >Cancel</Action>
                 <Action onClick={confirmInput} >{props.actionName}</Action>
             </Actions>}

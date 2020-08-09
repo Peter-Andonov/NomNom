@@ -162,6 +162,10 @@ const RecipeDetails = () => {
         getRecipe();
     }, []);
 
+    const addComment = (newComment) => {
+        setComments([newComment, ...comments])
+    };
+
     const addToFavorites = async (e) => {
         e.preventDefault();
 
@@ -221,7 +225,10 @@ const RecipeDetails = () => {
                     <Editor editorState={stepsToCreate} readOnly={true} />
                 </Main>
             </Container>
-            {userContext.loggedIn && <CommentsSection>
+            {userContext.loggedIn && <CommentsSection
+                entityId={recipeId.id}
+                addComment={addComment}
+            >
                 {comments.map((comment) =>
                     <Comment
                         key={comment._id}

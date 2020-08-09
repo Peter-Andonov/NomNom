@@ -78,7 +78,8 @@ getRecipeById = async (req, res) => {
                         path: 'createdBy',
                         model: 'User',
                     }
-                }
+                },
+                options: { sort: { 'createdAt': 'desc' }}
             }
         ).lean();
 

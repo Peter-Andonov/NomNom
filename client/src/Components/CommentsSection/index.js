@@ -1,4 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import Axios from 'axios';
+import * as utils from '../../Utils/user';
 import styled from 'styled-components';
 import CommentInput from './CommentInput';
 
@@ -34,12 +36,40 @@ const CommentsSection = (props) => {
         setOpen(!open);
     };
 
-    return(
+    const postComment = async () => {
+
+        if (!newComment) {
+            return
+        };
+
+        const authToken = utils.getCookieByName('auth-token');
+
+        const res = await Axios('http://localhost:5000/api/comment/recipe', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, data: {
+                recipeId: props.entityId,
+                commentBody : newComment
+            }
+        });
+
+        setNewComment('');
+
+        props.addComment(res.data)
+    };
+
+    return (
         <Wrapper>
             <HeadingContainer>
                 <ToggleDiv onClick={toggleOpen} >{open ? 'Hide comments' : 'Show comments'}</ToggleDiv>
             </HeadingContainer>
-            {open && <CommentInput value={newComment} setNewComment={setNewComment} />}
+            {open && <CommentInput
+                value={newComment}
+                setNewComment={setNewComment}
+                postComment={postComment}
+            />}
             {open && props.children}
         </Wrapper>
     );

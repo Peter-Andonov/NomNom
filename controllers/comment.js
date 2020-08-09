@@ -25,7 +25,7 @@ commentRecipe = async (req, res) => {
         }
     });
 
-    return created;
+    return Comment.findById(created._id).populate({path: "createdBy"});
 };
 
 commentArticle = async (req, res) => {

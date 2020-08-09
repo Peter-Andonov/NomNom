@@ -23,7 +23,29 @@ createArticle = async (req, res) => {
 getArticleById = async (req, res) => {
     const id = req.query.id;
 
-    const article = Article.findById(id).lean();
+    const article = Article.findById(id)
+        .populate(
+            {
+                path: 'comments',
+                populate: {
+                    path: 'createdBy',
+                    model: 'User',
+                }
+            }
+        ).populate(
+            {
+                path: 'comments',
+                populate: {
+                    path: 'replies',
+                    populate: {
+                        path: 'createdBy',
+                        model: 'User',
+                    },
+                    options: { sort: { 'createdAt': 'desc' } }
+                },
+                options: { sort: { 'createdAt': 'desc' } }
+            }
+        ).lean();
 
     return article;
 };
@@ -65,7 +87,7 @@ getAllArticles = async (req, res) => {
 
     const totalArticlesCount = await Article.countDocuments();
 
-    return data = {articles, totalArticlesCount};
+    return data = { articles, totalArticlesCount };
 };
 
 

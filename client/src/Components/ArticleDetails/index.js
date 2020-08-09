@@ -1,8 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { Editor, EditorState, convertFromRaw } from "draft-js";
+import UserContext from '../../Context';
+import CommentsSection from '../CommentsSection';
+import Comment from '../CommentsSection/Comment';
 
 
 const Wrapper = styled.div`
@@ -36,10 +39,12 @@ const MainTitle = styled.h1`
 const RecipeDetails = () => {
 
     const articleId = useParams();
+    const userContext = useContext(UserContext);
 
     const [title, setTitle] = useState('');
     const [imageUrl, setImageUrl] = useState('');
     const [body, setBody] = useState(EditorState.createEmpty());
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
         const getArticle = async () => {
@@ -56,9 +61,14 @@ const RecipeDetails = () => {
 
             const bodyContentState = convertFromRaw(JSON.parse(res.data.body));
             setBody(EditorState.createWithContent(bodyContentState));
+            setComments(res.data.comments);
         };
         getArticle();
     }, []);
+
+    const addComment = (newComment) => {
+        setComments([newComment, ...comments])
+    };
 
     return (
         <Wrapper>
@@ -67,6 +77,21 @@ const RecipeDetails = () => {
             <EditorContainer>
                 <Editor editorState={body} readOnly={true} />
             </EditorContainer>
+            {userContext.loggedIn && <CommentsSection
+                entityId={articleId.id}
+                entityType={'article'}
+                addComment={addComment}
+            >
+                {comments && comments.map((comment) =>
+                    <Comment
+                        key={comment._id}
+                        commentId={comment._id}
+                        body={comment.body}
+                        createdBy={comment.createdBy}
+                        createdAt={comment.createdAt}
+                        replies={comment.replies}
+                    />)}
+            </CommentsSection>}
         </Wrapper>
     );
 };

@@ -30,10 +30,6 @@ const IngredientEditor = () => {
 
     const user = useContext(UserContext);
 
-    const printState = () => {
-        console.log(user);
-    }
-
     const saveIngredient = async () => {
 
         const description = convertToRaw(editorState.getCurrentContent());
@@ -68,7 +64,6 @@ const IngredientEditor = () => {
                 editorState={editorState}
                 setEditorState={setEditorState}
             />
-            <button onClick={printState} >print state</button>
             <button onClick={saveIngredient} >Save</button>
         </Wrapper>
     );

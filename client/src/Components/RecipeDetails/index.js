@@ -1,10 +1,13 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
 import { Editor, EditorState, convertFromRaw } from "draft-js";
+import UserContext from '../../Context';
 import * as utils from '../../Utils/user';
 import IngredientSection from './IngredientSection';
+import CommentsSection from '../CommentsSection';
+import Comment from '../CommentsSection/Comment';
 
 
 const Wrapper = styled.div`
@@ -116,6 +119,7 @@ const Image = styled.img`
 const RecipeDetails = () => {
 
     const recipeId = useParams();
+    const userContext = useContext(UserContext);
 
     const [title, setTitle] = useState('');
     const [shortDescription, setShortDescription] = useState(EditorState.createEmpty());
@@ -126,6 +130,7 @@ const RecipeDetails = () => {
     const [cookTime, setCookTime] = useState('');
     const [serves, setServes] = useState('');
     const [difficulty, setDifficulty] = useState('');
+    const [comments, setComments] = useState([]);
 
     useEffect(() => {
         const getRecipe = async () => {
@@ -152,17 +157,21 @@ const RecipeDetails = () => {
             setCookTime(res.data.cookTime);
             setServes(res.data.serves);
             setDifficulty(res.data.difficulty);
+            setComments(res.data.comments);
         };
         getRecipe();
     }, []);
 
+    const addComment = (newComment) => {
+        setComments([newComment, ...comments])
+    };
+
     const addToFavorites = async (e) => {
         e.preventDefault();
 
-
         const token = utils.getCookieByName('auth-token');
 
-        const res = await Axios('http://localhost:5000/api/recipe/favourites', {
+        await Axios('http://localhost:5000/api/recipe/favourites', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -216,6 +225,21 @@ const RecipeDetails = () => {
                     <Editor editorState={stepsToCreate} readOnly={true} />
                 </Main>
             </Container>
+            {userContext.loggedIn && <CommentsSection
+                entityId={recipeId.id}
+                entityType={'recipe'}
+                addComment={addComment}
+            >
+                {comments && comments.map((comment) =>
+                    <Comment
+                        key={comment._id}
+                        commentId={comment._id}
+                        body={comment.body}
+                        createdBy={comment.createdBy}
+                        createdAt={comment.createdAt}
+                        replies={comment.replies}
+                    />)}
+            </CommentsSection>}
         </Wrapper>
     );
 };

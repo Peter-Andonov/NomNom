@@ -227,9 +227,10 @@ const RecipeDetails = () => {
             </Container>
             {userContext.loggedIn && <CommentsSection
                 entityId={recipeId.id}
+                entityType={'recipe'}
                 addComment={addComment}
             >
-                {comments.map((comment) =>
+                {comments && comments.map((comment) =>
                     <Comment
                         key={comment._id}
                         commentId={comment._id}

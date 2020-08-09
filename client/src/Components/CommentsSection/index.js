@@ -6,7 +6,7 @@ import CommentInput from './CommentInput';
 
 
 const Wrapper = styled.div`
-    padding: 3rem;
+    width: 100%;
     display: flex;
     flex-direction: column;
 `;
@@ -33,7 +33,7 @@ const CommentsSection = (props) => {
     const [newComment, setNewComment] = useState('');
     const [exceedsLimit, setExceedsLimit] = useState(false);
     
-    const commentCharLimit = 10;
+    const commentCharLimit = 300;
 
     const checkLimit = (comment) => {
         if (comment.length > commentCharLimit) {
@@ -60,13 +60,13 @@ const CommentsSection = (props) => {
 
         const authToken = utils.getCookieByName('auth-token');
 
-        const res = await Axios('http://localhost:5000/api/comment/recipe', {
+        const res = await Axios(`http://localhost:5000/api/comment/${props.entityType}`, {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
                 'Authorization': authToken
             }, data: {
-                recipeId: props.entityId,
+                entityId: props.entityId,
                 commentBody : newComment
             }
         });

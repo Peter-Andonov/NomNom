@@ -72,7 +72,7 @@ const Comment = (props) => {
     const body = props.body;
     const date = new Date(props.createdAt);
     
-    const replyCharLimit = 10;
+    const replyCharLimit = 300;
 
     const checkLimit = (reply) => {
         if (reply.length > replyCharLimit) {

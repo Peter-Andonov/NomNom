@@ -9,7 +9,7 @@ const { ObjectId } = mongoose.Types;
 commentRecipe = async (req, res) => {
     const userId = ObjectId(req.userId);
 
-    const recipeId = ObjectId(req.body.recipeId);
+    const recipeId = ObjectId(req.body.entityId);
     const commentBody = req.body.commentBody;
 
     validateCommentLength(commentBody);
@@ -33,7 +33,7 @@ commentRecipe = async (req, res) => {
 commentArticle = async (req, res) => {
     const userId = ObjectId(req.userId);
 
-    const articleId = ObjectId(req.body.articleId);
+    const articleId = ObjectId(req.body.entityId);
     const commentBody = req.body.commentBody;
 
     validateCommentLength(commentBody);
@@ -51,7 +51,7 @@ commentArticle = async (req, res) => {
         }
     });
 
-    return created;
+    return Comment.findById(created._id).populate({path: "createdBy"});
 };
 
 replyToComment = async (req, res) => {

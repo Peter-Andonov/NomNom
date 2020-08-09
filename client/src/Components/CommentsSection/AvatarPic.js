@@ -3,9 +3,8 @@ import styled from 'styled-components';
 
 
 const Avatar = styled.img`
-    height: 50%;
-    max-width: 4rem;
-    max-height: 4rem;
+    width: 4rem;
+    height: 4rem;
     object-fit: cover;
 `;
 

@@ -5,8 +5,8 @@ import AvatarPic from './AvatarPic';
 
 
 const Wrapper = styled.div`
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     display: flex;
     flex-direction: column;
 `;

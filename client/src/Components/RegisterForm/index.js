@@ -140,14 +140,15 @@ class RegisterForm extends Component {
 
         Axios.post('http://localhost:5000/api/register', data).then((res) => {
             document.cookie = `auth-token=${res.headers.authorization}`;
-            const { _id, email, role, firstName, lastName, profilePicUrl } = res.data;
+            const { _id, email, role, firstName, lastName, profilePicUrl, favouriteRecipes } = res.data;
             this.context.logIn({
                 _id,
                 email,
                 role,
                 firstName,
                 lastName,
-                profilePicUrl
+                profilePicUrl,
+                favouriteRecipes
             });
             this.props.history.push('/');
         }).catch((error) => {

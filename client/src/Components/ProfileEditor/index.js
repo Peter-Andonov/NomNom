@@ -4,6 +4,7 @@ import styled from 'styled-components';
 import UserContext from '../../Context';
 import ImageSelector from '../ImageSelector';
 import Input from '../RegisterForm/Input';
+import Submit from '../RegisterForm/Submit';
 
 
 const Wrapper = styled.div`
@@ -87,8 +88,6 @@ const ProfileEditor = () => {
                         value={firstName}
                         onChange={setFirstName}
                     />
-
-
                     <label>Last name</label>
                     <Input
                         type='text'
@@ -96,8 +95,7 @@ const ProfileEditor = () => {
                         onChange={setLastName}
                     />
                 </Container>
-
-                <button type='submit' >Save</button>
+                <Submit label={"Save changes"} />
             </Form>
         </Wrapper>
     );

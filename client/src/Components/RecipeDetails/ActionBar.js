@@ -9,7 +9,7 @@ const Container = styled.div`
     align-items: center;
 `;
 
-const LikeBtn = styled.button`
+const GreenBtn = styled.button`
     background-color: rgb(160, 184, 85);
     border-radius: 5px;
     border: none;
@@ -18,12 +18,16 @@ const LikeBtn = styled.button`
     text-align: center;
     text-decoration: none;
     font-size: 1.5rem;
-    &:focus{
+    &:hover {
+        cursor: pointer;
+    };
+    &:focus {
         outline: none;
-    }
+    };
 `;
 
-const DislikeBtn = styled.button`
+const RedBtn = styled.button`
+    margin-left: 1.5rem;
     background-color: rgb(237, 88, 59);
     border-radius: 5px;
     border: none;
@@ -32,9 +36,12 @@ const DislikeBtn = styled.button`
     text-align: center;
     text-decoration: none;
     font-size: 1.5rem;
-    &:focus{
+    &:hover {
+        cursor: pointer;
+    };
+    &:focus {
         outline: none;
-    }
+    };
 `;
 
 const ActionBar = (props) => {
@@ -46,8 +53,10 @@ const ActionBar = (props) => {
 
     return (
         <Container>
-            {isLoggedIn && !isAdmin && !props.userHasLiked && <LikeBtn onClick={props.addToFavorites} >Add to Favourites</LikeBtn>}
-            {isLoggedIn && !isAdmin && props.userHasLiked && <DislikeBtn onClick={props.removeFromFavorites} >Remove from Favourites</DislikeBtn>}
+            {isLoggedIn && !isAdmin && !props.userHasLiked && <GreenBtn onClick={props.addToFavorites} >Add to Favourites</GreenBtn>}
+            {isLoggedIn && !isAdmin && props.userHasLiked && <RedBtn onClick={props.removeFromFavorites} >Remove from Favourites</RedBtn>}
+            {isLoggedIn && isAdmin && <GreenBtn onClick={props.editRecipe} >Edit Recipe</GreenBtn>}
+            {isLoggedIn && isAdmin && <RedBtn onClick={props.deleteRecipe} >Delete Recipe</RedBtn>}
         </Container>
     );
 };

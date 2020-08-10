@@ -2,6 +2,7 @@ import React, { useState, useEffect, useContext } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
+import { useHistory } from "react-router-dom";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
 import UserContext from '../../Context';
 import * as utils from '../../Utils/user';
@@ -111,6 +112,7 @@ const RecipeDetails = () => {
 
     const recipeId = useParams();
     const userContext = useContext(UserContext);
+    const history = useHistory();
 
     const hasLikedState = userContext.user ? userContext.user.favouriteRecipes.includes(recipeId.id) : false;
 
@@ -158,6 +160,26 @@ const RecipeDetails = () => {
 
     const addComment = (newComment) => {
         setComments([newComment, ...comments])
+    };
+
+    const deleteRecipe = (e) => {
+        e.preventDefault();
+
+        const authToken = utils.getCookieByName('auth-token');
+
+        Axios('http://localhost:5000/api/recipe', {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, params: {
+                id: recipeId.id
+            }
+        }).then((res) => {
+            history.push('/');
+        }).catch((err) => {
+            console.log(err)
+        });
     };
 
     const addToFavorites = async (e) => {
@@ -226,6 +248,7 @@ const RecipeDetails = () => {
                     userHasLiked={userHasLiked}
                     addToFavorites={addToFavorites}
                     removeFromFavorites={removeFromFavorites}
+                    deleteRecipe={deleteRecipe}
                 />
             </TitleContainer>
             <Editor editorState={shortDescription} readOnly={true} />

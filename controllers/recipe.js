@@ -90,9 +90,11 @@ getRecipeById = async (req, res) => {
 // TODO: add a update controller
 
 deleteRecipe = async (req, res) => {
-    const id = req.body.id;
+    const recipeId = req.query.id;
 
-    const deleted = await Recipe.findByIdAndDelete(id);
+    const deleted = await Recipe.findByIdAndDelete(recipeId);
+
+    await User.updateMany({}, { $pull: { favouriteRecipes: deleted._id}});
 
     return deleted;
 };

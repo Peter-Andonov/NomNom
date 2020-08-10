@@ -15,6 +15,8 @@ import CreateRecipePage from './Pages/Create-recipe-page';
 import CreateIngredientPage from './Pages/Create-ingredient-page';
 import CreateArticlePage from './Pages/Create-article-page';
 import CreateUnitPage from './Pages/Create-unit-page';
+import EditArticlePage from './Pages/Edit-article-page';
+import EditRecipePage from './Pages/Edit-recipe-page';
 
 
 const Navigation = () => {
@@ -57,6 +59,12 @@ const Navigation = () => {
         </Route>
         <Route path={'/create/unit'} >
           {isAdmin ? (<CreateUnitPage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/edit/article/:id'} >
+          {isAdmin ? (<EditArticlePage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/edit/recipe/:id'} >
+          {isAdmin ? (<EditRecipePage />) : (<Redirect to={'/'} />)}
         </Route>
       </Switch>
     </Router>

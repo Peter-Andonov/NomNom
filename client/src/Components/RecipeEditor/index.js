@@ -94,7 +94,7 @@ const Button = styled.button`
 `;
 
 
-const RecipeEditor = () => {
+const RecipeEditor = (props) => {
 
     const [title, setTitle] = useState('');
     const [coverImageUrl, setCoverImageUrl] = useState('');

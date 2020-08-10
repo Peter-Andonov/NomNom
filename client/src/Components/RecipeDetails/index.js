@@ -168,7 +168,7 @@ const RecipeDetails = () => {
     const editRecipe = (e) => {
         e.preventDefault();
 
-        history.push('/')
+        history.push(`/edit/recipe/${recipeId.id}`)
     };
 
     const deleteRecipe = (e) => {

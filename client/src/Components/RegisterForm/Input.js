@@ -11,7 +11,6 @@ const Wrapper = styled.div`
 
 const Label = styled.label`
     font-size: 1.8rem;
-    color: rgba(237, 71, 59);
 `;
 
 const StyledInput = styled.input`

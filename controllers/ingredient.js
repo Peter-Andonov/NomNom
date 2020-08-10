@@ -11,8 +11,7 @@ createIngredient = async (req, res) => {
         name,
         imageUrl,
         description,
-        createdOn: new Date(),
-        createdBy: ObjectId(req.body.userId)
+        createdBy: ObjectId(req.userId)
     });
 
     const saved = await newIngredient.save();

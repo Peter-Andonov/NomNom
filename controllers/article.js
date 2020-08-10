@@ -12,7 +12,7 @@ createArticle = async (req, res) => {
         imageUrl,
         body,
         createdOn: new Date(),
-        createdBy: ObjectId(req.body.userId)
+        createdBy: ObjectId(req.userId)
     });
 
     const saved = await newArticle.save();

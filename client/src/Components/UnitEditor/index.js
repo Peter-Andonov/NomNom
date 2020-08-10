@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
+import { useHistory } from "react-router-dom";
 import Axios from 'axios';
 import styled from 'styled-components';
+import * as utils from '../../Utils/user';
 import Input from '../RegisterForm/Input';
+import Submit from '../RegisterForm/Submit';
 
 
-const Wrapper = styled.div`
+const Wrapper = styled.form`
     position: absolute;
-    padding-bottom: 5rem;
     top: 30vh;
     background-color: white;
     height: auto;
@@ -16,29 +18,52 @@ const Wrapper = styled.div`
     align-items: center;
 `;
 
+const ErrorMessage = styled.div`
+    font-size: 1rem;
+    color: red;
+`;
 
 const UnitEditor = () => {
 
     const [name, setName] = useState('');
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const saveUnit = async () => {
+    const history = useHistory();
+
+    const saveUnit = async (e) => {
+
+        e.preventDefault();
+
+        const authToken = utils.getCookieByName('auth-token');
 
         const data = {
             name: name,
         };
 
-        await Axios.post('http://localhost:5000/api/unit', data);
-
+        Axios('http://localhost:5000/api/unit', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, data: data
+        }).then(() => {
+            history.push('/admin');
+        }).catch((err) => {
+            setError(true);
+            setErrorMessage('Something went wrong');
+        });
     };
 
     return (
-        <Wrapper>
+        <Wrapper onSubmit={saveUnit}>
             <h1>Create Measurement Unit</h1>
             <Input
                 value={name}
                 onChange={setName}
             />
-            <button onClick={saveUnit} >Save</button>
+            {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            <Submit label={'Save Unit'} />
         </Wrapper>
     );
 };

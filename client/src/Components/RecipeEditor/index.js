@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory } from "react-router-dom";
 import Axios from 'axios';
 import styled from 'styled-components';
 import { EditorState, convertToRaw } from 'draft-js';
-import UserContext from '../../Context';
+import * as utils from '../../Utils/user';
 import TextEditor from '../TextEditor';
 import ImageSelector from '../ImageSelector';
 import Input from '../RegisterForm/Input';
 import IngredientsTable from './IngredientsTable';
+import addIcon from '../../Images/Icons/add-24px.svg';
+import removeIcon from '../../Images/Icons/remove-24px.svg';
 
 
 const Wrapper = styled.div`
-    padding-bottom: 10rem;
     position: absolute;
     top: 30vh;
     background-color: white;
@@ -25,8 +27,70 @@ const Container = styled.div`
     width: 100%;
     height: auto;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
+`;
+
+const Column = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+`;
+
+const ErrorMessage = styled.div`
+    font-size: 1rem;
+    color: red;
+`;
+
+const SectionIcon = styled.img`
+    margin-left: 0.5rem;
+    &:hover{
+        cursor: pointer;
+    }
+`;
+
+const StyledInput = styled.input`
+    font-size: 1.2rem;
+    width: 6.5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 2px solid black;
+`;
+
+const StyledSelect = styled.select`
+    font-size: 1.2rem;
+    width: 7.8rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 2px solid black;
+`;
+
+const InfoLabel = styled.div`
+    padding-left: 0.5rem;
+    width: 12rem;
+`;
+
+const Button = styled.button`
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1rem;
+    padding-top: 0.5rem;
+    padding-right: 1rem;
+    padding-bottom: 0.5rem;
+    background: rgb(255, 151, 23);
+    border: none;
+    border-radius: 20px;
+    color: white;
+    font-family: 'Sriracha', cursive;
+    font-size: 1.5rem;
+    &:focus {
+        outline: none;
+    };
+    &:hover {
+        cursor: pointer;
+    };
 `;
 
 
@@ -50,8 +114,10 @@ const RecipeEditor = () => {
     const [cookTime, setCookTime] = useState('');
     const [serves, setServes] = useState('');
     const [difficulty, setDifficulty] = useState('');
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
-    const user = useContext(UserContext);
+    const history = useHistory();
 
 
     useEffect(() => {
@@ -104,8 +170,12 @@ const RecipeEditor = () => {
     };
 
     const saveRecipe = async () => {
+
+        const authToken = utils.getCookieByName('auth-token');
+
         const shortDescription = JSON.stringify(convertToRaw(shortDescriptionState.getCurrentContent()));
         const stepsToCreate = JSON.stringify(convertToRaw(stepsState.getCurrentContent()));
+        
         const data = {
             title,
             coverImageUrl,
@@ -116,11 +186,20 @@ const RecipeEditor = () => {
             cookTime,
             serves,
             difficulty,
-            createdBy: user._id
-        }
-        const res = await Axios.post('http://localhost:5000/api/recipe', data);
+        };
 
-        console.log(res);
+        Axios('http://localhost:5000/api/recipe', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, data: data
+        }).then(() => {
+            history.push('/admin');
+        }).catch((err) => {
+            setError(true);
+            setErrorMessage('Something went wrong');
+        });
     };
 
     return (
@@ -149,8 +228,8 @@ const RecipeEditor = () => {
             />
             <Container>
                 <h3>Ingredient Sections</h3>
-                <button onClick={addIngredientSection} >Add section</button>
-                <button onClick={removeIngredientSection} >Remove section</button>
+                <SectionIcon src={addIcon} onClick={addIngredientSection} />
+                <SectionIcon src={removeIcon} onClick={removeIngredientSection} />
             </Container>
             <Container>
                 {ingredientSections.map((section, idx) =>
@@ -163,33 +242,47 @@ const RecipeEditor = () => {
                     />)}
             </Container>
             <h3>Additional recipe information</h3>
-            <Container>
-                <input
-                    placeholder='Time to prepare'
-                    type='number'
-                    value={prepTime}
-                    onChange={(e) => setPrepTime(e.target.value)}
-                />
-                <input
-                    placeholder='Time to cook'
-                    type='number'
-                    value={cookTime}
-                    onChange={(e) => setCookTime(e.target.value)}
-                />
-                <input
-                    placeholder='Serves'
-                    type='number'
-                    value={serves}
-                    onChange={(e) => setServes(e.target.value)}
-                />
-                <select defaultValue={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
-                    <option value="" hidden >Select Difficulty</option>
-                    <option value="easy" >Easy</option>
-                    <option value="medium" >Medium</option>
-                    <option value="hard" >Hard</option>
-                </select>
-            </Container>
-            <button onClick={saveRecipe} >Save recipe</button>
+            <Column>
+                <Container>
+                    <InfoLabel>Time to prepare</InfoLabel>
+                    <StyledInput
+                        type='number'
+                        value={prepTime}
+                        onChange={(e) => setPrepTime(e.target.value)}
+                    />
+                    <InfoLabel>min</InfoLabel>
+                </Container>
+                <Container>
+                    <InfoLabel>Time to cook</InfoLabel>
+                    <StyledInput
+                        type='number'
+                        value={cookTime}
+                        onChange={(e) => setCookTime(e.target.value)}
+                    />
+                    <InfoLabel>min</InfoLabel>
+                </Container>
+                <Container>
+                    <InfoLabel>Serves</InfoLabel>
+                    <StyledInput
+                        type='number'
+                        value={serves}
+                        onChange={(e) => setServes(e.target.value)}
+                    />
+                    <InfoLabel>people</InfoLabel>
+                </Container>
+                <Container>
+                    <InfoLabel>Difficulty</InfoLabel>
+                    <StyledSelect defaultValue={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+                        <option value="" hidden >Difficulty</option>
+                        <option value="easy" >Easy</option>
+                        <option value="medium" >Medium</option>
+                        <option value="hard" >Hard</option>
+                    </StyledSelect>
+                    <InfoLabel></InfoLabel>
+                </Container>
+            </Column>
+            {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            <Button onClick={saveRecipe} >Save recipe</Button>
         </Wrapper>
     );
 };

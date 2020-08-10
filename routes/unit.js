@@ -6,6 +6,9 @@ const {
     deleteUnit,
     getAllUnits,
 } = require('../controllers/unit');
+const {
+    checkAdminAuth
+} = require('../controllers/user');
 const unitRouter = express.Router();
 
 
@@ -18,7 +21,7 @@ unitRouter.get('/unit/all', async (req, res, next) => {
     }
 });
 
-unitRouter.post('/unit', async (req, res, next) => {
+unitRouter.post('/unit', checkAdminAuth, async (req, res, next) => {
     try {
         const newUnit = await createUnit(req, res);
         return res.status(201).json(newUnit);
@@ -43,7 +46,7 @@ unitRouter.get('/unit', async (req, res, next) => {
     }
 });
 
-unitRouter.patch('/unit', async (req, res, next) => {
+unitRouter.patch('/unit', checkAdminAuth, async (req, res, next) => {
     try {
         const updatedUnit = await updateUnit(req, res);
 
@@ -59,7 +62,7 @@ unitRouter.patch('/unit', async (req, res, next) => {
     };
 });
 
-unitRouter.delete('/unit', async (req, res, next) => {
+unitRouter.delete('/unit', checkAdminAuth, async (req, res, next) => {
     try {
         const deletedUnit = await deleteUnit(req, res);
 

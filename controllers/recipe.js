@@ -33,7 +33,7 @@ createRecipe = async (req, res) => {
         cookTime,
         serves,
         difficulty,
-        createdBy: mongoose.Types.ObjectId(req.body.createdBy)
+        createdBy: ObjectId(req.userId)
     });
 
     const saved = await newRecipe.save();

@@ -6,6 +6,9 @@ const {
     deleteArticle,
     getAllArticles,
 } = require('../controllers/article');
+const {
+    checkAdminAuth,
+} = require('../controllers/user');
 const articleRouter = express.Router();
 
 
@@ -18,7 +21,7 @@ articleRouter.get('/article/all', async (req, res, next) => {
     };
 });
 
-articleRouter.post('/article', async (req, res, next) => {
+articleRouter.post('/article', checkAdminAuth, async (req, res, next) => {
     try {
         const newArticle = await createArticle(req, res);
         return res.status(201).json(newArticle);
@@ -43,7 +46,7 @@ articleRouter.get('/article', async (req, res, next) => {
     };
 });
 
-articleRouter.patch('/article', async (req, res, next) => {
+articleRouter.patch('/article', checkAdminAuth, async (req, res, next) => {
     try {
         const updatedArticle = await updateArticle(req, res);
 
@@ -59,7 +62,7 @@ articleRouter.patch('/article', async (req, res, next) => {
     };
 });
 
-articleRouter.delete('/article', async (req, res, next) => {
+articleRouter.delete('/article', checkAdminAuth, async (req, res, next) => {
     try {
         const deletedArticle = await deleteArticle(req, res);
 

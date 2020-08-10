@@ -84,7 +84,7 @@ updateUser = async (req, res) => {
     validateName(updatedData.firstName);
     validateName(updatedData.lastName);
 
-    const updated = await User.findByIdAndUpdate(id, updatedData, {new: true});
+    const updated = await User.findByIdAndUpdate(id, updatedData, { new: true });
 
     if (updated) {
 
@@ -148,10 +148,38 @@ checkUserAuth = (req, res, next) => {
     });
 };
 
+checkAdminAuth = (req, res, next) => {
+    const token = req.get('Authorization');
+
+    if (!token) {
+        const error = new Error("Authorization token must be provided");
+        error.statusCode = 401;
+        throw error;
+    };
+
+    jwt.verify(token, process.env.JWT_SECRET_KEY, (err, decoded) => {
+        if (err) {
+            const error = new Error("Invalid authorization token");
+            error.statusCode = 401;
+            throw error;
+        } else {
+            if (decoded.role !== 'admin') {
+                const error = new Error("You are not authorized to do that");
+                error.statusCode = 401;
+                throw error;
+            } else {
+                req.userId = decoded.id
+                next();
+            };
+        };
+    });
+};
+
 
 signJWTtoken = (user) => {
     const token = jwt.sign({
-        id: user._id.toString()
+        id: user._id.toString(),
+        role: user.role
     }, process.env.JWT_SECRET_KEY);
 
     return token;
@@ -159,7 +187,7 @@ signJWTtoken = (user) => {
 
 validateEmail = async (email) => {
 
-    if (!/^\w+@[a-zA-Z_]+?\.[a-zA-Z]{2,3}$/.test(email)) {
+    if (!/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(email)) {
         const error = new Error("Invalid email format");
         error.statusCode = 400;
         throw error;
@@ -195,7 +223,7 @@ validatePasswords = (password, repeatPassword) => {
 };
 
 validateName = (name) => {
-    if(name.length < 2 || name.length > 20) {
+    if (name.length < 2 || name.length > 20) {
         const error = new Error("Name must be between 2 and 20 characters long");
         error.statusCode = 400;
         throw error;
@@ -208,5 +236,6 @@ module.exports = {
     updateUser,
     verifyLogin,
     getUser,
-    checkUserAuth
+    checkUserAuth,
+    checkAdminAuth,
 };

@@ -7,7 +7,8 @@ const {
     addRecipeToFavourites,
 } = require('../controllers/recipe');
 const {
-    checkUserAuth
+    checkUserAuth,
+    checkAdminAuth
 } = require('../controllers/user');
 const recipeRouter = express.Router();
 
@@ -21,7 +22,7 @@ recipeRouter.get('/recipe/all', async (req, res, next) => {
     };
 });
 
-recipeRouter.post('/recipe', async (req, res, next) => {
+recipeRouter.post('/recipe', checkAdminAuth, async (req, res, next) => {
     try {
         const newRecipe = await createRecipe(req, res);
         return res.status(201).json(newRecipe);
@@ -57,7 +58,7 @@ recipeRouter.get('/recipe', async (req, res, next) => {
 
 // TODO: Add update route for recipe
 
-recipeRouter.delete('/recipe', async (req, res, next) => {
+recipeRouter.delete('/recipe', checkAdminAuth, async (req, res, next) => {
     try {
         const deletedRecipe = await deleteRecipe(req, res);
 

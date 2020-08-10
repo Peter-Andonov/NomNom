@@ -1,15 +1,46 @@
 import React, { useState } from 'react';
 import InputRow from './InputRow';
 import styled from 'styled-components';
+import addIcon from '../../Images/Icons/add-24px.svg';
+import removeIcon from '../../Images/Icons/remove-24px.svg';
 
 
 const Wrapper = styled.div`
+    background-color: rgb(205, 255, 204);
+    padding: 1.5rem;
+    margin: 1.5rem;
+    border-radius: 20px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
 `;
 
+const Container = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+`;
+
+const StyledInput = styled.input`
+    font-size: 1.2rem;
+    width: 50%;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 2px solid black;
+`;
+
+const SectionIcon = styled.img`
+    margin-left: 0.5rem;
+    &:hover{
+        cursor: pointer;
+    }
+`;
+
+const ColHeading = styled.td`
+    text-align: center;
+`;
 
 const IngredientsTable = (props) => {
 
@@ -100,7 +131,7 @@ const IngredientsTable = (props) => {
 
     return (
         <Wrapper>
-            <input
+            <StyledInput
                 placeholder='Section name'
                 type='text'
                 id={props.sectionState.id}
@@ -110,9 +141,9 @@ const IngredientsTable = (props) => {
             <table>
                 <thead>
                     <tr>
-                        <td>Quantity</td>
-                        <td>Unit</td>
-                        <td>Ingredient</td>
+                        <ColHeading>Quantity</ColHeading>
+                        <ColHeading>Unit</ColHeading>
+                        <ColHeading>Ingredient</ColHeading>
                     </tr>
                 </thead>
                 <tbody>
@@ -128,8 +159,10 @@ const IngredientsTable = (props) => {
                         />)}
                 </tbody>
             </table>
-            <button onClick={addInput}>Add input</button>
-            <button onClick={removeInput}>Remove input</button>
+            <Container>
+                <SectionIcon src={addIcon} onClick={addInput} />
+                <SectionIcon src={removeIcon} onClick={removeInput} />
+            </Container>
         </Wrapper>
     );
 };

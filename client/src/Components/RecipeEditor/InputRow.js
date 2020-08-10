@@ -1,5 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
 
+
+const StyledInput = styled.input`
+    font-size: 1.2rem;
+    width: 5rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 2px solid black;
+`;
+
+const StyledSelect = styled.select`
+    font-size: 1.2rem;
+    width: 12rem;
+    padding: 0.5rem;
+    border-radius: 5px;
+    border: 2px solid black;
+`;
 
 const InputRow = (props) => {
 
@@ -23,19 +40,19 @@ const InputRow = (props) => {
         
         <tr>
             <td>
-                <input onChange={setQuantityInput} type='number' />
+                <StyledInput onChange={setQuantityInput} type='number' />
             </td>
             <td>
-                <select defaultValue={""} onChange={setUnitInput}>
+                <StyledSelect defaultValue={""} onChange={setUnitInput}>
                     <option value="" hidden >Select Unit</option>
                     {unitOptions}
-                </select>
+                </StyledSelect>
             </td>
             <td>
-                <select defaultValue={""} onChange={setIngredientInput}>
+                <StyledSelect defaultValue={""} onChange={setIngredientInput}>
                     <option value="" hidden >Select Ingredient</option>
                     {ingredientOptions}
-                </select>
+                </StyledSelect>
             </td>
         </tr>
     );

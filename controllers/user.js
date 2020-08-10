@@ -163,16 +163,14 @@ checkAdminAuth = (req, res, next) => {
             error.statusCode = 401;
             throw error;
         } else {
-            User.findOne({ _id: decoded.id }, (err, user) => {
-                if (err) {
-                    const error = new Error("Invalid authorization token");
-                    error.statusCode = 401;
-                    throw error;
-                } else {
-                    req.userId = decoded.id
-                    next();
-                };
-            });
+            if (decoded.role !== 'admin') {
+                const error = new Error("You are not authorized to do that");
+                error.statusCode = 401;
+                throw error;
+            } else {
+                req.userId = decoded.id
+                next();
+            };
         };
     });
 };
@@ -180,7 +178,8 @@ checkAdminAuth = (req, res, next) => {
 
 signJWTtoken = (user) => {
     const token = jwt.sign({
-        id: user._id.toString()
+        id: user._id.toString(),
+        role: user.role
     }, process.env.JWT_SECRET_KEY);
 
     return token;

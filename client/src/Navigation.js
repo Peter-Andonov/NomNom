@@ -1,5 +1,5 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import UserContext from './Context';
 import HomePage from './Pages/Home-page';
 import RecipesPage from './Pages/Recipes-page';
@@ -17,32 +17,50 @@ import CreateArticlePage from './Pages/Create-article-page';
 import CreateUnitPage from './Pages/Create-unit-page';
 
 
-class Navigation extends Component {
+const Navigation = () => {
 
-  static contextType = UserContext;
+  const userContext = useContext(UserContext);
+  const isLoggedIn = userContext.loggedIn;
+  const isAdmin = userContext.user ? userContext.user.role === 'admin' : false;
 
-  render() {
-    return (
-      <Router>
-        <Switch>
-          <Route path={'/'} exact component={HomePage} />
-          <Route path={'/recipes'} component={RecipesPage} />
-          <Route path={'/recipe/:id'} component={RecipeDetailsPage} />
-          <Route path={'/articles'} component={ArticlesPage} />
-          <Route path={'/article/:id'} component={ArticleDetailsPage} />
-          <Route path={'/login'} component={LoginPage} />
-          <Route path={'/register'} component={RegisterPage} />
-          <Route path={'/profile'} component={ProfilePage} />
-          <Route path={'/favourites'} component={FavouritesPage} />
-          <Route path={'/admin'} component={AdminPage} />
-          <Route path={'/create/recipe'} component={CreateRecipePage} />
-          <Route path={'/create/ingredient'} component={CreateIngredientPage} />
-          <Route path={'/create/article'} component={CreateArticlePage} />
-          <Route path={'/create/unit'} component={CreateUnitPage} />
-        </Switch>
-      </Router>
-    );
-  };
+  return (
+    <Router>
+      <Switch>
+        <Route path={'/'} exact component={HomePage} />
+        <Route path={'/recipes'} component={RecipesPage} />
+        <Route path={'/recipe/:id'} component={RecipeDetailsPage} />
+        <Route path={'/articles'} component={ArticlesPage} />
+        <Route path={'/article/:id'} component={ArticleDetailsPage} />
+        <Route path={'/login'} >
+          {isLoggedIn ? (<Redirect to={'/'} />) : (<LoginPage />)}
+        </Route>
+        <Route path={'/register'} >
+          {isLoggedIn ? (<Redirect to={'/'} />) : (<RegisterPage />)}
+        </Route>
+        <Route path={'/profile'} >
+          {isLoggedIn ? (<ProfilePage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/favourites'} >
+          {isLoggedIn ? (<FavouritesPage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/admin'} >
+          {isAdmin ? (<AdminPage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/create/recipe'} >
+          {isAdmin ? (<CreateRecipePage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/create/ingredient'} >
+          {isAdmin ? (<CreateIngredientPage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/create/article'} >
+          {isAdmin ? (<CreateArticlePage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/create/unit'} >
+          {isAdmin ? (<CreateUnitPage />) : (<Redirect to={'/'} />)}
+        </Route>
+      </Switch>
+    </Router>
+  );
 };
 
 export default Navigation;

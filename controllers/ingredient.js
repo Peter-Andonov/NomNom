@@ -57,7 +57,7 @@ deleteIngredient = async (req, res) => {
 };
 
 getAllIngredients = async () => {
-    const ingredients = await Ingredient.find({}).lean();
+    const ingredients = await Ingredient.find({}).sort({ 'name': 'asc' }).lean();
 
     return ingredients;
 };

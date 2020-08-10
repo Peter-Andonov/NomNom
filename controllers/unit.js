@@ -44,7 +44,7 @@ deleteUnit = async (req, res) => {
 }
 
 getAllUnits = async () => {
-    const units = await Unit.find({}).lean();
+    const units = await Unit.find({}).sort({ 'name': 'asc' }).lean();
 
     return units;
 };

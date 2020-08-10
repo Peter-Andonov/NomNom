@@ -83,7 +83,7 @@ getAllArticles = async (req, res) => {
     const page = req.query.page;
     const perPage = Number(req.query.perPage);
 
-    const articles = await Article.find({}).skip((page - 1) * perPage).limit(perPage).lean();
+    const articles = await Article.find({}).sort({ 'createdAt': 'desc' }).skip((page - 1) * perPage).limit(perPage).lean();
 
     const totalArticlesCount = await Article.countDocuments();
 

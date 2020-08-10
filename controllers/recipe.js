@@ -101,7 +101,7 @@ getAllRecipes = async (req, res) => {
     const page = req.query.page;
     const perPage = Number(req.query.perPage);
 
-    const recipes = await Recipe.find({}).skip((page - 1) * perPage).limit(perPage).lean();
+    const recipes = await Recipe.find({}).sort({ 'createdAt': 'desc' }).skip((page - 1) * perPage).limit(perPage).lean();
 
     const totalRecipesCount = await Recipe.countDocuments();
 

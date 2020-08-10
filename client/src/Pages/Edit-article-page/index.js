@@ -72,6 +72,7 @@ const EditArticlePage = () => {
         <PageLayout>
             <HeaderImage />
             <ArticleEditor 
+                pageTitle={'Edit Article'}
                 title={title}
                 setTitle={setTitle}
                 imageUrl={imageUrl}

@@ -27,7 +27,7 @@ const ArticleEditor = (props) => {
 
     return (
         <Wrapper onSubmit={props.onSubmit}>
-            <h1>Create Article</h1>
+            <h1>{props.pageTitle}</h1>
             <h3>Title</h3>
             <Input
                 value={props.title}

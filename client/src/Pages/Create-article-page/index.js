@@ -52,6 +52,7 @@ const CreateArticlePage = () => {
         <PageLayout>
             <HeaderImage />
             <ArticleEditor 
+                pageTitle={'Create Article'}
                 title={title}
                 setTitle={setTitle}
                 imageUrl={imageUrl}

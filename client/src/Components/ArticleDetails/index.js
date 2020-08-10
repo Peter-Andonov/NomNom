@@ -80,7 +80,7 @@ const ArticleDetails = () => {
     const editArticle = (e) => {
         e.preventDefault();
 
-        history.push(`/edit/recipe/${articleId.id}`)
+        history.push(`/edit/article/${articleId.id}`)
     };
 
     const deleteArticle = (e) => {

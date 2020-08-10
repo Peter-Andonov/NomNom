@@ -9,7 +9,6 @@ import Submit from '../RegisterForm/Submit';
 
 const Wrapper = styled.div`
     position: absolute;
-    padding-bottom: 5rem;
     top: 30vh;
     background-color: white;
     height: auto;

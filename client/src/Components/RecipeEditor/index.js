@@ -13,7 +13,6 @@ import removeIcon from '../../Images/Icons/remove-24px.svg';
 
 
 const Wrapper = styled.div`
-    padding-bottom: 10rem;
     position: absolute;
     top: 30vh;
     background-color: white;
@@ -62,7 +61,7 @@ const StyledInput = styled.input`
 
 const StyledSelect = styled.select`
     font-size: 1.2rem;
-    width: 7.5rem;
+    width: 7.8rem;
     padding: 0.5rem;
     border-radius: 5px;
     border: 2px solid black;

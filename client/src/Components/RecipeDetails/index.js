@@ -165,7 +165,7 @@ const RecipeDetails = () => {
 
         const authToken = utils.getCookieByName('auth-token');
 
-        Axios('http://localhost:5000/api/recipe/favourites', {
+        Axios('http://localhost:5000/api/recipe/like', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -174,6 +174,15 @@ const RecipeDetails = () => {
                 recipeId: recipeId.id
             }
         }).then((res) => {
+            userContext.logIn({
+                _id: res.data._id,
+                email: res.data.email,
+                role: res.data.role,
+                firstName: res.data.firstName,
+                lastName: res.data.lastName,
+                profilePicUrl: res.data.profilePicUrl,
+                favouriteRecipes: res.data.favouriteRecipes
+            });
             setUserHasLiked(true);
         }).catch((err) => {
             console.log(err)
@@ -185,7 +194,7 @@ const RecipeDetails = () => {
 
         const authToken = utils.getCookieByName('auth-token');
 
-        Axios('http://localhost:5000/api/recipe/favourites', {
+        Axios('http://localhost:5000/api/recipe/dislike', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
@@ -194,7 +203,16 @@ const RecipeDetails = () => {
                 recipeId: recipeId.id
             }
         }).then((res) => {
-            setUserHasLiked(true);
+            userContext.logIn({
+                _id: res.data._id,
+                email: res.data.email,
+                role: res.data.role,
+                firstName: res.data.firstName,
+                lastName: res.data.lastName,
+                profilePicUrl: res.data.profilePicUrl,
+                favouriteRecipes: res.data.favouriteRecipes
+            });
+            setUserHasLiked(false);
         }).catch((err) => {
             console.log(err)
         });
@@ -207,6 +225,7 @@ const RecipeDetails = () => {
                 <ActionBar
                     userHasLiked={userHasLiked}
                     addToFavorites={addToFavorites}
+                    removeFromFavorites={removeFromFavorites}
                 />
             </TitleContainer>
             <Editor editorState={shortDescription} readOnly={true} />

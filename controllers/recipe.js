@@ -130,6 +130,30 @@ addRecipeToFavourites = async (req, res) => {
     return updatedUser;
 };
 
+removeRecipeFromFavourites = async (req, res) => {
+    const userId = req.userId;
+
+    const recipeId = req.body.recipeId;
+
+
+    const updatedUser = await User.findByIdAndUpdate(ObjectId(userId), {
+        $pull: {
+            favouriteRecipes: ObjectId(recipeId)
+        }
+    }, {
+        new: true
+    });
+
+    const updatedRecipe = await Recipe.findByIdAndUpdate(ObjectId(recipeId), {
+        $pull: {
+            usersLiked: ObjectId(userId)
+        }
+    });
+
+    return updatedUser;
+};
+
+
 createIngredientSet = async (body) => {
     const name = body.name;
     const quantities = body.quantities;
@@ -157,4 +181,5 @@ module.exports = {
     deleteRecipe,
     getRecipeById,
     addRecipeToFavourites,
+    removeRecipeFromFavourites,
 };

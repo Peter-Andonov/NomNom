@@ -5,6 +5,7 @@ const {
     deleteRecipe,
     getAllRecipes,
     addRecipeToFavourites,
+    removeRecipeFromFavourites
 } = require('../controllers/recipe');
 const {
     checkUserAuth,
@@ -26,15 +27,6 @@ recipeRouter.post('/recipe', checkAdminAuth, async (req, res, next) => {
     try {
         const newRecipe = await createRecipe(req, res);
         return res.status(201).json(newRecipe);
-    } catch (err) {
-        next(err);
-    };
-});
-
-recipeRouter.post('/recipe/favourites', checkUserAuth, async (req, res, next) => {
-    try {
-        const updatedUser = await addRecipeToFavourites(req, res);
-        return res.status(200).json(updatedUser);
     } catch (err) {
         next(err);
     };
@@ -69,6 +61,24 @@ recipeRouter.delete('/recipe', checkAdminAuth, async (req, res, next) => {
         }
 
         return res.status(200).json(deletedRecipe);
+    } catch (err) {
+        next(err);
+    };
+});
+
+recipeRouter.post('/recipe/like', checkUserAuth, async (req, res, next) => {
+    try {
+        const updatedUser = await addRecipeToFavourites(req, res);
+        return res.status(200).json(updatedUser);
+    } catch (err) {
+        next(err);
+    };
+});
+
+recipeRouter.post('/recipe/dislike', checkUserAuth, async (req, res, next) => {
+    try {
+        const updatedUser = await removeRecipeFromFavourites(req, res);
+        return res.status(200).json(updatedUser);
     } catch (err) {
         next(err);
     };

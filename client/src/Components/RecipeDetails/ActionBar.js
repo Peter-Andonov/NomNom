@@ -10,23 +10,31 @@ const Container = styled.div`
 `;
 
 const LikeBtn = styled.button`
-    background-color: #4CAF50;
+    background-color: rgb(160, 184, 85);
+    border-radius: 5px;
     border: none;
     color: white;
     padding: 12px 22px;
     text-align: center;
     text-decoration: none;
     font-size: 1.5rem;
+    &:focus{
+        outline: none;
+    }
 `;
 
 const DislikeBtn = styled.button`
-    background-color: red;
+    background-color: rgb(237, 88, 59);
+    border-radius: 5px;
     border: none;
     color: white;
     padding: 12px 22px;
     text-align: center;
     text-decoration: none;
     font-size: 1.5rem;
+    &:focus{
+        outline: none;
+    }
 `;
 
 const ActionBar = (props) => {
@@ -39,7 +47,7 @@ const ActionBar = (props) => {
     return (
         <Container>
             {isLoggedIn && !isAdmin && !props.userHasLiked && <LikeBtn onClick={props.addToFavorites} >Add to Favourites</LikeBtn>}
-            {isLoggedIn && !isAdmin && props.userHasLiked && <DislikeBtn onClick={props.addToFavorites} >Remove from Favourites</DislikeBtn>}
+            {isLoggedIn && !isAdmin && props.userHasLiked && <DislikeBtn onClick={props.removeFromFavorites} >Remove from Favourites</DislikeBtn>}
         </Container>
     );
 };

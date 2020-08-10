@@ -10,6 +10,8 @@ import IngredientSection from './IngredientSection';
 import CommentsSection from '../CommentsSection';
 import Comment from '../CommentsSection/Comment';
 import ActionBar from './ActionBar';
+import GreenButton from './GreenButton';
+import RedButton from './RedButton';
 
 
 const Wrapper = styled.div`
@@ -113,7 +115,8 @@ const RecipeDetails = () => {
     const recipeId = useParams();
     const userContext = useContext(UserContext);
     const history = useHistory();
-
+    const isLoggedIn = userContext.loggedIn;
+    const isAdmin = userContext.user ? userContext.user.role === 'admin' : false;
     const hasLikedState = userContext.user ? userContext.user.favouriteRecipes.includes(recipeId.id) : false;
 
     const [title, setTitle] = useState('');
@@ -160,6 +163,12 @@ const RecipeDetails = () => {
 
     const addComment = (newComment) => {
         setComments([newComment, ...comments])
+    };
+
+    const editRecipe = (e) => {
+        e.preventDefault();
+
+        history.push('/')
     };
 
     const deleteRecipe = (e) => {
@@ -244,12 +253,12 @@ const RecipeDetails = () => {
         <Wrapper>
             <TitleContainer>
                 <MainTitle>{title}</MainTitle>
-                <ActionBar
-                    userHasLiked={userHasLiked}
-                    addToFavorites={addToFavorites}
-                    removeFromFavorites={removeFromFavorites}
-                    deleteRecipe={deleteRecipe}
-                />
+                <ActionBar>
+                    {isLoggedIn && !isAdmin && !userHasLiked && <GreenButton action={addToFavorites} label={'Add to Favourites'} />}
+                    {isLoggedIn && !isAdmin && userHasLiked && <RedButton action={removeFromFavorites} label={'Remove from Favourites'} />}
+                    {isLoggedIn && isAdmin && <GreenButton action={editRecipe} label={'Edit Recipe'} />}
+                    {isLoggedIn && isAdmin && <RedButton action={deleteRecipe} label={'Delete Recipe'} />}
+                </ActionBar>
             </TitleContainer>
             <Editor editorState={shortDescription} readOnly={true} />
             <InfoList>

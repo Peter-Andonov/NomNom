@@ -132,15 +132,14 @@ const RecipeDetails = () => {
     const [difficulty, setDifficulty] = useState('');
     const [comments, setComments] = useState([]);
 
+
     useEffect(() => {
-        const getRecipe = async () => {
-
-            const res = await Axios.get('http://localhost:5000/api/recipe', {
-                params: {
-                    id: recipeId.id
-                }
-            });
-
+        Axios('http://localhost:5000/api/recipe', {
+            method: 'GET',
+            params: {
+                id: recipeId.id
+            }
+        }).then((res) => {
             setTitle(res.data.title);
 
             const shortDescriptionContentState = convertFromRaw(JSON.parse(res.data.shortDescription));
@@ -158,9 +157,10 @@ const RecipeDetails = () => {
             setServes(res.data.serves);
             setDifficulty(res.data.difficulty);
             setComments(res.data.comments);
-        };
-        getRecipe();
-    }, []);
+        }).catch((err) => {
+            console.log(err)
+        });
+    }, [recipeId.id]);
 
     const addComment = (newComment) => {
         setComments([newComment, ...comments])

@@ -36,7 +36,7 @@ const MainTitle = styled.h1`
 `;
 
 
-const RecipeDetails = () => {
+const ArticleDetails = () => {
 
     const articleId = useParams();
     const userContext = useContext(UserContext);
@@ -47,14 +47,12 @@ const RecipeDetails = () => {
     const [comments, setComments] = useState([]);
 
     useEffect(() => {
-        const getArticle = async () => {
-
-            const res = await Axios.get('http://localhost:5000/api/article', {
-                params: {
-                    id: articleId.id
-                }
-            });
-
+        Axios('http://localhost:5000/api/article', {
+            method: 'GET',
+            params: {
+                id: articleId.id
+            }
+        }).then((res) => {
             setTitle(res.data.title);
 
             setImageUrl(res.data.imageUrl);
@@ -62,9 +60,10 @@ const RecipeDetails = () => {
             const bodyContentState = convertFromRaw(JSON.parse(res.data.body));
             setBody(EditorState.createWithContent(bodyContentState));
             setComments(res.data.comments);
-        };
-        getArticle();
-    }, []);
+        }).catch((err) => {
+            console.log(err)
+        });
+    }, [articleId.id]);
 
     const addComment = (newComment) => {
         setComments([newComment, ...comments])
@@ -97,4 +96,4 @@ const RecipeDetails = () => {
 };
 
 
-export default RecipeDetails;
+export default ArticleDetails;

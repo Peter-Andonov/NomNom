@@ -30,7 +30,7 @@ const SelectorButton = (props) => {
                 accept='image/*'
                 onChange={handleSelection}
             />
-            <Label htmlFor="file"> + Select Image</Label>
+            <Label htmlFor="file">{props.imageUrl ? '+ Change Image' : '+ Select Image'}</Label>
         </div>
     );
 };

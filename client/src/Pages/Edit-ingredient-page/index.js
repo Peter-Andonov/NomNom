@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 import { useHistory } from "react-router-dom";
 import Axios from 'axios';
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
@@ -9,9 +10,10 @@ import Header from '../../Components/Header';
 import IngredientEditor from '../../Components/IngredientEditor';
 
 
-const CreateIngredientPage = () => {
+const EditIngredientPage = () => {
 
     const history = useHistory();
+    const ingredientId = useParams();
 
     const [name, setName] = useState('');
     const [imageUrl, setImageUrl] = useState('');
@@ -19,6 +21,24 @@ const CreateIngredientPage = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
+
+    useEffect(() => {
+        Axios('http://localhost:5000/api/ingredient', {
+            method: 'GET',
+            params: {
+                id: ingredientId.id
+            }
+        }).then((res) => {
+            setName(res.data.name);
+
+            setImageUrl(res.data.imageUrl);
+
+            const descriptionContentState = convertFromRaw(JSON.parse(res.data.description));
+            setEditorState(EditorState.createWithContent(descriptionContentState));
+        }).catch((err) => {
+            console.log(err)
+        });
+    }, [ingredientId.id]);
 
     const saveIngredient = (e) => {
 
@@ -29,13 +49,14 @@ const CreateIngredientPage = () => {
         const description = JSON.stringify(convertToRaw(editorState.getCurrentContent()));
 
         const data = {
+            id: ingredientId.id,
             name: name,
             imageUrl: imageUrl,
             description: description
         };
 
         Axios('http://localhost:5000/api/ingredient', {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
                 'Authorization': authToken
@@ -70,4 +91,4 @@ const CreateIngredientPage = () => {
 };
 
 
-export default CreateIngredientPage;
+export default EditIngredientPage;

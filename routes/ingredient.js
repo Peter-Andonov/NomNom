@@ -14,7 +14,7 @@ const ingredientRouter = express.Router();
 
 ingredientRouter.get('/ingredient/all', async (req, res, next) => {
     try {
-        const ingredients = await getAllIngredients();
+        const ingredients = await getAllIngredients(req, res);
         return res.status(200).json(ingredients);
     } catch (err) {
         next(err)

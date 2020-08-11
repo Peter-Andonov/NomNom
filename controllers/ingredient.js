@@ -20,7 +20,7 @@ createIngredient = async (req, res) => {
 };
 
 getIngredientById = async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const ingredient = Ingredient.findById(id).lean();
 
@@ -40,7 +40,7 @@ updateIngredient = async (req, res) => {
     }
 
     if (req.body.description) {
-        updatedData.shortDescription = req.body.description;
+        updatedData.description = req.body.description;
     }
 
     const updated = await Ingredient.findByIdAndUpdate(id, updatedData);
@@ -49,17 +49,33 @@ updateIngredient = async (req, res) => {
 };
 
 deleteIngredient = async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const deleted = await Ingredient.findByIdAndDelete(id);
 
     return deleted;
 };
 
-getAllIngredients = async () => {
-    const ingredients = await Ingredient.find({}).sort({ 'name': 'asc' }).lean();
+getAllIngredients = async (req, res) => {
+    
+    const page = req.query.page;
+    const perPage = Number(req.query.perPage);
+    const sortCrit = req.query.sortCrit;
+    const sortOrd = req.query.sortOrd;
 
-    return ingredients;
+    const sortObj = {};
+    sortObj[sortCrit] = sortOrd;
+
+    const ingredients = await Ingredient.find({})
+    .sort(sortObj)
+    .skip((page - 1) * perPage)
+    .limit(perPage).lean();
+
+    const totalIngredientsCount = await Ingredient.countDocuments();
+
+    const data = { ingredients, totalIngredientsCount };
+
+    return data;
 };
 
 

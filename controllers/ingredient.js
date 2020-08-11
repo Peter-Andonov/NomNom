@@ -20,7 +20,7 @@ createIngredient = async (req, res) => {
 };
 
 getIngredientById = async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const ingredient = Ingredient.findById(id).lean();
 
@@ -49,7 +49,7 @@ updateIngredient = async (req, res) => {
 };
 
 deleteIngredient = async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const deleted = await Ingredient.findByIdAndDelete(id);
 

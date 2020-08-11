@@ -4,6 +4,7 @@ import UserContext from './Context';
 import HomePage from './Pages/Home-page';
 import RecipesPage from './Pages/Recipes-page';
 import RecipeDetailsPage from './Pages/Recipe-details-page';
+import IngredientDetailsPage from './Pages/Ingredient-details-page';
 import ArticlesPage from './Pages/Articles-page';
 import ArticleDetailsPage from './Pages/Article-details-page';
 import LoginPage from './Pages/Login-page';
@@ -31,6 +32,7 @@ const Navigation = () => {
         <Route path={'/'} exact component={HomePage} />
         <Route path={'/recipes'} component={RecipesPage} />
         <Route path={'/recipe/:id'} component={RecipeDetailsPage} />
+        <Route path={'/ingredient/:id'} component={IngredientDetailsPage} />
         <Route path={'/articles'} component={ArticlesPage} />
         <Route path={'/article/:id'} component={ArticleDetailsPage} />
         <Route path={'/login'} >

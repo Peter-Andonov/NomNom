@@ -1,9 +1,5 @@
-import React, { useState, useEffect } from 'react';
-import { useHistory } from "react-router-dom";
-import Axios from 'axios';
+import React from 'react';
 import styled from 'styled-components';
-import { EditorState, convertToRaw } from 'draft-js';
-import * as utils from '../../Utils/user';
 import TextEditor from '../TextEditor';
 import ImageSelector from '../ImageSelector';
 import Input from '../RegisterForm/Input';
@@ -96,149 +92,43 @@ const Button = styled.button`
 
 const RecipeEditor = (props) => {
 
-    const [title, setTitle] = useState('');
-    const [coverImageUrl, setCoverImageUrl] = useState('');
-    const [deleteToken, setDeleteToken] = useState('');
-    const [shortDescriptionState, setShortDescriptionState] = useState(EditorState.createEmpty());
-    const [stepsState, setStepsState] = useState(EditorState.createEmpty());
-    const [units, setUnits] = useState([]);
-    const [ingredients, setIngredients] = useState([]);
-    const [ingredientSections, setIngredientSections] = useState([{
-        id: 'section-0',
-        name: '',
-        quantities: [],
-        units: [],
-        ingredients: []
-    }]);
-    const [prepTime, setPrepTime] = useState('');
-    const [cookTime, setCookTime] = useState('');
-    const [serves, setServes] = useState('');
-    const [difficulty, setDifficulty] = useState('');
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const history = useHistory();
-
-
-    useEffect(() => {
-        const getUnits = async () => {
-            const res = await Axios.get('http://localhost:5000/api/unit/all');
-            setUnits(res.data);
-        }
-        getUnits();
-    }, []);
-
-    useEffect(() => {
-        const getIngredients = async () => {
-            const res = await Axios.get('http://localhost:5000/api/ingredient/all');
-            setIngredients(res.data);
-        }
-        getIngredients();
-    }, []);
-
-    const addIngredientSection = () => {
-        const newIngredientSection = `section-${ingredientSections.length}`;
-        setIngredientSections([...ingredientSections, {
-            id: newIngredientSection,
-            name: '',
-            quantities: [],
-            units: [],
-            ingredients: []
-        }]);
-    };
-
-    const removeIngredientSection = () => {
-
-        if (ingredientSections.length === 1) {
-            return;
-        }
-
-        //remove the last ingredient section from the state
-        const newIngredientSections = [...ingredientSections];
-        newIngredientSections.splice((newIngredientSections.length - 1), 1);
-        setIngredientSections(newIngredientSections);
-    };
-
-    const handleInput = (newSectionState) => {
-        const newIngredientSections = ingredientSections.map((section) => {
-            if (section.id === newSectionState.id) {
-                return newSectionState
-            }
-            return section;
-        });
-        setIngredientSections(newIngredientSections);
-    };
-
-    const saveRecipe = async () => {
-
-        const authToken = utils.getCookieByName('auth-token');
-
-        const shortDescription = JSON.stringify(convertToRaw(shortDescriptionState.getCurrentContent()));
-        const stepsToCreate = JSON.stringify(convertToRaw(stepsState.getCurrentContent()));
-        
-        const data = {
-            title,
-            coverImageUrl,
-            shortDescription,
-            stepsToCreate,
-            ingredientSections,
-            prepTime,
-            cookTime,
-            serves,
-            difficulty,
-        };
-
-        Axios('http://localhost:5000/api/recipe', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'Authorization': authToken
-            }, data: data
-        }).then(() => {
-            history.push('/admin');
-        }).catch((err) => {
-            setError(true);
-            setErrorMessage('Something went wrong');
-        });
-    };
-
     return (
         <Wrapper>
             <h1>Create Recipe</h1>
             <h3>Recipe Title</h3>
             <Input
-                value={title}
-                onChange={setTitle} />
+                value={props.title}
+                onChange={props.setTitle} />.
             <h3>Cover Image</h3>
             <ImageSelector
-                imageUrl={coverImageUrl}
-                setImageUrl={setCoverImageUrl}
-                deleteToken={deleteToken}
-                setDeleteToken={setDeleteToken}
+                imageUrl={props.coverImageUrl}
+                setImageUrl={props.setCoverImageUrl}
+                deleteToken={props.deleteToken}
+                setDeleteToken={props.setDeleteToken}
             />
             <h3>Short Description</h3>
             <TextEditor
-                editorState={shortDescriptionState}
-                setEditorState={setShortDescriptionState}
+                editorState={props.shortDescriptionState}
+                setEditorState={props.setShortDescriptionState}
             />
             <h3>Steps to create</h3>
             <TextEditor
-                editorState={stepsState}
-                setEditorState={setStepsState}
+                editorState={props.stepsState}
+                setEditorState={props.setStepsState}
             />
             <Container>
                 <h3>Ingredient Sections</h3>
-                <SectionIcon src={addIcon} onClick={addIngredientSection} />
-                <SectionIcon src={removeIcon} onClick={removeIngredientSection} />
+                <SectionIcon src={addIcon} onClick={props.addIngredientSection} />
+                <SectionIcon src={removeIcon} onClick={props.removeIngredientSection} />
             </Container>
             <Container>
-                {ingredientSections.map((section, idx) =>
+                {props.ingredientSections.map((section, idx) =>
                     <IngredientsTable
                         key={section.id}
-                        units={units}
-                        ingredients={ingredients}
-                        sectionState={ingredientSections[idx]}
-                        handleInput={handleInput}
+                        units={props.units}
+                        ingredients={props.ingredients}
+                        sectionState={props.ingredientSections[idx]}
+                        handleInput={props.handleInput}
                     />)}
             </Container>
             <h3>Additional recipe information</h3>
@@ -247,8 +137,8 @@ const RecipeEditor = (props) => {
                     <InfoLabel>Time to prepare</InfoLabel>
                     <StyledInput
                         type='number'
-                        value={prepTime}
-                        onChange={(e) => setPrepTime(e.target.value)}
+                        value={props.prepTime}
+                        onChange={(e) => props.setPrepTime(e.target.value)}
                     />
                     <InfoLabel>min</InfoLabel>
                 </Container>
@@ -256,8 +146,8 @@ const RecipeEditor = (props) => {
                     <InfoLabel>Time to cook</InfoLabel>
                     <StyledInput
                         type='number'
-                        value={cookTime}
-                        onChange={(e) => setCookTime(e.target.value)}
+                        value={props.cookTime}
+                        onChange={(e) => props.setCookTime(e.target.value)}
                     />
                     <InfoLabel>min</InfoLabel>
                 </Container>
@@ -265,14 +155,14 @@ const RecipeEditor = (props) => {
                     <InfoLabel>Serves</InfoLabel>
                     <StyledInput
                         type='number'
-                        value={serves}
-                        onChange={(e) => setServes(e.target.value)}
+                        value={props.serves}
+                        onChange={(e) => props.setServes(e.target.value)}
                     />
                     <InfoLabel>people</InfoLabel>
                 </Container>
                 <Container>
                     <InfoLabel>Difficulty</InfoLabel>
-                    <StyledSelect defaultValue={difficulty} onChange={(e) => setDifficulty(e.target.value)}>
+                    <StyledSelect defaultValue={props.difficulty} onChange={(e) => props.setDifficulty(e.target.value)}>
                         <option value="" hidden >Difficulty</option>
                         <option value="easy" >Easy</option>
                         <option value="medium" >Medium</option>
@@ -281,8 +171,8 @@ const RecipeEditor = (props) => {
                     <InfoLabel></InfoLabel>
                 </Container>
             </Column>
-            {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
-            <Button onClick={saveRecipe} >Save recipe</Button>
+            {props.error && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
+            <Button onClick={props.action} >Save recipe</Button>
         </Wrapper>
     );
 };

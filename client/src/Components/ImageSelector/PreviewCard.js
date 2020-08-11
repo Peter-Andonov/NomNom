@@ -42,7 +42,6 @@ const PreviewCard = (props) => {
     return (
         <Wrapper >
             <Image src={props.imageUrl} />
-            <Remove onClick={props.handleDelete} >Remove</Remove>
         </Wrapper>
     );
 };

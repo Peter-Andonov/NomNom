@@ -40,7 +40,7 @@ updateIngredient = async (req, res) => {
     }
 
     if (req.body.description) {
-        updatedData.shortDescription = req.body.description;
+        updatedData.description = req.body.description;
     }
 
     const updated = await Ingredient.findByIdAndUpdate(id, updatedData);

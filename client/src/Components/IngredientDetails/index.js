@@ -102,8 +102,8 @@ const IngredientDetails = () => {
                 <Editor editorState={description} readOnly={true} />
             </EditorContainer>
             {isAdmin && <ActionBar>
-                <GreenButton action={editIngredient} label={'Edit Article'} />
-                <RedButton action={deleteIngredient} label={'Delete Article'} />
+                <GreenButton action={editIngredient} label={'Edit Ingredient'} />
+                <RedButton action={deleteIngredient} label={'Delete Ingredient'} />
             </ActionBar>}
         </Wrapper>
     );

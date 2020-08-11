@@ -17,6 +17,7 @@ import CreateIngredientPage from './Pages/Create-ingredient-page';
 import CreateArticlePage from './Pages/Create-article-page';
 import CreateUnitPage from './Pages/Create-unit-page';
 import EditArticlePage from './Pages/Edit-article-page';
+import EditIngredientPage from './Pages/Edit-ingredient-page';
 import EditRecipePage from './Pages/Edit-recipe-page';
 
 
@@ -62,11 +63,14 @@ const Navigation = () => {
         <Route path={'/create/unit'} >
           {isAdmin ? (<CreateUnitPage />) : (<Redirect to={'/'} />)}
         </Route>
-        <Route path={'/edit/article/:id'} >
-          {isAdmin ? (<EditArticlePage />) : (<Redirect to={'/'} />)}
-        </Route>
         <Route path={'/edit/recipe/:id'} >
           {isAdmin ? (<EditRecipePage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/edit/ingredient/:id'} >
+          {isAdmin ? (<EditIngredientPage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/edit/article/:id'} >
+          {isAdmin ? (<EditArticlePage />) : (<Redirect to={'/'} />)}
         </Route>
       </Switch>
     </Router>

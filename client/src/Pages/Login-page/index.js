@@ -1,7 +1,7 @@
 import React from 'react';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import Header from '../../Components/UserHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import LoginForm from '../../Components/LoginForm';
 
 
@@ -9,7 +9,7 @@ const LoginPage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <Header />
             <LoginForm />
         </PageLayout>

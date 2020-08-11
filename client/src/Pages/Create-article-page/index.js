@@ -4,8 +4,8 @@ import Axios from 'axios';
 import { EditorState, convertToRaw } from 'draft-js';
 import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import AdminHeader from '../../Components/AdminHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import ArticleEditor from '../../Components/ArticleEditor';
 
 
@@ -13,7 +13,6 @@ const CreateArticlePage = () => {
 
     const [title, setTitle] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [deleteToken, setDeleteToken] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -50,15 +49,13 @@ const CreateArticlePage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <ArticleEditor 
                 pageTitle={'Create Article'}
                 title={title}
                 setTitle={setTitle}
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
-                deleteToken={deleteToken}
-                setDeleteToken={setDeleteToken}
                 editorState={editorState}
                 setEditorState={setEditorState}
                 error={error}
@@ -67,7 +64,7 @@ const CreateArticlePage = () => {
                 setErrorMessage={setErrorMessage}
                 onSubmit={saveArticle}
             />
-            <AdminHeader />
+            <Header />
         </PageLayout>
     );
 };

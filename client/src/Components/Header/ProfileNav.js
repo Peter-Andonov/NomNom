@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import UserContext from '../../Context';
+import TextItem from './TextItem';
 
 
 const Container = styled.div`
@@ -16,15 +17,12 @@ const Container = styled.div`
 `;
 
 const Avatar = styled.img`
+    margin-right: 1rem;
     height: 50%;
     max-width: 4rem;
     max-height: 4rem;
     border-radius: 50%;
     object-fit: cover;
-`;
-
-const Text = styled.span`
-    margin-left: 1rem;
 `;
 
 
@@ -34,7 +32,7 @@ const ProfileNav = (props) => {
 
     const toggleOpen = () => {
         setOpen(!open)
-    }
+    };
 
     const userContext = useContext(UserContext);
     const displayName = userContext.user.firstName ? `${userContext.user.firstName} ${userContext.user.lastName}` : userContext.user.email;
@@ -43,7 +41,7 @@ const ProfileNav = (props) => {
     return (
         <Container onClick={toggleOpen}>
             <Avatar src={displayPicture} alt='Avatar' />
-            <Text>{displayName}</Text>
+            <TextItem label={displayName} />
             {open && props.children}
         </Container>
     );

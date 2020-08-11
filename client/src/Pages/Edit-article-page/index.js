@@ -5,8 +5,8 @@ import { useParams } from 'react-router';
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import AdminHeader from '../../Components/AdminHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import ArticleEditor from '../../Components/ArticleEditor';
 
 
@@ -17,7 +17,6 @@ const EditArticlePage = () => {
 
     const [title, setTitle] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [deleteToken, setDeleteToken] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -70,15 +69,13 @@ const EditArticlePage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <ArticleEditor 
                 pageTitle={'Edit Article'}
                 title={title}
                 setTitle={setTitle}
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
-                deleteToken={deleteToken}
-                setDeleteToken={setDeleteToken}
                 editorState={editorState}
                 setEditorState={setEditorState}
                 error={error}
@@ -87,7 +84,7 @@ const EditArticlePage = () => {
                 setErrorMessage={setErrorMessage}
                 onSubmit={saveArticle}
             />
-            <AdminHeader />
+            <Header />
         </PageLayout>
     );
 };

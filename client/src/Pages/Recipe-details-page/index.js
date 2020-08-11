@@ -1,7 +1,7 @@
 import React from 'react';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import Header from '../../Components/UserHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import RecipeDetails from '../../Components/RecipeDetails';
 
 
@@ -9,7 +9,7 @@ const RecipeDetailsPage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <RecipeDetails />
             <Header />
         </PageLayout>

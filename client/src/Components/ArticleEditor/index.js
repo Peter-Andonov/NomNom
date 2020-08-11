@@ -37,8 +37,6 @@ const ArticleEditor = (props) => {
             <ImageSelector
                 imageUrl={props.imageUrl}
                 setImageUrl={props.setImageUrl}
-                deleteToken={props.deleteToken}
-                setDeleteToken={props.setDeleteToken}
             />
             <h3>Article Body</h3>
             <TextEditor

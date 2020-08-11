@@ -5,8 +5,8 @@ import Axios from 'axios';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import AdminHeader from '../../Components/AdminHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import RecipeEditor from '../../Components/RecipeEditor';
 
 
@@ -16,7 +16,6 @@ const EditRecipePage = () => {
 
     const [title, setTitle] = useState('');
     const [coverImageUrl, setCoverImageUrl] = useState('');
-    const [deleteToken, setDeleteToken] = useState('');
     const [shortDescriptionState, setShortDescriptionState] = useState(EditorState.createEmpty());
     const [stepsState, setStepsState] = useState(EditorState.createEmpty());
     const [units, setUnits] = useState([]);
@@ -150,15 +149,13 @@ const EditRecipePage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <RecipeEditor 
                 pageTitle={'Edit recipe'}
                 title={title}
                 setTitle={setTitle}
                 coverImageUrl={coverImageUrl}
                 setCoverImageUrl={setCoverImageUrl}
-                deleteToken={deleteToken}
-                setDeleteToken={setDeleteToken}
                 shortDescriptionState={shortDescriptionState}
                 setShortDescriptionState={setShortDescriptionState}
                 stepsState={stepsState}
@@ -181,7 +178,7 @@ const EditRecipePage = () => {
                 errorMessage={errorMessage}
                 action={saveRecipe}
             />
-            <AdminHeader />
+            <Header />
         </PageLayout>
     );
 };

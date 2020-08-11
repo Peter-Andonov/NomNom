@@ -104,8 +104,6 @@ const RecipeEditor = (props) => {
             <ImageSelector
                 imageUrl={props.coverImageUrl}
                 setImageUrl={props.setCoverImageUrl}
-                deleteToken={props.deleteToken}
-                setDeleteToken={props.setDeleteToken}
             />
             <h3>Short Description</h3>
             <TextEditor

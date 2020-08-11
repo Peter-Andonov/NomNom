@@ -44,6 +44,7 @@ const ArticlesPage = () => {
                 {articles.map((article) =>
                     <ArticleCard
                         key={article._id}
+                        entity={'article'}
                         id={article._id}
                         title={article.title}
                         imageUrl={article.imageUrl}

@@ -50,7 +50,7 @@ const ArticleCard = (props) => {
 
     return (
         <Wrapper>
-            <UnStyledLink to={`/article/${props.id}`} >
+            <UnStyledLink to={`/${props.entity}/${props.id}`} >
                 <Image src={props.imageUrl} alt='Article' />
                 <Title>{props.title}</Title>
             </UnStyledLink>

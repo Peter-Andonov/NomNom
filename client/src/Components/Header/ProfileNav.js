@@ -18,9 +18,8 @@ const Container = styled.div`
 
 const Avatar = styled.img`
     margin-right: 1rem;
-    height: 50%;
-    max-width: 4rem;
-    max-height: 4rem;
+    width: 4rem;
+    height: 4rem;
     border-radius: 50%;
     object-fit: cover;
 `;

@@ -55,6 +55,7 @@ const IngredientsPage = () => {
                 {ingredients && ingredients.map((ingredient) =>
                     <ArticleCard
                         key={ingredient._id}
+                        entity={'ingredient'}
                         id={ingredient._id}
                         title={ingredient.name}
                         imageUrl={ingredient.imageUrl}

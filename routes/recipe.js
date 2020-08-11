@@ -2,9 +2,11 @@ const express = require('express');
 const {
     createRecipe,
     getRecipeById,
+    updateRecipe,
     deleteRecipe,
     getAllRecipes,
     addRecipeToFavourites,
+    removeRecipeFromFavourites
 } = require('../controllers/recipe');
 const {
     checkUserAuth,
@@ -31,15 +33,6 @@ recipeRouter.post('/recipe', checkAdminAuth, async (req, res, next) => {
     };
 });
 
-recipeRouter.post('/recipe/favourites', checkUserAuth, async (req, res, next) => {
-    try {
-        const updatedUser = await addRecipeToFavourites(req, res);
-        return res.status(200).json(updatedUser);
-    } catch (err) {
-        next(err);
-    };
-});
-
 recipeRouter.get('/recipe', async (req, res, next) => {
     try {
         const recipe = await getRecipeById(req, res);
@@ -56,7 +49,21 @@ recipeRouter.get('/recipe', async (req, res, next) => {
     };
 });
 
-// TODO: Add update route for recipe
+recipeRouter.patch('/recipe', checkAdminAuth, async (req, res, next) => {
+    try {
+        const recipe = await updateRecipe(req, res);
+
+        if (!recipe) {
+            return res.status(404).json({
+                message: "Recipe with the requested id does not exist"
+            });
+        }
+
+        return res.status(200).json(recipe);
+    } catch (err) {
+        next(err);
+    };
+});
 
 recipeRouter.delete('/recipe', checkAdminAuth, async (req, res, next) => {
     try {
@@ -69,6 +76,24 @@ recipeRouter.delete('/recipe', checkAdminAuth, async (req, res, next) => {
         }
 
         return res.status(200).json(deletedRecipe);
+    } catch (err) {
+        next(err);
+    };
+});
+
+recipeRouter.post('/recipe/like', checkUserAuth, async (req, res, next) => {
+    try {
+        const updatedUser = await addRecipeToFavourites(req, res);
+        return res.status(200).json(updatedUser);
+    } catch (err) {
+        next(err);
+    };
+});
+
+recipeRouter.post('/recipe/dislike', checkUserAuth, async (req, res, next) => {
+    try {
+        const updatedUser = await removeRecipeFromFavourites(req, res);
+        return res.status(200).json(updatedUser);
     } catch (err) {
         next(err);
     };

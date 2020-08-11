@@ -72,7 +72,7 @@ updateArticle = async (req, res) => {
 };
 
 deleteArticle = async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const deleted = await Article.findByIdAndDelete(id);
 

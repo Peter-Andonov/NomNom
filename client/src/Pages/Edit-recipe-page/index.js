@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router';
 import { useHistory } from "react-router-dom";
 import Axios from 'axios';
-import { EditorState, convertToRaw } from 'draft-js';
+import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
 import HeaderImage from '../../Components/HeaderImage';
@@ -9,7 +10,9 @@ import AdminHeader from '../../Components/AdminHeader';
 import RecipeEditor from '../../Components/RecipeEditor';
 
 
-const CreateRecipePage = () => {
+const EditRecipePage = () => {
+
+    const recipeId = useParams();
 
     const [title, setTitle] = useState('');
     const [coverImageUrl, setCoverImageUrl] = useState('');
@@ -34,6 +37,33 @@ const CreateRecipePage = () => {
 
     const history = useHistory();
 
+    useEffect(() => {
+        Axios('http://localhost:5000/api/recipe', {
+            method: 'GET',
+            params: {
+                id: recipeId.id
+            }
+        }).then((res) => {
+            setTitle(res.data.title);
+
+            const shortDescriptionContentState = convertFromRaw(JSON.parse(res.data.shortDescription));
+            setShortDescriptionState(EditorState.createWithContent(shortDescriptionContentState));
+
+            setCoverImageUrl(res.data.coverImageUrl);
+
+            const stepsToCreateContentState = convertFromRaw(JSON.parse(res.data.stepsToCreate));
+            setStepsState(EditorState.createWithContent(stepsToCreateContentState));
+
+            setIngredientSections(res.data.ingredientSets);
+
+            setPrepTime(res.data.prepTime);
+            setCookTime(res.data.cookTime);
+            setServes(res.data.serves);
+            setDifficulty(res.data.difficulty);
+        }).catch((err) => {
+            console.log(err)
+        });
+    }, [recipeId.id]);
 
     useEffect(() => {
         const getUnits = async () => {
@@ -92,6 +122,7 @@ const CreateRecipePage = () => {
         const stepsToCreate = JSON.stringify(convertToRaw(stepsState.getCurrentContent()));
         
         const data = {
+            id: recipeId.id,
             title,
             coverImageUrl,
             shortDescription,
@@ -104,7 +135,7 @@ const CreateRecipePage = () => {
         };
 
         Axios('http://localhost:5000/api/recipe', {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
                 'Authorization': authToken
@@ -121,7 +152,7 @@ const CreateRecipePage = () => {
         <PageLayout>
             <HeaderImage />
             <RecipeEditor 
-                pageTitle={'Create recipe'}
+                pageTitle={'Edit recipe'}
                 title={title}
                 setTitle={setTitle}
                 coverImageUrl={coverImageUrl}
@@ -156,4 +187,4 @@ const CreateRecipePage = () => {
 };
 
 
-export default CreateRecipePage;
+export default EditRecipePage;

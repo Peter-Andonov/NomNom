@@ -65,7 +65,8 @@ const ProfileEditor = () => {
             role: res.data.role,
             firstName: res.data.firstName,
             lastName: res.data.lastName,
-            profilePicUrl: res.data.profilePicUrl
+            profilePicUrl: res.data.profilePicUrl,
+            favouriteRecipes: res.data.favouriteRecipes
         });
     };
 

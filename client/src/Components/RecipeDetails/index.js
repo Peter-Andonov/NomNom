@@ -2,12 +2,16 @@ import React, { useState, useEffect, useContext } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
+import { useHistory } from "react-router-dom";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
 import UserContext from '../../Context';
 import * as utils from '../../Utils/user';
 import IngredientSection from './IngredientSection';
 import CommentsSection from '../CommentsSection';
 import Comment from '../CommentsSection/Comment';
+import ActionBar from './ActionBar';
+import GreenButton from './GreenButton';
+import RedButton from './RedButton';
 
 
 const Wrapper = styled.div`
@@ -95,16 +99,6 @@ const MainTitle = styled.h1`
     margin: 0;
 `;
 
-const LikeBtn = styled.button`
-    background-color: #4CAF50;
-    border: none;
-    color: white;
-    padding: 15px 32px;
-    text-align: center;
-    text-decoration: none;
-    font-size: 2rem;
-`;
-
 const SubTitle = styled.h3`
     margin: 0;
     padding-bottom: 3rem;
@@ -120,6 +114,10 @@ const RecipeDetails = () => {
 
     const recipeId = useParams();
     const userContext = useContext(UserContext);
+    const history = useHistory();
+    const isLoggedIn = userContext.loggedIn;
+    const isAdmin = userContext.user ? userContext.user.role === 'admin' : false;
+    const hasLikedState = userContext.user ? userContext.user.favouriteRecipes.includes(recipeId.id) : false;
 
     const [title, setTitle] = useState('');
     const [shortDescription, setShortDescription] = useState(EditorState.createEmpty());
@@ -131,6 +129,7 @@ const RecipeDetails = () => {
     const [serves, setServes] = useState('');
     const [difficulty, setDifficulty] = useState('');
     const [comments, setComments] = useState([]);
+    const [userHasLiked, setUserHasLiked] = useState(hasLikedState);
 
 
     useEffect(() => {
@@ -166,19 +165,87 @@ const RecipeDetails = () => {
         setComments([newComment, ...comments])
     };
 
+    const editRecipe = (e) => {
+        e.preventDefault();
+
+        history.push(`/edit/recipe/${recipeId.id}`)
+    };
+
+    const deleteRecipe = (e) => {
+        e.preventDefault();
+
+        const authToken = utils.getCookieByName('auth-token');
+
+        Axios('http://localhost:5000/api/recipe', {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, params: {
+                id: recipeId.id
+            }
+        }).then((res) => {
+            history.push('/');
+        }).catch((err) => {
+            console.log(err)
+        });
+    };
+
     const addToFavorites = async (e) => {
         e.preventDefault();
 
-        const token = utils.getCookieByName('auth-token');
+        const authToken = utils.getCookieByName('auth-token');
 
-        await Axios('http://localhost:5000/api/recipe/favourites', {
+        Axios('http://localhost:5000/api/recipe/like', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json',
-                'Authorization': token
+                'Authorization': authToken
             }, data: {
                 recipeId: recipeId.id
             }
+        }).then((res) => {
+            userContext.logIn({
+                _id: res.data._id,
+                email: res.data.email,
+                role: res.data.role,
+                firstName: res.data.firstName,
+                lastName: res.data.lastName,
+                profilePicUrl: res.data.profilePicUrl,
+                favouriteRecipes: res.data.favouriteRecipes
+            });
+            setUserHasLiked(true);
+        }).catch((err) => {
+            console.log(err)
+        });
+    };
+
+    const removeFromFavorites = async (e) => {
+        e.preventDefault();
+
+        const authToken = utils.getCookieByName('auth-token');
+
+        Axios('http://localhost:5000/api/recipe/dislike', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, data: {
+                recipeId: recipeId.id
+            }
+        }).then((res) => {
+            userContext.logIn({
+                _id: res.data._id,
+                email: res.data.email,
+                role: res.data.role,
+                firstName: res.data.firstName,
+                lastName: res.data.lastName,
+                profilePicUrl: res.data.profilePicUrl,
+                favouriteRecipes: res.data.favouriteRecipes
+            });
+            setUserHasLiked(false);
+        }).catch((err) => {
+            console.log(err)
         });
     };
 
@@ -186,7 +253,12 @@ const RecipeDetails = () => {
         <Wrapper>
             <TitleContainer>
                 <MainTitle>{title}</MainTitle>
-                <LikeBtn onClick={addToFavorites} >Add to Favourites</LikeBtn>
+                <ActionBar>
+                    {isLoggedIn && !isAdmin && !userHasLiked && <GreenButton action={addToFavorites} label={'Add to Favourites'} />}
+                    {isLoggedIn && !isAdmin && userHasLiked && <RedButton action={removeFromFavorites} label={'Remove from Favourites'} />}
+                    {isLoggedIn && isAdmin && <GreenButton action={editRecipe} label={'Edit Recipe'} />}
+                    {isLoggedIn && isAdmin && <RedButton action={deleteRecipe} label={'Delete Recipe'} />}
+                </ActionBar>
             </TitleContainer>
             <Editor editorState={shortDescription} readOnly={true} />
             <InfoList>

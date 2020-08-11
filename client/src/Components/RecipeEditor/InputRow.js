@@ -40,16 +40,16 @@ const InputRow = (props) => {
         
         <tr>
             <td>
-                <StyledInput onChange={setQuantityInput} type='number' />
+                <StyledInput value={props.quantityValue} onChange={setQuantityInput} type='number' />
             </td>
             <td>
-                <StyledSelect defaultValue={""} onChange={setUnitInput}>
+                <StyledSelect value={props.unitValue} onChange={setUnitInput}>
                     <option value="" hidden >Select Unit</option>
                     {unitOptions}
                 </StyledSelect>
             </td>
             <td>
-                <StyledSelect defaultValue={""} onChange={setIngredientInput}>
+                <StyledSelect value={props.ingredientValue} onChange={setIngredientInput}>
                     <option value="" hidden >Select Ingredient</option>
                     {ingredientOptions}
                 </StyledSelect>

@@ -2,10 +2,15 @@ import React, { useState, useEffect, useContext } from 'react';
 import Axios from 'axios';
 import styled from 'styled-components';
 import { useParams } from 'react-router';
+import { useHistory } from "react-router-dom";
 import { Editor, EditorState, convertFromRaw } from "draft-js";
+import * as utils from '../../Utils/user';
 import UserContext from '../../Context';
 import CommentsSection from '../CommentsSection';
 import Comment from '../CommentsSection/Comment';
+import ActionBar from '../RecipeDetails/ActionBar';
+import GreenButton from '../RecipeDetails/GreenButton';
+import RedButton from '../RecipeDetails/RedButton';
 
 
 const Wrapper = styled.div`
@@ -40,6 +45,9 @@ const ArticleDetails = () => {
 
     const articleId = useParams();
     const userContext = useContext(UserContext);
+    const history = useHistory();
+    const isLoggedIn = userContext.loggedIn;
+    const isAdmin = userContext.user ? userContext.user.role === 'admin' : false;
 
     const [title, setTitle] = useState('');
     const [imageUrl, setImageUrl] = useState('');
@@ -69,6 +77,32 @@ const ArticleDetails = () => {
         setComments([newComment, ...comments])
     };
 
+    const editArticle = (e) => {
+        e.preventDefault();
+
+        history.push(`/edit/article/${articleId.id}`)
+    };
+
+    const deleteArticle = (e) => {
+        e.preventDefault();
+
+        const authToken = utils.getCookieByName('auth-token');
+
+        Axios('http://localhost:5000/api/article', {
+            method: 'DELETE',
+            headers: {
+                'content-type': 'application/json',
+                'Authorization': authToken
+            }, params: {
+                id: articleId.id
+            }
+        }).then((res) => {
+            history.push('/');
+        }).catch((err) => {
+            console.log(err)
+        });
+    };
+
     return (
         <Wrapper>
             <MainTitle>{title}</MainTitle>
@@ -76,6 +110,10 @@ const ArticleDetails = () => {
             <EditorContainer>
                 <Editor editorState={body} readOnly={true} />
             </EditorContainer>
+            {isLoggedIn && isAdmin && <ActionBar>
+                <GreenButton action={editArticle} label={'Edit Article'} />
+                <RedButton action={deleteArticle} label={'Delete Article'} />
+            </ActionBar>}
             {userContext.loggedIn && <CommentsSection
                 entityId={articleId.id}
                 entityType={'article'}

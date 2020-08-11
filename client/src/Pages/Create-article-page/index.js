@@ -4,8 +4,8 @@ import Axios from 'axios';
 import { EditorState, convertToRaw } from 'draft-js';
 import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import AdminHeader from '../../Components/AdminHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import ArticleEditor from '../../Components/ArticleEditor';
 
 
@@ -49,7 +49,7 @@ const CreateArticlePage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <ArticleEditor 
                 pageTitle={'Create Article'}
                 title={title}
@@ -64,7 +64,7 @@ const CreateArticlePage = () => {
                 setErrorMessage={setErrorMessage}
                 onSubmit={saveArticle}
             />
-            <AdminHeader />
+            <Header />
         </PageLayout>
     );
 };

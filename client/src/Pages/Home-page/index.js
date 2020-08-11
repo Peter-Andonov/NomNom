@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import Header from '../../Components/UserHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import PageInfo from '../../Components/PageInfo';
 import FlexLister from '../../Components/FlexLister';
 import ArticleCard from '../../Components/ArticleCard';
@@ -32,7 +32,7 @@ const HomePage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <PageInfo title='Latest Recipes' />
             <FlexLister>
                 {recipes.map((recipe) =>

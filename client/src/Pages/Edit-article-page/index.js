@@ -5,8 +5,8 @@ import { useParams } from 'react-router';
 import { EditorState, convertFromRaw, convertToRaw } from "draft-js";
 import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import AdminHeader from '../../Components/AdminHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import ArticleEditor from '../../Components/ArticleEditor';
 
 
@@ -69,7 +69,7 @@ const EditArticlePage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <ArticleEditor 
                 pageTitle={'Edit Article'}
                 title={title}
@@ -84,7 +84,7 @@ const EditArticlePage = () => {
                 setErrorMessage={setErrorMessage}
                 onSubmit={saveArticle}
             />
-            <AdminHeader />
+            <Header />
         </PageLayout>
     );
 };

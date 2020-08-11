@@ -5,8 +5,8 @@ import Axios from 'axios';
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import AdminHeader from '../../Components/AdminHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import RecipeEditor from '../../Components/RecipeEditor';
 
 
@@ -149,7 +149,7 @@ const EditRecipePage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <RecipeEditor 
                 pageTitle={'Edit recipe'}
                 title={title}
@@ -178,7 +178,7 @@ const EditRecipePage = () => {
                 errorMessage={errorMessage}
                 action={saveRecipe}
             />
-            <AdminHeader />
+            <Header />
         </PageLayout>
     );
 };

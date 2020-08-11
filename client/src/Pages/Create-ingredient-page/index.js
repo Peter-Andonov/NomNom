@@ -1,7 +1,7 @@
 import React from 'react';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import AdminHeader from '../../Components/AdminHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import IngredientEditor from '../../Components/IngredientEditor';
 
 
@@ -9,9 +9,9 @@ const CreateIngredientPage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <IngredientEditor />
-            <AdminHeader />
+            <Header />
         </PageLayout>
     );
 };

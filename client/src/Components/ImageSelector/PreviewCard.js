@@ -26,16 +26,6 @@ const Image = styled.img`
     }
 `;
 
-const Remove = styled.div`
-    margin-bottom: 1rem;
-    width: fit-content;
-    padding: 0;
-    &:hover {
-        color: rgba(237, 71, 59);
-        cursor: pointer;
-    }
-`;
-
 
 const PreviewCard = (props) => {
 

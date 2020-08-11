@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import Axios from 'axios';
 import PageLayout from '../PageLayout';
-import HeaderImage from '../../Components/HeaderImage';
-import Header from '../../Components/UserHeader';
+import BannerImage from '../../Components/BannerImage';
+import Header from '../../Components/Header';
 import FlexLister from '../../Components/FlexLister';
 import PageInfo from '../../Components/PageInfo';
 import Pagination from '../../Components/Pagination';
@@ -38,7 +38,7 @@ const ArticlesPage = () => {
 
     return (
         <PageLayout>
-            <HeaderImage />
+            <BannerImage />
             <PageInfo title='Articles' />
             <FlexLister>
                 {articles.map((article) =>

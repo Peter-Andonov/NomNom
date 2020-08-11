@@ -18,24 +18,23 @@ const IngredientsPage = () => {
     const perPage = 10;
     const totalPages = Math.ceil(totalIngredients / perPage);
 
-    const getIngredients = () => {
-        Axios(`http://localhost:5000/api/ingredient/all`, {
-            method: "GET",
-            params: {
-                page: currentPage,
-                perPage: perPage,
-                sortCrit: 'createdAt',
-                sortOrd: 'desc'
-            }
-        }).then((res) => {
-            setIngredients(res.data.ingredients);
-            setTotalIngredients(res.data.totalIngredientsCount);
-        }).catch((err) => {
-            console.log(err);
-        });
-    };
-
     useEffect(() => {
+        const getIngredients = () => {
+            Axios(`http://localhost:5000/api/ingredient/all`, {
+                method: "GET",
+                params: {
+                    page: currentPage,
+                    perPage: perPage,
+                    sortCrit: 'createdAt',
+                    sortOrd: 'desc'
+                }
+            }).then((res) => {
+                setIngredients(res.data.ingredients);
+                setTotalIngredients(res.data.totalIngredientsCount);
+            }).catch((err) => {
+                console.log(err);
+            });
+        };
         getIngredients();
     }, [currentPage]);
 

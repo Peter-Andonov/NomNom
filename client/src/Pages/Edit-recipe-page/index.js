@@ -72,13 +72,25 @@ const EditRecipePage = () => {
         getUnits();
     }, []);
 
+    
+
     useEffect(() => {
-        const getIngredients = async () => {
-            const res = await Axios.get('http://localhost:5000/api/ingredient/all');
-            setIngredients(res.data);
-        }
         getIngredients();
     }, []);
+
+    const getIngredients = () => {
+        Axios(`http://localhost:5000/api/ingredient/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'name',
+                sortOrd: 'asc'
+            }
+        }).then((res) => {
+            setIngredients(res.data.ingredients);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
 
     const addIngredientSection = () => {
         const newIngredientSection = `section-${ingredientSections.length}`;

@@ -56,10 +56,26 @@ deleteIngredient = async (req, res) => {
     return deleted;
 };
 
-getAllIngredients = async () => {
-    const ingredients = await Ingredient.find({}).sort({ 'name': 'asc' }).lean();
+getAllIngredients = async (req, res) => {
+    
+    const page = req.query.page;
+    const perPage = Number(req.query.perPage);
+    const sortCrit = req.query.sortCrit;
+    const sortOrd = req.query.sortOrd;
 
-    return ingredients;
+    const sortObj = {};
+    sortObj[sortCrit] = sortOrd;
+
+    const ingredients = await Ingredient.find({})
+    .sort(sortObj)
+    .skip((page - 1) * perPage)
+    .limit(perPage).lean();
+
+    const totalIngredientsCount = await Ingredient.countDocuments();
+
+    const data = { ingredients, totalIngredientsCount };
+
+    return data;
 };
 
 

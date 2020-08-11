@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import UserContext from './Context';
 import HomePage from './Pages/Home-page';
 import RecipesPage from './Pages/Recipes-page';
+import IngredientsPage from './Pages/Ingredients-page';
 import RecipeDetailsPage from './Pages/Recipe-details-page';
 import IngredientDetailsPage from './Pages/Ingredient-details-page';
 import ArticlesPage from './Pages/Articles-page';
@@ -21,6 +22,7 @@ import EditIngredientPage from './Pages/Edit-ingredient-page';
 import EditRecipePage from './Pages/Edit-recipe-page';
 
 
+
 const Navigation = () => {
 
   const userContext = useContext(UserContext);
@@ -33,6 +35,7 @@ const Navigation = () => {
         <Route path={'/'} exact component={HomePage} />
         <Route path={'/recipes'} component={RecipesPage} />
         <Route path={'/recipe/:id'} component={RecipeDetailsPage} />
+        <Route path={'/ingredients'} component={IngredientsPage} />
         <Route path={'/ingredient/:id'} component={IngredientDetailsPage} />
         <Route path={'/articles'} component={ArticlesPage} />
         <Route path={'/article/:id'} component={ArticleDetailsPage} />

@@ -45,6 +45,7 @@ const Header = () => {
             <Navigation>
                 <StyledLink to={'/'} text={'Home'} />
                 <StyledLink to={'/recipes'} text={'Recipes'} />
+                <StyledLink to={'/ingredients'} text={'Ingredients'} />
                 <StyledLink to={'/articles'} text={'Articles'} />
                 {isAdmin &&
                     <AdminNav >

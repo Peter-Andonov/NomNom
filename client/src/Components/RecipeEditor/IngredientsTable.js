@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     border-radius: 20px;
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: left;
     align-items: center;
 `;
 
@@ -44,7 +44,9 @@ const ColHeading = styled.td`
 
 const IngredientsTable = (props) => {
 
-    const [inputFields, setInputFields] = useState(['input-0']);
+    const initialRows = props.sectionState.ingredients.map((ingr, idx) => `input-${idx}`);
+
+    const [inputFields, setInputFields] = useState(initialRows);
 
     const addInput = () => {
         const newInput = `input-${inputFields.length}`;
@@ -78,10 +80,10 @@ const IngredientsTable = (props) => {
     };
 
     const handleNameInput = (value) => {
-        const { id, quantities, units, ingredients } = { ...props.sectionState };
+        const { _id, quantities, units, ingredients } = { ...props.sectionState };
         const newName = value;
         props.handleInput({
-            id,
+            _id,
             name: newName,
             quantities,
             units,
@@ -90,11 +92,11 @@ const IngredientsTable = (props) => {
     }
 
     const handleQuantityInputValues = (value, idx) => {
-        const { id, name, quantities, units, ingredients } = { ...props.sectionState };
+        const { _id, name, quantities, units, ingredients } = { ...props.sectionState };
         const newQuantities = [...quantities];
         newQuantities[idx] = value;
         props.handleInput({
-            id,
+            _id,
             name,
             quantities: newQuantities,
             units,
@@ -103,11 +105,11 @@ const IngredientsTable = (props) => {
     };
 
     const handleUnitInputValues = (value, idx) => {
-        const { id, name, quantities, units, ingredients } = { ...props.sectionState };
+        const { _id, name, quantities, units, ingredients } = { ...props.sectionState };
         const newUnits = [...units];
         newUnits[idx] = value;
         props.handleInput({
-            id,
+            _id,
             name,
             quantities,
             units: newUnits,
@@ -116,11 +118,11 @@ const IngredientsTable = (props) => {
     };
 
     const handleIngredientInputValues = (value, idx) => {
-        const { id, name, quantities, units, ingredients } = { ...props.sectionState };
+        const { _id, name, quantities, units, ingredients } = { ...props.sectionState };
         const newIngredients = [...ingredients];
         newIngredients[idx] = value;
         props.handleInput({
-            id,
+            _id,
             name,
             quantities,
             units,
@@ -131,6 +133,7 @@ const IngredientsTable = (props) => {
 
     return (
         <Wrapper>
+        
             <StyledInput
                 placeholder='Section name'
                 type='text'
@@ -151,6 +154,9 @@ const IngredientsTable = (props) => {
                         <InputRow
                             key={input}
                             idx={idx}
+                            quantityValue={props.sectionState.quantities[idx]}
+                            unitValue={props.sectionState.units[idx] ? props.sectionState.units[idx]._id : ''}
+                            ingredientValue={props.sectionState.ingredients[idx] ? props.sectionState.ingredients[idx]._id : ''}
                             units={props.units}
                             ingredients={props.ingredients}
                             setQuantityInputValues={handleQuantityInputValues}

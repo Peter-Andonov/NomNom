@@ -19,11 +19,11 @@ const CreateRecipePage = () => {
     const [units, setUnits] = useState([]);
     const [ingredients, setIngredients] = useState([]);
     const [ingredientSections, setIngredientSections] = useState([{
-        id: 'section-0',
+        _id: 'section-0',
         name: '',
-        quantities: [],
-        units: [],
-        ingredients: []
+        quantities: [''],
+        units: [''],
+        ingredients: ['']
     }]);
     const [prepTime, setPrepTime] = useState('');
     const [cookTime, setCookTime] = useState('');
@@ -54,11 +54,11 @@ const CreateRecipePage = () => {
     const addIngredientSection = () => {
         const newIngredientSection = `section-${ingredientSections.length}`;
         setIngredientSections([...ingredientSections, {
-            id: newIngredientSection,
+            _id: newIngredientSection,
             name: '',
-            quantities: [],
-            units: [],
-            ingredients: []
+            quantities: [''],
+            units: [''],
+            ingredients: ['']
         }]);
     };
 
@@ -76,7 +76,7 @@ const CreateRecipePage = () => {
 
     const handleInput = (newSectionState) => {
         const newIngredientSections = ingredientSections.map((section) => {
-            if (section.id === newSectionState.id) {
+            if (section._id === newSectionState._id) {
                 return newSectionState
             }
             return section;
@@ -119,6 +119,7 @@ const CreateRecipePage = () => {
 
     return (
         <PageLayout>
+        {console.log(ingredientSections)}
             <HeaderImage />
             <RecipeEditor 
                 title={title}

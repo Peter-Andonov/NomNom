@@ -20,11 +20,12 @@ const Wrapper = styled.div`
 `;
 
 const Container = styled.div`
+    margin-top: 0.5rem;
     width: 100%;
     height: auto;
     display: flex;
     flex-wrap: wrap;
-    align-items: center;
+    align-items: left;
     justify-content: center;
 `;
 
@@ -98,7 +99,7 @@ const RecipeEditor = (props) => {
             <h3>Recipe Title</h3>
             <Input
                 value={props.title}
-                onChange={props.setTitle} />.
+                onChange={props.setTitle} />
             <h3>Cover Image</h3>
             <ImageSelector
                 imageUrl={props.coverImageUrl}
@@ -124,7 +125,7 @@ const RecipeEditor = (props) => {
             <Container>
                 {props.ingredientSections.map((section, idx) =>
                     <IngredientsTable
-                        key={section.id}
+                        key={section._id}
                         units={props.units}
                         ingredients={props.ingredients}
                         sectionState={props.ingredientSections[idx]}
@@ -162,7 +163,9 @@ const RecipeEditor = (props) => {
                 </Container>
                 <Container>
                     <InfoLabel>Difficulty</InfoLabel>
-                    <StyledSelect defaultValue={props.difficulty} onChange={(e) => props.setDifficulty(e.target.value)}>
+                    <StyledSelect
+                    value={props.difficulty}
+                    onChange={(e) => props.setDifficulty(e.target.value)}>
                         <option value="" hidden >Difficulty</option>
                         <option value="easy" >Easy</option>
                         <option value="medium" >Medium</option>

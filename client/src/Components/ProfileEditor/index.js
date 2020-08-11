@@ -38,8 +38,7 @@ const ProfileEditor = () => {
 
     const [firstName, setFirstName] = useState(userContext.user.firstName);
     const [lastName, setLastName] = useState(userContext.user.lastName);
-    const [profilePicUrl, setProfilePicUrl] = useState('');
-    const [deleteToken, setDeleteToken] = useState('');
+    const [profilePicUrl, setProfilePicUrl] = useState(userContext.user.profilePicUrl);
 
 
     const saveProfile = async (e) => {
@@ -78,8 +77,6 @@ const ProfileEditor = () => {
                 <ImageSelector
                     imageUrl={profilePicUrl}
                     setImageUrl={setProfilePicUrl}
-                    deleteToken={deleteToken}
-                    setDeleteToken={setDeleteToken}
                 />
                 <Container>
                     <label>First name</label>

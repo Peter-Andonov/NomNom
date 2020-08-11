@@ -13,7 +13,6 @@ const CreateArticlePage = () => {
 
     const [title, setTitle] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    const [deleteToken, setDeleteToken] = useState('');
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
@@ -57,8 +56,6 @@ const CreateArticlePage = () => {
                 setTitle={setTitle}
                 imageUrl={imageUrl}
                 setImageUrl={setImageUrl}
-                deleteToken={deleteToken}
-                setDeleteToken={setDeleteToken}
                 editorState={editorState}
                 setEditorState={setEditorState}
                 error={error}

@@ -13,7 +13,6 @@ const CreateRecipePage = () => {
 
     const [title, setTitle] = useState('');
     const [coverImageUrl, setCoverImageUrl] = useState('');
-    const [deleteToken, setDeleteToken] = useState('');
     const [shortDescriptionState, setShortDescriptionState] = useState(EditorState.createEmpty());
     const [stepsState, setStepsState] = useState(EditorState.createEmpty());
     const [units, setUnits] = useState([]);
@@ -126,8 +125,6 @@ const CreateRecipePage = () => {
                 setTitle={setTitle}
                 coverImageUrl={coverImageUrl}
                 setCoverImageUrl={setCoverImageUrl}
-                deleteToken={deleteToken}
-                setDeleteToken={setDeleteToken}
                 shortDescriptionState={shortDescriptionState}
                 setShortDescriptionState={setShortDescriptionState}
                 stepsState={stepsState}

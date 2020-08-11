@@ -119,9 +119,9 @@ const CreateRecipePage = () => {
 
     return (
         <PageLayout>
-        {console.log(ingredientSections)}
             <HeaderImage />
             <RecipeEditor 
+                pageTitle={'Create recipe'}
                 title={title}
                 setTitle={setTitle}
                 coverImageUrl={coverImageUrl}

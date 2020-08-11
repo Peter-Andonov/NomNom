@@ -87,7 +87,52 @@ getRecipeById = async (req, res) => {
     return recipe;
 };
 
-// TODO: add a update controller
+updateRecipe = async (req, res) => {
+    const recipeId = req.body.id;
+
+    const updatedRecipeData = {};
+
+    if(req.body.title){
+        updatedRecipeData.title = req.body.title;
+    }
+    if(req.body.coverImageUrl){
+        updatedRecipeData.coverImageUrl = req.body.coverImageUrl;
+    }
+    if(req.body.shortDescription){
+        updatedRecipeData.shortDescription = req.body.shortDescription;
+    }
+    if(req.body.stepsToCreate){
+        updatedRecipeData.stepsToCreate = req.body.stepsToCreate;
+    }
+    if(req.body.prepTime){
+        updatedRecipeData.prepTime = req.body.prepTime;
+    }
+    if(req.body.cookTime){
+        updatedRecipeData.cookTime = req.body.cookTime;
+    }
+    if(req.body.serves){
+        updatedRecipeData.serves = req.body.serves;
+    }
+    if(req.body.difficulty){
+        updatedRecipeData.difficulty = req.body.difficulty;
+    }
+
+    const ingredientSections = req.body.ingredientSections;
+
+    const newIngredientSets = await Promise.all(ingredientSections.map(async (section) => {
+        return createIngredientSet(section);
+    }));
+
+    const newIngredientSetIds = newIngredientSets.map((set) => {
+        return set._id;
+    });
+
+    updatedRecipeData.ingredientSets = newIngredientSetIds;
+
+    const updated = await Recipe.findByIdAndUpdate(recipeId, updatedRecipeData);
+
+    return updated;
+};
 
 deleteRecipe = async (req, res) => {
     const recipeId = req.query.id;
@@ -180,6 +225,7 @@ createIngredientSet = async (body) => {
 module.exports = {
     createRecipe,
     getAllRecipes,
+    updateRecipe,
     deleteRecipe,
     getRecipeById,
     addRecipeToFavourites,

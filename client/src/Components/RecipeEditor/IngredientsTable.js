@@ -133,7 +133,6 @@ const IngredientsTable = (props) => {
 
     return (
         <Wrapper>
-        
             <StyledInput
                 placeholder='Section name'
                 type='text'

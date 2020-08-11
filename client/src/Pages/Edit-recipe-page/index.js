@@ -106,7 +106,7 @@ const EditRecipePage = () => {
 
     const handleInput = (newSectionState) => {
         const newIngredientSections = ingredientSections.map((section) => {
-            if (section.id === newSectionState.id) {
+            if (section._id === newSectionState._id) {
                 return newSectionState
             }
             return section;
@@ -122,6 +122,7 @@ const EditRecipePage = () => {
         const stepsToCreate = JSON.stringify(convertToRaw(stepsState.getCurrentContent()));
         
         const data = {
+            id: recipeId.id,
             title,
             coverImageUrl,
             shortDescription,
@@ -134,7 +135,7 @@ const EditRecipePage = () => {
         };
 
         Axios('http://localhost:5000/api/recipe', {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
                 'Authorization': authToken
@@ -151,6 +152,7 @@ const EditRecipePage = () => {
         <PageLayout>
             <HeaderImage />
             <RecipeEditor 
+                pageTitle={'Edit recipe'}
                 title={title}
                 setTitle={setTitle}
                 coverImageUrl={coverImageUrl}

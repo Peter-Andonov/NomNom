@@ -2,6 +2,7 @@ const express = require('express');
 const {
     createRecipe,
     getRecipeById,
+    updateRecipe,
     deleteRecipe,
     getAllRecipes,
     addRecipeToFavourites,
@@ -48,7 +49,21 @@ recipeRouter.get('/recipe', async (req, res, next) => {
     };
 });
 
-// TODO: Add update route for recipe
+recipeRouter.patch('/recipe', checkAdminAuth, async (req, res, next) => {
+    try {
+        const recipe = await updateRecipe(req, res);
+
+        if (!recipe) {
+            return res.status(404).json({
+                message: "Recipe with the requested id does not exist"
+            });
+        }
+
+        return res.status(200).json(recipe);
+    } catch (err) {
+        next(err);
+    };
+});
 
 recipeRouter.delete('/recipe', checkAdminAuth, async (req, res, next) => {
     try {

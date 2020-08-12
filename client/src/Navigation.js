@@ -21,7 +21,7 @@ import EditRecipePage from './Pages/Edit-recipe-page';
 import EditIngredientPage from './Pages/Edit-ingredient-page';
 import EditArticlePage from './Pages/Edit-article-page';
 import EditUnitPage from './Pages/Edit-unit-page'
-
+import PageNotFound from './Pages/404';
 
 
 const Navigation = () => {
@@ -78,6 +78,9 @@ const Navigation = () => {
         </Route>
         <Route path={'/edit/unit/:id'} >
           {isAdmin ? (<EditUnitPage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'*'} >
+          <PageNotFound />
         </Route>
       </Switch>
     </Router>

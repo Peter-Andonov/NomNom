@@ -7,6 +7,7 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import ArticleEditor from '../../Components/ArticleEditor';
+import Footer from '../../Components/Footer';
 
 
 const CreateArticlePage = () => {
@@ -50,7 +51,7 @@ const CreateArticlePage = () => {
     return (
         <PageLayout>
             <BannerImage />
-            <ArticleEditor 
+            <ArticleEditor
                 pageTitle={'Create Article'}
                 title={title}
                 setTitle={setTitle}
@@ -65,6 +66,7 @@ const CreateArticlePage = () => {
                 onSubmit={saveArticle}
             />
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

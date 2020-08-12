@@ -9,8 +9,6 @@ import removeIcon from '../../Images/Icons/remove-24px.svg';
 
 
 const Wrapper = styled.div`
-    position: absolute;
-    top: 30vh;
     background-color: white;
     height: auto;
     width: 80%;

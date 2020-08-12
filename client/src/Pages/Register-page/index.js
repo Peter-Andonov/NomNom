@@ -3,14 +3,16 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import RegisterForm from '../../Components/RegisterForm';
+import Footer from '../../Components/Footer';
 
 const RegisterPage = () => {
 
     return (
         <PageLayout>
             <BannerImage />
-            <Header />
             <RegisterForm />
+            <Header />
+            <Footer />
         </PageLayout>
     );
 };

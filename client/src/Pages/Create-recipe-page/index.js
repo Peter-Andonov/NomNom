@@ -7,6 +7,7 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import RecipeEditor from '../../Components/RecipeEditor';
+import Footer from '../../Components/Footer';
 
 
 const CreateRecipePage = () => {
@@ -106,7 +107,7 @@ const CreateRecipePage = () => {
 
         const shortDescription = JSON.stringify(convertToRaw(shortDescriptionState.getCurrentContent()));
         const stepsToCreate = JSON.stringify(convertToRaw(stepsState.getCurrentContent()));
-        
+
         const data = {
             title,
             coverImageUrl,
@@ -136,7 +137,7 @@ const CreateRecipePage = () => {
     return (
         <PageLayout>
             <BannerImage />
-            <RecipeEditor 
+            <RecipeEditor
                 pageTitle={'Create recipe'}
                 title={title}
                 setTitle={setTitle}
@@ -165,6 +166,7 @@ const CreateRecipePage = () => {
                 action={saveRecipe}
             />
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

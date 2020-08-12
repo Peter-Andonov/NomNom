@@ -8,6 +8,7 @@ import FlexLister from '../../Components/FlexLister';
 import Pagination from '../../Components/Pagination';
 import RecipeCard from '../../Components/RecipeCard';
 import Search from '../../Components/Search';
+import Footer from '../../Components/Footer';
 
 
 const RecipesPage = () => {
@@ -81,6 +82,7 @@ const RecipesPage = () => {
                     changePage={changePage}
                 /> : ''}
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

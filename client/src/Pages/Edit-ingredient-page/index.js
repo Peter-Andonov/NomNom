@@ -8,6 +8,7 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import IngredientEditor from '../../Components/IngredientEditor';
+import Footer from '../../Components/Footer';
 
 
 const EditIngredientPage = () => {
@@ -86,6 +87,7 @@ const EditIngredientPage = () => {
                 action={saveIngredient}
             />
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

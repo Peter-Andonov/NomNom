@@ -15,8 +15,6 @@ import RedButton from '../RecipeDetails/RedButton';
 
 const Wrapper = styled.div`
     padding: 3rem;
-    position: absolute;
-    top: 30vh;
     background-color: white;
     height: auto;
     width: 80%;

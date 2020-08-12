@@ -3,6 +3,7 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import ArticleDetails from '../../Components/ArticleDetails';
+import Footer from '../../Components/Footer';
 
 
 const ArticleDetailsPage = () => {
@@ -12,6 +13,7 @@ const ArticleDetailsPage = () => {
             <BannerImage />
             <ArticleDetails />
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

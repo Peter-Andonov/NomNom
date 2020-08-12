@@ -7,6 +7,7 @@ import Dashboard from '../../Components/Dashboard';
 import DashboardContainer from '../../Components/Dashboard/DashboardContainer';
 import ListItem from '../../Components/Dashboard/ListItem';
 import ListEditable from '../../Components/Dashboard/ListEditable';
+import Footer from '../../Components/Footer';
 
 
 const AdminPage = () => {
@@ -166,6 +167,7 @@ const AdminPage = () => {
                 </DashboardContainer>
             </Dashboard>
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

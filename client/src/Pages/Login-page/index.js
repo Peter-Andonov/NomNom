@@ -3,6 +3,7 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import LoginForm from '../../Components/LoginForm';
+import Footer from '../../Components/Footer';
 
 
 const LoginPage = () => {
@@ -10,8 +11,9 @@ const LoginPage = () => {
     return (
         <PageLayout>
             <BannerImage />
-            <Header />
             <LoginForm />
+            <Header />
+            <Footer />
         </PageLayout>
     );
 };

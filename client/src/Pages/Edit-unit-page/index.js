@@ -7,6 +7,7 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import UnitEditor from '../../Components/UnitEditor';
+import Footer from '../../Components/Footer';
 
 
 const CreateUnitPage = () => {
@@ -69,6 +70,7 @@ const CreateUnitPage = () => {
                 onSubmit={saveUnit}
             />
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

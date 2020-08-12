@@ -7,7 +7,7 @@ import instagramIcon from '../../Images/Icons/icons8-instagram.svg';
 
 const Container = styled.footer`
     margin-top: 3rem;
-    min-height: 10rem;
+    min-height: 8rem;
     width: 100%;
     background-color: rgb(51, 51, 51);
     display: flex;

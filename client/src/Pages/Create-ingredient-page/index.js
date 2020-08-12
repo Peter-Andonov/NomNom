@@ -7,6 +7,7 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import IngredientEditor from '../../Components/IngredientEditor';
+import Footer from '../../Components/Footer';
 
 
 const CreateIngredientPage = () => {
@@ -65,6 +66,7 @@ const CreateIngredientPage = () => {
                 action={saveIngredient}
             />
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

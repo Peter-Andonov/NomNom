@@ -8,8 +8,6 @@ import Submit from '../RegisterForm/Submit';
 
 
 const Wrapper = styled.div`
-    position: absolute;
-    top: 30vh;
     background-color: white;
     height: auto;
     width: 60%;

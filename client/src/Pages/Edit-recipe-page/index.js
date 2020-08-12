@@ -8,6 +8,7 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import RecipeEditor from '../../Components/RecipeEditor';
+import Footer from '../../Components/Footer';
 
 
 const EditRecipePage = () => {
@@ -196,6 +197,7 @@ const EditRecipePage = () => {
                 action={saveRecipe}
             />
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

@@ -10,6 +10,7 @@ const Wrapper = styled.div`
     height: auto;
     width: 80%;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     align-items: left;
     justify-content: space-around;

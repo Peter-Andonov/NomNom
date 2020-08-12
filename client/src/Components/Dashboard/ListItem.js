@@ -19,11 +19,12 @@ const Image = styled.img`
 
 
 const ListItem = (props) => {
+
     return (
         <Wrapper>
-            <Image src={props.src} />
+            {props.src && <Image src={props.src} />}
             <div>{props.title}</div>
-            <div>{`${props.metricValue} ${props.metricLabel}`}</div>
+            {props.metricLabel && <div>{`${props.metricValue} ${props.metricLabel}`}</div>}
         </Wrapper>
     );
 };

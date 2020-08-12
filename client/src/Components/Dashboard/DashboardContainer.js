@@ -4,6 +4,8 @@ import Pagination from '../../Components/Pagination';
 
 
 const Wrapper = styled.div`
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
     min-width: 40rem;
     background-color: rgb(242, 243, 247);
     display: flex;

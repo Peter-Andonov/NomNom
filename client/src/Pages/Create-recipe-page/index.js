@@ -35,15 +35,8 @@ const CreateRecipePage = () => {
 
 
     useEffect(() => {
-        const getUnits = async () => {
-            const res = await Axios.get('http://localhost:5000/api/unit/all');
-            setUnits(res.data);
-        }
-        getUnits();
-    }, []);
-
-    useEffect(() => {
         getIngredients();
+        getUnits();
     }, []);
 
     const getIngredients = () => {
@@ -55,6 +48,20 @@ const CreateRecipePage = () => {
             }
         }).then((res) => {
             setIngredients(res.data.ingredients);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
+    const getUnits = () => {
+        Axios(`http://localhost:5000/api/unit/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'name',
+                sortOrd: 'asc'
+            }
+        }).then((res) => {
+            setUnits(res.data.units);
         }).catch((err) => {
             console.log(err);
         });

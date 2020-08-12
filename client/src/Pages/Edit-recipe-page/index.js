@@ -65,31 +65,37 @@ const EditRecipePage = () => {
     }, [recipeId.id]);
 
     useEffect(() => {
-        const getUnits = async () => {
-            const res = await Axios.get('http://localhost:5000/api/unit/all');
-            setUnits(res.data);
-        }
+        getIngredients();
         getUnits();
     }, []);
 
-    
+    const getIngredients = () => {
+        Axios(`http://localhost:5000/api/ingredient/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'name',
+                sortOrd: 'asc'
+            }
+        }).then((res) => {
+            setIngredients(res.data.ingredients);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
 
-    useEffect(() => {
-        const getIngredients = () => {
-            Axios(`http://localhost:5000/api/ingredient/all`, {
-                method: "GET",
-                params: {
-                    sortCrit: 'name',
-                    sortOrd: 'asc'
-                }
-            }).then((res) => {
-                setIngredients(res.data.ingredients);
-            }).catch((err) => {
-                console.log(err);
-            });
-        };
-        getIngredients();
-    }, []);
+    const getUnits = () => {
+        Axios(`http://localhost:5000/api/unit/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'name',
+                sortOrd: 'asc'
+            }
+        }).then((res) => {
+            setUnits(res.data.units);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
 
     const addIngredientSection = () => {
         const newIngredientSection = `section-${ingredientSections.length}`;

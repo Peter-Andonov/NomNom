@@ -6,7 +6,7 @@ import Header from '../../Components/Header';
 import Dashboard from '../../Components/Dashboard';
 import DashboardContainer from '../../Components/Dashboard/DashboardContainer';
 import ListItem from '../../Components/Dashboard/ListItem';
-import Pagination from '../../Components/Pagination';
+import ListEditable from '../../Components/Dashboard/ListEditable';
 
 
 const AdminPage = () => {
@@ -17,51 +17,66 @@ const AdminPage = () => {
     const [articles, setArticles] = useState([]);
     const [totalArticlesCount, setTotalArticlesCount] = useState(0);
     const [currentArticlesPage, setCurrentArticlesPage] = useState(1);
+    const [units, setUnits] = useState([]);
+    const [totalUnitsCount, setTotalUnitsCount] = useState(0);
+    const [currentUnitsPage, setCurrentUnitsPage] = useState(1);
 
     const perPage = 5;
     const totalRecipePages = Math.ceil(totalRecipesCount / perPage);
     const totalArticlePages = Math.ceil(totalArticlesCount / perPage);
+    const totalUnitPages = Math.ceil(totalUnitsCount / perPage);
 
 
     useEffect(() => {
-        const getRecipes = () => {
-            Axios(`http://localhost:5000/api/recipe/all`, {
-                method: "GET",
-                params: {
-                    sortCrit: 'usersLiked',
-                    sortOrd: 'desc',
-                    page: currentRecipesPage,
-                    perPage: perPage
-                }
-            }).then((res) => {
-                setRecipes(res.data.recipes);
-                setTotalRecipesCount(res.data.totalRecipesCount);
-            }).catch((err) => {
-                console.log(err);
-            });
-        };
-        getRecipes();
+        Axios(`http://localhost:5000/api/recipe/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'usersLiked',
+                sortOrd: 'desc',
+                page: currentRecipesPage,
+                perPage: perPage
+            }
+        }).then((res) => {
+            setRecipes(res.data.recipes);
+            setTotalRecipesCount(res.data.totalRecipesCount);
+        }).catch((err) => {
+            console.log(err);
+        });
     }, [currentRecipesPage]);
 
     useEffect(() => {
-        const getArticles = () => {
-            Axios(`http://localhost:5000/api/article/all`, {
-                method: "GET",
-                params: {
-                    sortCrit: 'comments',
-                    sortOrd: 'desc',
-                    page: currentArticlesPage,
-                    perPage: perPage
-                }
-            }).then((res) => {
-                setArticles(res.data.articles);
-                setTotalArticlesCount(res.data.totalArticlesCount);
-            }).catch((err) => {
-                console.log(err);
-            });
-        };
-        getArticles();
+        Axios(`http://localhost:5000/api/article/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'comments',
+                sortOrd: 'desc',
+                page: currentArticlesPage,
+                perPage: perPage
+            }
+        }).then((res) => {
+            setArticles(res.data.articles);
+            setTotalArticlesCount(res.data.totalArticlesCount);
+        }).catch((err) => {
+            console.log(err);
+        });
     }, [currentArticlesPage]);
+
+    useEffect(() => {
+        Axios(`http://localhost:5000/api/unit/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'name',
+                sortOrd: 'asc',
+                page: currentUnitsPage,
+                perPage: perPage
+            }
+        }).then((res) => {
+            setUnits(res.data.units);
+            setTotalUnitsCount(res.data.totalUnitsCount);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, [currentUnitsPage]);
 
     const changeRecipesPage = async (pageNumber) => {
 
@@ -79,6 +94,15 @@ const AdminPage = () => {
         }
 
         setCurrentArticlesPage(pageNumber);
+    };
+
+    const changeUnitsPage = async (pageNumber) => {
+
+        if (pageNumber < 1 || pageNumber > totalUnitPages) {
+            return;
+        }
+
+        setCurrentUnitsPage(pageNumber);
     };
 
     return (
@@ -118,6 +142,25 @@ const AdminPage = () => {
                             title={article.title}
                             metricValue={article.comments.length}
                             metricLabel={'comments'}
+                        />
+                    )}
+                </DashboardContainer>
+                <DashboardContainer
+                    title={'Measurement units'}
+                    perPage={perPage}
+                    totalCount={totalUnitsCount}
+                    currentPage={currentUnitsPage}
+                    totalPages={totalUnitPages}
+                    changePage={changeUnitsPage}
+                >
+                    {units && units.map((unit) =>
+                        <ListEditable
+                            key={unit._id}
+                            id={unit._id}
+                            title={unit.name}
+                            entityType={'unit'}
+                            entities={units}
+                            stateUpdate={setUnits}
                         />
                     )}
                 </DashboardContainer>

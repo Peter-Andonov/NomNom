@@ -7,6 +7,7 @@ import PageInfo from '../../Components/PageInfo';
 import FlexLister from '../../Components/FlexLister';
 import Pagination from '../../Components/Pagination';
 import RecipeCard from '../../Components/RecipeCard';
+import Search from '../../Components/Search';
 
 
 const RecipesPage = () => {
@@ -14,26 +15,33 @@ const RecipesPage = () => {
     const [recipes, setRecipes] = useState([]);
     const [totalRecipes, setTotalRecipes] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch] = useState('');
 
     const perPage = 10;
     const totalPages = Math.ceil(totalRecipes / perPage);
 
     useEffect(() => {
-        const getRecipes = async () => {
-            const res = await Axios(`http://localhost:5000/api/recipe/all`, {
-                method: "GET",    
-                params: {
-                    sortCrit: 'createdAt',
-                    sortOrd: 'desc',
-                    page: currentPage,
-                    perPage: perPage
-                }
-            });
+        getRecipes();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [currentPage]);
+
+    const getRecipes = () => {
+        Axios(`http://localhost:5000/api/recipe/all`, {
+            method: "GET",
+            params: {
+                search: search,
+                sortCrit: 'createdAt',
+                sortOrd: 'desc',
+                page: currentPage,
+                perPage: perPage
+            }
+        }).then((res) => {
             setRecipes(res.data.recipes);
             setTotalRecipes(res.data.totalRecipesCount);
-        }
-        getRecipes();
-    }, [currentPage]);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
 
     const changePage = async (pageNumber) => {
 
@@ -48,8 +56,13 @@ const RecipesPage = () => {
         <PageLayout>
             <BannerImage />
             <PageInfo title='Recipes' />
+            <Search
+                value={search}
+                onChange={setSearch}
+                onSearch={getRecipes}
+            />
             <FlexLister>
-                {recipes.map((recipe) =>
+                {recipes && recipes.map((recipe) =>
                     <RecipeCard
                         key={recipe._id}
                         id={recipe._id}

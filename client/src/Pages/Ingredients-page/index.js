@@ -7,6 +7,7 @@ import FlexLister from '../../Components/FlexLister';
 import PageInfo from '../../Components/PageInfo';
 import Pagination from '../../Components/Pagination';
 import ArticleCard from '../../Components/ArticleCard';
+import Search from '../../Components/Search';
 
 
 const IngredientsPage = () => {
@@ -14,27 +15,30 @@ const IngredientsPage = () => {
     const [ingredients, setIngredients] = useState([]);
     const [totalIngredients, setTotalIngredients] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch] = useState('');
 
     const perPage = 10;
     const totalPages = Math.ceil(totalIngredients / perPage);
 
+    const getIngredients = () => {
+        Axios(`http://localhost:5000/api/ingredient/all`, {
+            method: "GET",
+            params: {
+                search: search,
+                page: currentPage,
+                perPage: perPage,
+                sortCrit: 'createdAt',
+                sortOrd: 'desc'
+            }
+        }).then((res) => {
+            setIngredients(res.data.ingredients);
+            setTotalIngredients(res.data.totalIngredientsCount);
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
     useEffect(() => {
-        const getIngredients = () => {
-            Axios(`http://localhost:5000/api/ingredient/all`, {
-                method: "GET",
-                params: {
-                    page: currentPage,
-                    perPage: perPage,
-                    sortCrit: 'createdAt',
-                    sortOrd: 'desc'
-                }
-            }).then((res) => {
-                setIngredients(res.data.ingredients);
-                setTotalIngredients(res.data.totalIngredientsCount);
-            }).catch((err) => {
-                console.log(err);
-            });
-        };
         getIngredients();
     }, [currentPage]);
 
@@ -51,6 +55,11 @@ const IngredientsPage = () => {
         <PageLayout>
             <BannerImage />
             <PageInfo title='Ingredients' />
+            <Search
+                value={search}
+                onChange={setSearch}
+                onSearch={getIngredients}
+            />
             <FlexLister>
                 {ingredients && ingredients.map((ingredient) =>
                     <ArticleCard

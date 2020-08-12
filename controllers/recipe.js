@@ -145,6 +145,7 @@ deleteRecipe = async (req, res) => {
 };
 
 getAllRecipes = async (req, res) => {
+    const search = req.query.search;
     const page = req.query.page;
     const perPage = Number(req.query.perPage);
     const sortCrit = req.query.sortCrit;
@@ -153,7 +154,7 @@ getAllRecipes = async (req, res) => {
     const sortObj = {};
     sortObj[sortCrit] = sortOrd;
 
-    const recipes = await Recipe.find({})
+    const recipes = await Recipe.find({'title' : new RegExp(search, 'i')})
     .sort(sortObj)
     .skip((page - 1) * perPage)
     .limit(perPage).lean();

@@ -67,6 +67,7 @@ const HomePage = () => {
                     <ArticleCard
                         key={article._id}
                         id={article._id}
+                        entity={'article'}
                         title={article.title}
                         imageUrl={article.imageUrl}
                     />)}

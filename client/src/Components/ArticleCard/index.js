@@ -40,7 +40,9 @@ const Title = styled.div`
 `;
 
 const UnStyledLink = styled(Link)`
+    display: inline-block;
     width: 100%;
+    height:100%;
     text-decoration: none;
     color: inherit;
 `;

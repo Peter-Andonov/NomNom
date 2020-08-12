@@ -1,5 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
+import Pagination from '../../Components/Pagination';
 
 
 const Wrapper = styled.div`
@@ -16,6 +17,7 @@ const ContainerTitle = styled.h4`
 `;
 
 const ContentContainer = styled.div`
+    min-height: 30rem;
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -29,6 +31,12 @@ const DashboardContainer = (props) => {
             <ContentContainer>
                 {props.children}
             </ContentContainer>
+            {props.totalCount > props.perPage ?
+                <Pagination
+                    currentPage={props.currentPage}
+                    totalPages={props.totalPages}
+                    changePage={props.changePage}
+                /> : ''}
         </Wrapper>
     );
 };

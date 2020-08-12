@@ -87,41 +87,39 @@ const AdminPage = () => {
             <Dashboard>
                 <DashboardContainer
                     title={'Your most liked recipes'}
+                    perPage={perPage}
+                    totalCount={totalRecipesCount}
+                    currentPage={currentRecipesPage}
+                    totalPages={totalRecipePages}
+                    changePage={changeRecipesPage}
                 >
                     {recipes && recipes.map((recipe) =>
-                        <ListItem 
-                        key={recipe._id}
-                        src={recipe.coverImageUrl} 
-                        title={recipe.title} 
-                        metricValue={recipe.usersLiked.length}
-                        metricLabel={'likes'}
+                        <ListItem
+                            key={recipe._id}
+                            src={recipe.coverImageUrl}
+                            title={recipe.title}
+                            metricValue={recipe.usersLiked.length}
+                            metricLabel={'likes'}
                         />
                     )}
-                    {totalRecipesCount > perPage ?
-                        <Pagination
-                            currentPage={currentArticlesPage}
-                            totalPages={totalArticlePages}
-                            changePage={changeArticlesPage}
-                        /> : ''}
                 </DashboardContainer>
                 <DashboardContainer
                     title={'Your most discussed articles'}
+                    perPage={perPage}
+                    totalCount={totalArticlesCount}
+                    currentPage={currentArticlesPage}
+                    totalPages={totalArticlePages}
+                    changePage={changeArticlesPage}
                 >
-                {articles && articles.map((article) =>
-                    <ListItem 
-                    key={article._id}
-                    src={article.imageUrl} 
-                    title={article.title} 
-                    metricValue={article.comments.length}
-                    metricLabel={'comments'}
-                    />
-                )}
-                {totalRecipesCount > perPage ?
-                    <Pagination
-                        currentPage={currentRecipesPage}
-                        totalPages={totalRecipePages}
-                        changePage={changeRecipesPage}
-                    /> : ''}
+                    {articles && articles.map((article) =>
+                        <ListItem
+                            key={article._id}
+                            src={article.imageUrl}
+                            title={article.title}
+                            metricValue={article.comments.length}
+                            metricLabel={'comments'}
+                        />
+                    )}
                 </DashboardContainer>
             </Dashboard>
             <Header />

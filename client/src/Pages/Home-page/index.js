@@ -16,12 +16,26 @@ const HomePage = () => {
 
 
     const getLatestRecipes = async () => {
-        const res = await Axios.get(`http://localhost:5000/api/recipe/all?perPage=5`);
+        const res = await Axios(`http://localhost:5000/api/recipe/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'createdAt',
+                sortOrd: 'desc',
+                perPage: 5
+            }
+        });
         setRecipes(res.data.recipes);
     }
 
     const getLatestArticles = async () => {
-        const res = await Axios.get(`http://localhost:5000/api/article/all?perPage=5`);
+        const res = await Axios.get(`http://localhost:5000/api/article/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'createdAt',
+                sortOrd: 'desc',
+                perPage: 5
+            }
+        });
         setArticles(res.data.articles);
     }
 

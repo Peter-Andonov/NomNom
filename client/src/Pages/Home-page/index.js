@@ -7,6 +7,7 @@ import PageInfo from '../../Components/PageInfo';
 import FlexLister from '../../Components/FlexLister';
 import ArticleCard from '../../Components/ArticleCard';
 import RecipeCard from '../../Components/RecipeCard';
+import Footer from '../../Components/Footer';
 
 
 const HomePage = () => {
@@ -73,6 +74,7 @@ const HomePage = () => {
                     />)}
             </FlexLister>
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

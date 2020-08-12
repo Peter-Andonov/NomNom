@@ -82,8 +82,16 @@ deleteArticle = async (req, res) => {
 getAllArticles = async (req, res) => {
     const page = req.query.page;
     const perPage = Number(req.query.perPage);
+    const sortCrit = req.query.sortCrit;
+    const sortOrd = req.query.sortOrd;
 
-    const articles = await Article.find({}).sort({ 'createdAt': 'desc' }).skip((page - 1) * perPage).limit(perPage).lean();
+    const sortObj = {};
+    sortObj[sortCrit] = sortOrd;
+
+    const articles = await Article.find({})
+    .sort(sortObj)
+    .skip((page - 1) * perPage)
+    .limit(perPage).lean();
 
     const totalArticlesCount = await Article.countDocuments();
 

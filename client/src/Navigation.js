@@ -4,9 +4,9 @@ import UserContext from './Context';
 import HomePage from './Pages/Home-page';
 import RecipesPage from './Pages/Recipes-page';
 import IngredientsPage from './Pages/Ingredients-page';
+import ArticlesPage from './Pages/Articles-page';
 import RecipeDetailsPage from './Pages/Recipe-details-page';
 import IngredientDetailsPage from './Pages/Ingredient-details-page';
-import ArticlesPage from './Pages/Articles-page';
 import ArticleDetailsPage from './Pages/Article-details-page';
 import LoginPage from './Pages/Login-page';
 import RegisterPage from './Pages/Register-page';
@@ -17,9 +17,10 @@ import CreateRecipePage from './Pages/Create-recipe-page';
 import CreateIngredientPage from './Pages/Create-ingredient-page';
 import CreateArticlePage from './Pages/Create-article-page';
 import CreateUnitPage from './Pages/Create-unit-page';
-import EditArticlePage from './Pages/Edit-article-page';
-import EditIngredientPage from './Pages/Edit-ingredient-page';
 import EditRecipePage from './Pages/Edit-recipe-page';
+import EditIngredientPage from './Pages/Edit-ingredient-page';
+import EditArticlePage from './Pages/Edit-article-page';
+import EditUnitPage from './Pages/Edit-unit-page'
 
 
 
@@ -74,6 +75,9 @@ const Navigation = () => {
         </Route>
         <Route path={'/edit/article/:id'} >
           {isAdmin ? (<EditArticlePage />) : (<Redirect to={'/'} />)}
+        </Route>
+        <Route path={'/edit/unit/:id'} >
+          {isAdmin ? (<EditUnitPage />) : (<Redirect to={'/'} />)}
         </Route>
       </Switch>
     </Router>

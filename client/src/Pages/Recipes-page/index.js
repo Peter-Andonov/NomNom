@@ -20,7 +20,15 @@ const RecipesPage = () => {
 
     useEffect(() => {
         const getRecipes = async () => {
-            const res = await Axios.get(`http://localhost:5000/api/recipe/all?page=${currentPage}&perPage=${perPage}`);
+            const res = await Axios(`http://localhost:5000/api/recipe/all`, {
+                method: "GET",    
+                params: {
+                    sortCrit: 'createdAt',
+                    sortOrd: 'desc',
+                    page: currentPage,
+                    perPage: perPage
+                }
+            });
             setRecipes(res.data.recipes);
             setTotalRecipes(res.data.totalRecipesCount);
         }

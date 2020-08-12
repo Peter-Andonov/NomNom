@@ -15,7 +15,7 @@ createUnit = async (req, res) => {
 };
 
 getUnitById = async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const unit = await Unit.findById(id).lean();
 
@@ -36,17 +36,30 @@ updateUnit = async (req, res) => {
 };
 
 deleteUnit = async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const deletedUnit = await Unit.findByIdAndDelete(id);
 
     return deletedUnit;
 }
 
-getAllUnits = async () => {
-    const units = await Unit.find({}).sort({ 'name': 'asc' }).lean();
+getAllUnits = async (req, res) => {
+    const page = req.query.page;
+    const perPage = Number(req.query.perPage);
+    const sortCrit = req.query.sortCrit;
+    const sortOrd = req.query.sortOrd;
 
-    return units;
+    const sortObj = {};
+    sortObj[sortCrit] = sortOrd;
+
+    const units = await Unit.find({})
+    .sort(sortObj)
+    .skip((page - 1) * perPage)
+    .limit(perPage).lean();
+
+    const totalUnitsCount = await Unit.countDocuments();
+
+    return data = { units, totalUnitsCount };
 };
 
 

@@ -1,8 +1,5 @@
-import React, { useState } from 'react';
-import { useHistory } from "react-router-dom";
-import Axios from 'axios';
+import React from 'react';
 import styled from 'styled-components';
-import * as utils from '../../Utils/user';
 import Input from '../RegisterForm/Input';
 import Submit from '../RegisterForm/Submit';
 
@@ -23,46 +20,16 @@ const ErrorMessage = styled.div`
     color: red;
 `;
 
-const UnitEditor = () => {
-
-    const [name, setName] = useState('');
-    const [error, setError] = useState(false);
-    const [errorMessage, setErrorMessage] = useState('');
-
-    const history = useHistory();
-
-    const saveUnit = async (e) => {
-
-        e.preventDefault();
-
-        const authToken = utils.getCookieByName('auth-token');
-
-        const data = {
-            name: name,
-        };
-
-        Axios('http://localhost:5000/api/unit', {
-            method: 'POST',
-            headers: {
-                'content-type': 'application/json',
-                'Authorization': authToken
-            }, data: data
-        }).then(() => {
-            history.push('/admin');
-        }).catch((err) => {
-            setError(true);
-            setErrorMessage('Something went wrong');
-        });
-    };
+const UnitEditor = (props) => {
 
     return (
-        <Wrapper onSubmit={saveUnit}>
+        <Wrapper onSubmit={props.onSubmit}>
             <h1>Create Measurement Unit</h1>
             <Input
-                value={name}
-                onChange={setName}
+                value={props.name}
+                onChange={props.setName}
             />
-            {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
+            {props.error && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
             <Submit label={'Save Unit'} />
         </Wrapper>
     );

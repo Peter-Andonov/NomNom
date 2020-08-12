@@ -14,7 +14,7 @@ const unitRouter = express.Router();
 
 unitRouter.get('/unit/all', async (req, res, next) => {
     try {
-        const units = await getAllUnits();
+        const units = await getAllUnits(req, res);
         return res.status(200).json(units);
     } catch (err) {
         next(err);

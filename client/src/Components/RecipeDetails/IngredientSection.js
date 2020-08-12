@@ -32,9 +32,9 @@ const IngredientSection = (props) => {
             <SectionHeading>{name}</SectionHeading>
             {ingredientsArr.map((ingredient, idx) =>
                 <Container key={idx}>
-                    <SectionItem>{quantitiesArr[idx]}</SectionItem>
-                    <SectionItem>{unitsArr[idx].name}</SectionItem>
-                    <SectionItem>{ingredient.name}</SectionItem>
+                    <SectionItem>{quantitiesArr[idx] ? quantitiesArr[idx] : ''}</SectionItem>
+                    <SectionItem>{unitsArr[idx] ? unitsArr[idx].name : ''}</SectionItem>
+                    <SectionItem>{ingredient.name || ''}</SectionItem>
                 </Container>
             )}
         </Wrapper>

@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useHistory } from "react-router-dom";
+import { useParams } from 'react-router';
 import Axios from 'axios';
 import * as utils from '../../Utils/user';
 import PageLayout from '../PageLayout';
@@ -10,11 +11,26 @@ import UnitEditor from '../../Components/UnitEditor';
 
 const CreateUnitPage = () => {
 
+    const unitId = useParams();
+    const history = useHistory();
+
     const [name, setName] = useState('');
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const history = useHistory();
+    useEffect(() => {
+        Axios('http://localhost:5000/api/unit', {
+            method: 'GET',
+            params: {
+                id: unitId.id
+            }
+        }).then((res) => {
+            setName(res.data.name);
+        }).catch((err) => {
+            setError(true);
+            setErrorMessage('Something went wrong');
+        });
+    }, [unitId.id]);
 
     const saveUnit = async (e) => {
 

@@ -147,8 +147,16 @@ deleteRecipe = async (req, res) => {
 getAllRecipes = async (req, res) => {
     const page = req.query.page;
     const perPage = Number(req.query.perPage);
+    const sortCrit = req.query.sortCrit;
+    const sortOrd = req.query.sortOrd;
 
-    const recipes = await Recipe.find({}).sort({ 'createdAt': 'desc' }).skip((page - 1) * perPage).limit(perPage).lean();
+    const sortObj = {};
+    sortObj[sortCrit] = sortOrd;
+
+    const recipes = await Recipe.find({})
+    .sort(sortObj)
+    .skip((page - 1) * perPage)
+    .limit(perPage).lean();
 
     const totalRecipesCount = await Recipe.countDocuments();
 

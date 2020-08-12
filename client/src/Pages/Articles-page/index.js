@@ -39,12 +39,8 @@ const ArticlesPage = () => {
     };
 
     useEffect(() => {
-        // const getArticles = async () => {
-        //     const res = await Axios.get(`http://localhost:5000/api/article/all?page=${currentPage}&perPage=${perPage}`);
-        //     setArticles(res.data.articles);
-        //     setTotalArticles(res.data.totalArticlesCount);
-        // }
         getArticles();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
     const changePage = async (pageNumber) => {

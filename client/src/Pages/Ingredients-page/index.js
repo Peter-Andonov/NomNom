@@ -40,6 +40,7 @@ const IngredientsPage = () => {
 
     useEffect(() => {
         getIngredients();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentPage]);
 
     const changePage = async (pageNumber) => {

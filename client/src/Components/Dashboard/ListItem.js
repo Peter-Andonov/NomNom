@@ -17,12 +17,6 @@ const Image = styled.img`
     object-fit: cover;
 `;
 
-const ContentContainer = styled.div`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: left;
-`;
 
 const ListItem = (props) => {
     return (

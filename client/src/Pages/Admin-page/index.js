@@ -20,16 +20,8 @@ const AdminPage = () => {
 
     const perPage = 5;
     const totalRecipePages = Math.ceil(totalRecipesCount / perPage);
+    const totalArticlePages = Math.ceil(totalArticlesCount / perPage);
 
-
-    const changeRecipesPage = async (pageNumber) => {
-
-        if (pageNumber < 1 || pageNumber > totalRecipePages) {
-            return;
-        }
-
-        setCurrentRecipesPage(pageNumber);
-    };
 
     useEffect(() => {
         const getRecipes = () => {
@@ -42,7 +34,6 @@ const AdminPage = () => {
                     perPage: perPage
                 }
             }).then((res) => {
-                console.log(res.data)
                 setRecipes(res.data.recipes);
                 setTotalRecipesCount(res.data.totalRecipesCount);
             }).catch((err) => {
@@ -63,7 +54,6 @@ const AdminPage = () => {
                     perPage: perPage
                 }
             }).then((res) => {
-                console.log(res.data)
                 setArticles(res.data.articles);
                 setTotalArticlesCount(res.data.totalArticlesCount);
             }).catch((err) => {
@@ -72,6 +62,24 @@ const AdminPage = () => {
         };
         getArticles();
     }, [currentArticlesPage]);
+
+    const changeRecipesPage = async (pageNumber) => {
+
+        if (pageNumber < 1 || pageNumber > totalRecipePages) {
+            return;
+        }
+
+        setCurrentRecipesPage(pageNumber);
+    };
+
+    const changeArticlesPage = async (pageNumber) => {
+
+        if (pageNumber < 1 || pageNumber > totalArticlePages) {
+            return;
+        }
+
+        setCurrentArticlesPage(pageNumber);
+    };
 
     return (
         <PageLayout>
@@ -91,9 +99,9 @@ const AdminPage = () => {
                     )}
                     {totalRecipesCount > perPage ?
                         <Pagination
-                            currentPage={currentRecipesPage}
-                            totalPages={totalRecipePages}
-                            changePage={changeRecipesPage}
+                            currentPage={currentArticlesPage}
+                            totalPages={totalArticlePages}
+                            changePage={changeArticlesPage}
                         /> : ''}
                 </DashboardContainer>
                 <DashboardContainer
@@ -108,6 +116,12 @@ const AdminPage = () => {
                     metricLabel={'comments'}
                     />
                 )}
+                {totalRecipesCount > perPage ?
+                    <Pagination
+                        currentPage={currentRecipesPage}
+                        totalPages={totalRecipePages}
+                        changePage={changeRecipesPage}
+                    /> : ''}
                 </DashboardContainer>
             </Dashboard>
             <Header />

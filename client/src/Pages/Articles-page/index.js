@@ -7,6 +7,7 @@ import FlexLister from '../../Components/FlexLister';
 import PageInfo from '../../Components/PageInfo';
 import Pagination from '../../Components/Pagination';
 import ArticleCard from '../../Components/ArticleCard';
+import Search from '../../Components/Search';
 
 
 const ArticlesPage = () => {
@@ -14,16 +15,35 @@ const ArticlesPage = () => {
     const [articles, setArticles] = useState([]);
     const [totalArticles, setTotalArticles] = useState(0);
     const [currentPage, setCurrentPage] = useState(1);
+    const [search, setSearch] = useState('');
 
     const perPage = 10;
     const totalPages = Math.ceil(totalArticles / perPage);
 
-    useEffect(() => {
-        const getArticles = async () => {
-            const res = await Axios.get(`http://localhost:5000/api/article/all?page=${currentPage}&perPage=${perPage}`);
+    const getArticles = () => {
+        Axios(`http://localhost:5000/api/article/all`, {
+            method: "GET",
+            params: {
+                search: search,
+                page: currentPage,
+                perPage: perPage,
+                sortCrit: 'createdAt',
+                sortOrd: 'desc'
+            }
+        }).then((res) => {
             setArticles(res.data.articles);
             setTotalArticles(res.data.totalArticlesCount);
-        }
+        }).catch((err) => {
+            console.log(err);
+        });
+    };
+
+    useEffect(() => {
+        // const getArticles = async () => {
+        //     const res = await Axios.get(`http://localhost:5000/api/article/all?page=${currentPage}&perPage=${perPage}`);
+        //     setArticles(res.data.articles);
+        //     setTotalArticles(res.data.totalArticlesCount);
+        // }
         getArticles();
     }, [currentPage]);
 
@@ -40,8 +60,13 @@ const ArticlesPage = () => {
         <PageLayout>
             <BannerImage />
             <PageInfo title='Articles' />
+            <Search
+                value={search}
+                onChange={setSearch}
+                onSearch={getArticles}
+            />
             <FlexLister>
-                {articles.map((article) =>
+                {articles && articles.map((article) =>
                     <ArticleCard
                         key={article._id}
                         entity={'article'}

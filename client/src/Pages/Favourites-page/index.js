@@ -8,6 +8,7 @@ import RecipeList from '../../Components/FlexLister';
 import PageInfo from '../../Components/PageInfo';
 import FlexLister from '../../Components/FlexLister';
 import RecipeCard from '../../Components/RecipeCard';
+import Footer from '../../Components/Footer';
 
 
 const FavouritesPage = () => {
@@ -20,13 +21,13 @@ const FavouritesPage = () => {
             const token = utils.getCookieByName('auth-token');
 
             const res = await Axios('http://localhost:5000/api/user', {
-            method: 'GET',
-            headers: {
-                'content-type': 'application/json',
-                'Authorization': token
-            }
-        });
-            
+                method: 'GET',
+                headers: {
+                    'content-type': 'application/json',
+                    'Authorization': token
+                }
+            });
+
             setFavouriteRecipes(res.data.favouriteRecipes);
         }
         getUserInfo();
@@ -35,22 +36,23 @@ const FavouritesPage = () => {
     return (
         <PageLayout>
             <BannerImage />
-            <Header />
             <PageInfo title='Your Favourite Recipes' />
             <FlexLister>
-            {favouriteRecipes.map((recipe) =>
-                <RecipeCard
-                    key={recipe._id}
-                    id={recipe._id}
-                    title={recipe.title}
-                    coverImageUrl={recipe.coverImageUrl}
-                    prepTime={recipe.prepTime}
-                    cookTime={recipe.cookTime}
-                    serves={recipe.serves}
-                    difficulty={recipe.difficulty}
-                />)}
+                {favouriteRecipes.map((recipe) =>
+                    <RecipeCard
+                        key={recipe._id}
+                        id={recipe._id}
+                        title={recipe.title}
+                        coverImageUrl={recipe.coverImageUrl}
+                        prepTime={recipe.prepTime}
+                        cookTime={recipe.cookTime}
+                        serves={recipe.serves}
+                        difficulty={recipe.difficulty}
+                    />)}
             </FlexLister>
             <RecipeList />
+            <Header />
+            <Footer />
         </PageLayout>
     );
 };

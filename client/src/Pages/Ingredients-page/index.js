@@ -8,6 +8,7 @@ import PageInfo from '../../Components/PageInfo';
 import Pagination from '../../Components/Pagination';
 import ArticleCard from '../../Components/ArticleCard';
 import Search from '../../Components/Search';
+import Footer from '../../Components/Footer';
 
 
 const IngredientsPage = () => {
@@ -78,6 +79,7 @@ const IngredientsPage = () => {
                     changePage={changePage}
                 /> : ''}
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

@@ -4,7 +4,8 @@ import background from '../../Images/background.jpg';
 
 
 const Container = styled.div`
-    height: 50vh;
+    margin-bottom: 3rem;
+    height: 30vh;
     min-height: 10rem;
     width: 100%;
     background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0), rgba(245, 245, 220, 1));

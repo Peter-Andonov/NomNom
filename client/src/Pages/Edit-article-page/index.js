@@ -8,6 +8,7 @@ import PageLayout from '../PageLayout';
 import BannerImage from '../../Components/BannerImage';
 import Header from '../../Components/Header';
 import ArticleEditor from '../../Components/ArticleEditor';
+import Footer from '../../Components/Footer';
 
 
 const EditArticlePage = () => {
@@ -85,6 +86,7 @@ const EditArticlePage = () => {
                 onSubmit={saveArticle}
             />
             <Header />
+            <Footer />
         </PageLayout>
     );
 };

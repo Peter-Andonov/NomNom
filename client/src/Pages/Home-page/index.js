@@ -7,6 +7,7 @@ import PageInfo from '../../Components/PageInfo';
 import FlexLister from '../../Components/FlexLister';
 import ArticleCard from '../../Components/ArticleCard';
 import RecipeCard from '../../Components/RecipeCard';
+import Footer from '../../Components/Footer';
 
 
 const HomePage = () => {
@@ -45,35 +46,38 @@ const HomePage = () => {
     }, []);
 
     return (
-        <PageLayout>
-            <BannerImage />
-            <PageInfo title='Latest Recipes' />
-            <FlexLister>
-                {recipes.map((recipe) =>
-                    <RecipeCard
-                        key={recipe._id}
-                        id={recipe._id}
-                        title={recipe.title}
-                        coverImageUrl={recipe.coverImageUrl}
-                        prepTime={recipe.prepTime}
-                        cookTime={recipe.cookTime}
-                        serves={recipe.serves}
-                        difficulty={recipe.difficulty}
-                    />)}
-            </FlexLister>
-            <PageInfo title='Latest Articles' />
-            <FlexLister>
-                {articles.map((article) =>
-                    <ArticleCard
-                        key={article._id}
-                        id={article._id}
-                        entity={'article'}
-                        title={article.title}
-                        imageUrl={article.imageUrl}
-                    />)}
-            </FlexLister>
-            <Header />
-        </PageLayout>
+        <div>
+            <PageLayout>
+                <BannerImage />
+                <PageInfo title='Latest Recipes' />
+                <FlexLister>
+                    {recipes.map((recipe) =>
+                        <RecipeCard
+                            key={recipe._id}
+                            id={recipe._id}
+                            title={recipe.title}
+                            coverImageUrl={recipe.coverImageUrl}
+                            prepTime={recipe.prepTime}
+                            cookTime={recipe.cookTime}
+                            serves={recipe.serves}
+                            difficulty={recipe.difficulty}
+                        />)}
+                </FlexLister>
+                <PageInfo title='Latest Articles' />
+                <FlexLister>
+                    {articles.map((article) =>
+                        <ArticleCard
+                            key={article._id}
+                            id={article._id}
+                            entity={'article'}
+                            title={article.title}
+                            imageUrl={article.imageUrl}
+                        />)}
+                </FlexLister>
+                <Header />
+            </PageLayout>
+            <Footer />
+        </div>
     );
 };
 

@@ -16,6 +16,7 @@ const Container = styled.div`
 `;
 
 const SearchInput = styled.input`
+    margin-right: 0.5rem;
     font-size: 1.5rem;
     width: 60%;
     padding: 0.5rem;

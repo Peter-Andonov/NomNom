@@ -15,7 +15,7 @@ createUnit = async (req, res) => {
 };
 
 getUnitById = async (req, res) => {
-    const id = req.body.id;
+    const id = req.query.id;
 
     const unit = await Unit.findById(id).lean();
 

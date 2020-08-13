@@ -4,23 +4,22 @@ import '@testing-library/jest-dom/extend-expect';
 import TestSetup from '../../Utils/TestUtils/test-utils';
 
 
-import Header from './index';
+import ArticleDetails from './index';
 
-jest.mock('./ProfileNav.js', () => () => <div />);
 
-describe('Header component', () => {
-    it("renders guest navigation", () => {
+describe('ArticleDetails component', () => {
+    it("does not render comment section or edit/delete buttons", () => {
         const { asFragment } = render(
             <TestSetup value={{
                 loggedIn: false,
                 user: null
             }}>
-                <Header />
+                <ArticleDetails />
             </TestSetup>);
         expect(asFragment()).toMatchSnapshot();
     });
 
-    it("renders user navigation", () => {
+    it("renders comment section, but not edit/delete buttons", () => {
         const { asFragment } = render(
             <TestSetup value={{
                 loggedIn: true,
@@ -33,12 +32,12 @@ describe('Header component', () => {
                     profilePicUrl: '',
                     favouriteRecipes: []
                 }}}>
-                <Header />
+                <ArticleDetails />
             </TestSetup>);
         expect(asFragment()).toMatchSnapshot();
     });
 
-    it("renders admin navigation", () => {
+    it("renders comment section and admin edit/delete buttons", () => {
         const { asFragment } = render(
             <TestSetup value={{
                 loggedIn: true,
@@ -51,7 +50,7 @@ describe('Header component', () => {
                     profilePicUrl: '',
                     favouriteRecipes: []
                 }}}>
-                <Header />
+                <ArticleDetails />
             </TestSetup>);
         expect(asFragment()).toMatchSnapshot();
     });

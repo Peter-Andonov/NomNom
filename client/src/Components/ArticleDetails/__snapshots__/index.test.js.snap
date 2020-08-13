@@ -1,0 +1,221 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ArticleDetails component does not render comment section or edit/delete buttons 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-fzoNJl kMRAUP"
+  >
+    <h1
+      class="sc-fznxKY bLwHNe"
+    />
+    <img
+      alt="Article"
+      class="sc-fzpmMD hdaQQe"
+      src=""
+    />
+    <div
+      class="sc-fzoXWK gWfiXS"
+    >
+      <div
+        class="DraftEditor-root"
+      >
+        <div
+          class="DraftEditor-editorContainer"
+        >
+          <div
+            aria-describedby="placeholder-61n23"
+            class="public-DraftEditor-content"
+            contenteditable="false"
+            spellcheck="false"
+            style="outline: none; user-select: text; white-space: pre-wrap; word-wrap: break-word;"
+          >
+            <div
+              data-contents="true"
+            >
+              <div
+                class=""
+                data-block="true"
+                data-editor="61n23"
+                data-offset-key="6rkfp-0-0"
+              >
+                <div
+                  class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                  data-offset-key="6rkfp-0-0"
+                >
+                  <span
+                    data-offset-key="6rkfp-0-0"
+                  >
+                    <br
+                      data-text="true"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ArticleDetails component renders comment section and admin edit/delete buttons 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-fzoNJl kMRAUP"
+  >
+    <h1
+      class="sc-fznxKY bLwHNe"
+    />
+    <img
+      alt="Article"
+      class="sc-fzpmMD hdaQQe"
+      src=""
+    />
+    <div
+      class="sc-fzoXWK gWfiXS"
+    >
+      <div
+        class="DraftEditor-root"
+      >
+        <div
+          class="DraftEditor-editorContainer"
+        >
+          <div
+            aria-describedby="placeholder-59qm8"
+            class="public-DraftEditor-content"
+            contenteditable="false"
+            spellcheck="false"
+            style="outline: none; user-select: text; white-space: pre-wrap; word-wrap: break-word;"
+          >
+            <div
+              data-contents="true"
+            >
+              <div
+                class=""
+                data-block="true"
+                data-editor="59qm8"
+                data-offset-key="cef1g-0-0"
+              >
+                <div
+                  class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                  data-offset-key="cef1g-0-0"
+                >
+                  <span
+                    data-offset-key="cef1g-0-0"
+                  >
+                    <br
+                      data-text="true"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sc-fzqARJ kcyFQq"
+    >
+      <button
+        class="sc-fzqNqU gtBSgC"
+      >
+        Edit Article
+      </button>
+      <button
+        class="sc-fzoyTs jJqnNu"
+      >
+        Delete Article
+      </button>
+    </div>
+    <div
+      class="sc-AxmLO fULdzK"
+    >
+      <div
+        class="sc-fzozJi gAlura"
+      >
+        <div
+          class="sc-fzoLsD bNKGwO"
+        >
+          Show comments
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ArticleDetails component renders comment section, but not edit/delete buttons 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-fzoNJl kMRAUP"
+  >
+    <h1
+      class="sc-fznxKY bLwHNe"
+    />
+    <img
+      alt="Article"
+      class="sc-fzpmMD hdaQQe"
+      src=""
+    />
+    <div
+      class="sc-fzoXWK gWfiXS"
+    >
+      <div
+        class="DraftEditor-root"
+      >
+        <div
+          class="DraftEditor-editorContainer"
+        >
+          <div
+            aria-describedby="placeholder-8s7n5"
+            class="public-DraftEditor-content"
+            contenteditable="false"
+            spellcheck="false"
+            style="outline: none; user-select: text; white-space: pre-wrap; word-wrap: break-word;"
+          >
+            <div
+              data-contents="true"
+            >
+              <div
+                class=""
+                data-block="true"
+                data-editor="8s7n5"
+                data-offset-key="3c4cs-0-0"
+              >
+                <div
+                  class="public-DraftStyleDefault-block public-DraftStyleDefault-ltr"
+                  data-offset-key="3c4cs-0-0"
+                >
+                  <span
+                    data-offset-key="3c4cs-0-0"
+                  >
+                    <br
+                      data-text="true"
+                    />
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="sc-AxmLO fULdzK"
+    >
+      <div
+        class="sc-fzozJi gAlura"
+      >
+        <div
+          class="sc-fzoLsD bNKGwO"
+        >
+          Show comments
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

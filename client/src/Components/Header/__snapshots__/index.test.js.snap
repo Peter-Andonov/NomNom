@@ -44,23 +44,7 @@ exports[`Header component renders admin navigation 1`] = `
       <div
         class="sc-AxheI jYYRbo"
       />
-      <profilenav>
-        <div
-          class="sc-AxiKw ibBiQu"
-        >
-          <a
-            class="sc-AxhCb eZTMiI"
-            href="/profile"
-          >
-            Profile
-          </a>
-          <div
-            class="sc-AxjAm cxNAeo"
-          >
-            Logout
-          </div>
-        </div>
-      </profilenav>
+      <div />
     </nav>
   </header>
 </DocumentFragment>
@@ -155,29 +139,7 @@ exports[`Header component renders user navigation 1`] = `
       <div
         class="sc-AxheI jYYRbo"
       />
-      <profilenav>
-        <div
-          class="sc-AxiKw ibBiQu"
-        >
-          <a
-            class="sc-AxhCb eZTMiI"
-            href="/favourites"
-          >
-            Favourites
-          </a>
-          <a
-            class="sc-AxhCb eZTMiI"
-            href="/profile"
-          >
-            Profile
-          </a>
-          <div
-            class="sc-AxjAm cxNAeo"
-          >
-            Logout
-          </div>
-        </div>
-      </profilenav>
+      <div />
     </nav>
   </header>
 </DocumentFragment>

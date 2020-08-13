@@ -6,7 +6,9 @@ import ProfileNav from './ProfileNav';
 import AdminNav from './AdminNav';
 import Dropdown from './Dropdown';
 import StyledLink from './Link';
+import { Link } from 'react-router-dom';
 import TextItem from './TextItem';
+import logo from '../../Images/logo.png'
 
 
 const Head = styled.header`
@@ -28,6 +30,18 @@ const Spacer = styled.div`
     flex: 1;
 `;
 
+const UnStyledLink = styled(Link)`
+    height: 80%;
+    text-decoration: none;
+    color: inherit;
+`;
+
+const Logo = styled.img`
+    margin-left: 0.5rem;
+    height: 100%;
+    object-fit: cover;
+`;
+
 const Header = () => {
 
     const userContext = useContext(UserContext);
@@ -43,7 +57,9 @@ const Header = () => {
     return (
         <Head>
             <Navigation>
-                <StyledLink to={'/'} text={'Home'} />
+                <UnStyledLink to={'/'} text={'Home'} >
+                    <Logo src={logo}/>
+                </UnStyledLink>
                 <StyledLink to={'/recipes'} text={'Recipes'} />
                 <StyledLink to={'/ingredients'} text={'Ingredients'} />
                 <StyledLink to={'/articles'} text={'Articles'} />

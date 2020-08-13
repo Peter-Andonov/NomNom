@@ -43,7 +43,7 @@ const ColHeading = styled.td`
 `;
 
 const IngredientsTable = (props) => {
-
+    //This should not have state - fix !!!
     const initialRows = props.sectionState.ingredients.map((ingr, idx) => `input-${idx}`);
 
     const [inputFields, setInputFields] = useState(initialRows);

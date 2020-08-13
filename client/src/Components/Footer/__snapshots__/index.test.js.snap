@@ -1,0 +1,46 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Footer component renders correctly 1`] = `
+<DocumentFragment>
+  <footer
+    class="sc-AxjAm gBfSkI"
+  >
+    <div
+      class="sc-AxirZ hRAFoT"
+    >
+      Follow on social media
+    </div>
+    <div>
+      <a
+        href="https://www.facebook.com/"
+      >
+        <img
+          class="sc-AxiKw eLCGzw"
+          src="icons8-facebook.svg"
+        />
+      </a>
+      <a
+        href="https://twitter.com/"
+      >
+        <img
+          class="sc-AxiKw eLCGzw"
+          src="icons8-twitter.svg"
+        />
+      </a>
+      <a
+        href="https://www.instagram.com/"
+      >
+        <img
+          class="sc-AxiKw eLCGzw"
+          src="icons8-instagram.svg"
+        />
+      </a>
+    </div>
+    <div
+      class="sc-AxhCb cKEvHI"
+    >
+      Copyright © 2020 NomNom. All rights reserved.
+    </div>
+  </footer>
+</DocumentFragment>
+`;

@@ -1,0 +1,58 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ProfileNav component renders default avatar picture and email 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-AxirZ hVzgMg"
+  >
+    <img
+      alt="Avatar"
+      class="sc-AxiKw fiBQpN"
+      src="https://res.cloudinary.com/nomnomapp/image/upload/v1596641498/Images/x5svb4l6kwcyiinazfqt.png"
+    />
+    <div
+      class="sc-AxjAm cxNAeo"
+    >
+      john.doe@gmail.com
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ProfileNav component renders default profile pic and user names instead of email 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-AxirZ hVzgMg"
+  >
+    <img
+      alt="Avatar"
+      class="sc-AxiKw fiBQpN"
+      src="https://res.cloudinary.com/nomnomapp/image/upload/v1596641498/Images/x5svb4l6kwcyiinazfqt.png"
+    />
+    <div
+      class="sc-AxjAm cxNAeo"
+    >
+      John Doe
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ProfileNav component renders user uploaded profile picture 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-AxirZ hVzgMg"
+  >
+    <img
+      alt="Avatar"
+      class="sc-AxiKw fiBQpN"
+      src="https://i.picsum.photos/id/1005/5760/3840.jpg?hmac=2acSJCOwz9q_dKtDZdSB-OIK1HUcwBeXco_RMMTUgfY"
+    />
+    <div
+      class="sc-AxjAm cxNAeo"
+    >
+      john.doe@gmail.com
+    </div>
+  </div>
+</DocumentFragment>
+`;

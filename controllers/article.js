@@ -4,9 +4,9 @@ const { ObjectId } = mongoose.Types;
 
 createArticle = async (req, res) => {
 
-    await validateArticleName(req.body.title);
+    const title = req.body.title.trim();
+    await validateArticleName(title);
 
-    const title = req.body.title;
     const imageUrl = req.body.imageUrl;
     const body = req.body.body;
 
@@ -56,14 +56,12 @@ getArticleById = async (req, res) => {
 updateArticle = async (req, res) => {
 
     const id = req.body.id;
+    const title = req.body.title.trim();
 
-    await validateArticleName(req.body.title, id);
+    await validateArticleName(title, id);
 
     const updatedData = {};
-
-    if (req.body.title) {
-        updatedData.title = req.body.title;
-    }
+    updatedData.title = title;
 
     if (req.body.imageUrl) {
         updatedData.imageUrl = req.body.imageUrl;
@@ -109,7 +107,14 @@ getAllArticles = async (req, res) => {
 };
 
 
-validateArticleName = async (title) => {
+validateArticleName = async (title, id) => {
+
+    if(!title) {
+        const error = new Error("Article title must be provided");
+        error.statusCode = 400;
+        throw error;
+    };
+
     const dupTitle = await Article.findOne({title: title});
 
     if(dupTitle && (id === dupTitle._id.toString())) {

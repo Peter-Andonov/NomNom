@@ -6,11 +6,13 @@ const { ObjectId } = mongoose.Types;
 
 createRecipe = async (req, res) => {
 
-    await validateRecipeName(req.body.title);
+    const title = req.body.title.trim();
+
+    await validateRecipeName(title);
     validateRecipeDifficulty(req.body.difficulty);
     validateIngredientSections(req.body.ingredientSections);
 
-    const title = req.body.title;
+
     const coverImageUrl = req.body.coverImageUrl;
     const shortDescription = req.body.shortDescription;
     const stepsToCreate = req.body.stepsToCreate;
@@ -95,15 +97,15 @@ getRecipeById = async (req, res) => {
 updateRecipe = async (req, res) => {
     const recipeId = req.body.id;
 
-    await validateRecipeName(req.body.title, recipeId);
+    const title = req.body.title.trim();
+
+    await validateRecipeName(title, recipeId);
     validateRecipeDifficulty(req.body.difficulty);
     validateIngredientSections(req.body.ingredientSections);
 
     const updatedRecipeData = {};
+    updatedRecipeData.title = title;
 
-    if(req.body.title){
-        updatedRecipeData.title = req.body.title;
-    }
     if(req.body.coverImageUrl){
         updatedRecipeData.coverImageUrl = req.body.coverImageUrl;
     }
@@ -218,6 +220,13 @@ removeRecipeFromFavourites = async (req, res) => {
 };
 
 validateRecipeName = async (title, id) => {
+
+    if(!title) {
+        const error = new Error("Recipe title must be provided");
+        error.statusCode = 400;
+        throw error;
+    };
+
     const dupTitle = await Recipe.findOne({title: title});
 
     if(dupTitle && (id === dupTitle._id.toString())) {

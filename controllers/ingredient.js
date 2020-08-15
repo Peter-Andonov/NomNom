@@ -4,9 +4,9 @@ const { ObjectId } = mongoose.Types;
 
 createIngredient = async (req, res) => {
 
-    await validateIngredientName(req.body.name);
-
-    const name = req.body.name;
+    const name = req.body.name.trim();
+    await validateIngredientName(name);
+    
     const imageUrl = req.body.imageUrl;
     const description = req.body.description;
 
@@ -33,14 +33,12 @@ getIngredientById = async (req, res) => {
 updateIngredient = async (req, res) => {
 
     const id = req.body.id;
+    const name = req.body.name.trim();
 
-    await validateIngredientName(req.body.name, id);
+    await validateIngredientName(name, id);
 
     const updatedData = {};
-
-    if (req.body.name) {
-        updatedData.name = req.body.name;
-    }
+    updatedData.name = name;
 
     if (req.body.imageUrl) {
         updatedData.imageUrl = req.body.imageUrl;
@@ -87,6 +85,13 @@ getAllIngredients = async (req, res) => {
 
 
 validateIngredientName = async (name, id) => {
+
+    if(!name) {
+        const error = new Error("Ingredient name must be provided");
+        error.statusCode = 400;
+        throw error;
+    };
+
     const dupName = await Ingredient.findOne({name: name});
 
     if(dupName && (id === dupName._id.toString())) {

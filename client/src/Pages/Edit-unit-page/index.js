@@ -29,7 +29,7 @@ const CreateUnitPage = () => {
             setName(res.data.name);
         }).catch((err) => {
             setError(true);
-            setErrorMessage('Something went wrong');
+            setErrorMessage(err.response.data.message);
         });
     }, [unitId.id]);
 
@@ -40,11 +40,12 @@ const CreateUnitPage = () => {
         const authToken = utils.getCookieByName('auth-token');
 
         const data = {
+            id: unitId.id,
             name: name,
         };
 
         Axios('http://localhost:5000/api/unit', {
-            method: 'POST',
+            method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
                 'Authorization': authToken
@@ -53,7 +54,7 @@ const CreateUnitPage = () => {
             history.push('/admin');
         }).catch((err) => {
             setError(true);
-            setErrorMessage('Something went wrong');
+            setErrorMessage(err.response.data.message);
         });
     };
 

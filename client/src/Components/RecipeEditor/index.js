@@ -183,7 +183,7 @@ const RecipeEditor = (props) => {
 
     return (
         <Wrapper>
-            <h1>Create Recipe</h1>
+            <h1>{props.pageTitle}</h1>
             <h3>Recipe Title</h3>
             <Input
                 value={props.title}
@@ -227,7 +227,7 @@ const RecipeEditor = (props) => {
                     <InfoLabel>Time to prepare</InfoLabel>
                     <StyledInput
                         type='number'
-                        value={props.prepTime}
+                        value={props.prepTime || ''}
                         onChange={(e) => props.setPrepTime(e.target.value)}
                     />
                     <InfoLabel>min</InfoLabel>
@@ -236,7 +236,7 @@ const RecipeEditor = (props) => {
                     <InfoLabel>Time to cook</InfoLabel>
                     <StyledInput
                         type='number'
-                        value={props.cookTime}
+                        value={props.cookTime || ''}
                         onChange={(e) => props.setCookTime(e.target.value)}
                     />
                     <InfoLabel>min</InfoLabel>
@@ -245,7 +245,7 @@ const RecipeEditor = (props) => {
                     <InfoLabel>Serves</InfoLabel>
                     <StyledInput
                         type='number'
-                        value={props.serves}
+                        value={props.serves || ''}
                         onChange={(e) => props.setServes(e.target.value)}
                     />
                     <InfoLabel>people</InfoLabel>

@@ -262,19 +262,19 @@ const RecipeDetails = () => {
             <InfoList>
                 <InfoItem>
                     <InfoItemLabel>Time to prepare</InfoItemLabel>
-                    <InfoItemValue>{`${prepTime} min`}</InfoItemValue>
+                    <InfoItemValue>{prepTime ? `${prepTime} min` : 'n/a'}</InfoItemValue>
                 </InfoItem>
                 <InfoItem>
                     <InfoItemLabel>Time to cook</InfoItemLabel>
-                    <InfoItemValue>{`${cookTime} min`}</InfoItemValue>
+                    <InfoItemValue>{cookTime ? `${cookTime} min` : 'n/a'}</InfoItemValue>
                 </InfoItem>
                 <InfoItem>
                     <InfoItemLabel>Serves</InfoItemLabel>
-                    <InfoItemValue>{serves}</InfoItemValue>
+                    <InfoItemValue>{serves || 'n/a'}</InfoItemValue>
                 </InfoItem>
                 <InfoItem>
                     <InfoItemLabel>Difficulty</InfoItemLabel>
-                    <InfoItemValue>{difficulty}</InfoItemValue>
+                    <InfoItemValue>{difficulty || 'n/a'}</InfoItemValue>
                 </InfoItem>
             </InfoList>
             <Container>

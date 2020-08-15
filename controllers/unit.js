@@ -3,7 +3,9 @@ const Unit = require('../models/Unit');
 
 
 createUnit = async (req, res) => {
-    const name = req.body.name
+
+    const name = req.body.name.trim();
+    await validateUnitName(name);
 
     const newUnit = new Unit({
         name
@@ -24,11 +26,12 @@ getUnitById = async (req, res) => {
 
 updateUnit = async (req, res) => {
     const id = req.body.id;
-    const updatedData = {};
+    const name = req.body.name.trim();
 
-    if (req.body.name) {
-        updatedData.name = req.body.name;
-    }
+    await validateUnitName(name, id);
+
+    const updatedData = {};
+    updatedData.name = name;
 
     const updatedUnit = await Unit.findByIdAndUpdate(id, updatedData)
 
@@ -60,6 +63,28 @@ getAllUnits = async (req, res) => {
     const totalUnitsCount = await Unit.countDocuments();
 
     return data = { units, totalUnitsCount };
+};
+
+
+validateUnitName = async (name, id) => {
+
+    if(!name) {
+        const error = new Error("Unit name must be provided");
+        error.statusCode = 400;
+        throw error;
+    };
+
+    const dupName = await Unit.findOne({name: name});
+
+    if(dupName && (id === dupName._id.toString())) {
+        return true;
+    };
+
+    if (dupName) {
+        const error = new Error("There is already a unit with that name");
+        error.statusCode = 400;
+        throw error;
+    };
 };
 
 

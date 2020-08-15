@@ -3,7 +3,10 @@ const Article = require('../models/Article');
 const { ObjectId } = mongoose.Types;
 
 createArticle = async (req, res) => {
-    const title = req.body.title;
+
+    const title = req.body.title.trim();
+    await validateArticleName(title);
+
     const imageUrl = req.body.imageUrl;
     const body = req.body.body;
 
@@ -51,12 +54,14 @@ getArticleById = async (req, res) => {
 };
 
 updateArticle = async (req, res) => {
-    const id = req.body.id;
-    const updatedData = {};
 
-    if (req.body.title) {
-        updatedData.title = req.body.title;
-    }
+    const id = req.body.id;
+    const title = req.body.title.trim();
+
+    await validateArticleName(title, id);
+
+    const updatedData = {};
+    updatedData.title = title;
 
     if (req.body.imageUrl) {
         updatedData.imageUrl = req.body.imageUrl;
@@ -99,6 +104,28 @@ getAllArticles = async (req, res) => {
     const data = { articles, totalArticlesCount };
 
     return data;
+};
+
+
+validateArticleName = async (title, id) => {
+
+    if(!title) {
+        const error = new Error("Article title must be provided");
+        error.statusCode = 400;
+        throw error;
+    };
+
+    const dupTitle = await Article.findOne({title: title});
+
+    if(dupTitle && (id === dupTitle._id.toString())) {
+        return true;
+    };
+
+    if (dupTitle) {
+        const error = new Error("There is already an article with that title");
+        error.statusCode = 400;
+        throw error;
+    };
 };
 
 

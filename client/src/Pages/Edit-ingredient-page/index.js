@@ -37,7 +37,8 @@ const EditIngredientPage = () => {
             const descriptionContentState = convertFromRaw(JSON.parse(res.data.description));
             setEditorState(EditorState.createWithContent(descriptionContentState));
         }).catch((err) => {
-            console.log(err)
+            setError(true);
+            setErrorMessage('There was an error while loading ingredient data');
         });
     }, [ingredientId.id]);
 
@@ -66,7 +67,7 @@ const EditIngredientPage = () => {
             history.push('/admin');
         }).catch((err) => {
             setError(true);
-            setErrorMessage('Something went wrong');
+            setErrorMessage(err.response.data.message);
         });
     };
 
@@ -74,6 +75,7 @@ const EditIngredientPage = () => {
         <PageLayout>
             <BannerImage />
             <IngredientEditor
+                pageTitle={'Edit ingredient'}
                 name={name}
                 setName={setName}
                 imageUrl={imageUrl}

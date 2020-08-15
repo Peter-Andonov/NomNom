@@ -35,7 +35,7 @@ const EditArticlePage = () => {
             setEditorState(EditorState.createWithContent(bodyContentState));
         }).catch((err) => {
             setError(true);
-            setErrorMessage('Something went wrong');
+            setErrorMessage('There was an error while loading article data');
         });
     }, [articleId.id]);
 
@@ -64,7 +64,7 @@ const EditArticlePage = () => {
             history.push('/admin');
         }).catch((err) => {
             setError(true);
-            setErrorMessage('Something went wrong');
+            setErrorMessage(err.response.data.message);
         });
     };
 

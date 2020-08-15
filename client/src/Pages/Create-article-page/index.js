@@ -44,7 +44,7 @@ const CreateArticlePage = () => {
             history.push('/admin');
         }).catch((err) => {
             setError(true);
-            setErrorMessage('Something went wrong');
+            setErrorMessage(err.response.data.message);
         });
     };
 

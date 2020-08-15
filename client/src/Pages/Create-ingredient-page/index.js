@@ -45,7 +45,7 @@ const CreateIngredientPage = () => {
             history.push('/admin');
         }).catch((err) => {
             setError(true);
-            setErrorMessage('Something went wrong');
+            setErrorMessage(err.response.data.message);
         });
     };
 
@@ -53,6 +53,7 @@ const CreateIngredientPage = () => {
         <PageLayout>
             <BannerImage />
             <IngredientEditor
+                pageTitle={'Create ingredient'}
                 name={name}
                 setName={setName}
                 imageUrl={imageUrl}

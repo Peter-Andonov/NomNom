@@ -59,7 +59,8 @@ const EditRecipePage = () => {
             setServes(res.data.serves);
             setDifficulty(res.data.difficulty);
         }).catch((err) => {
-            console.log(err)
+            setError(true);
+            setErrorMessage('There was an error while loading recipe data');
         });
     }, [recipeId.id]);
 
@@ -93,7 +94,7 @@ const EditRecipePage = () => {
             history.push('/admin');
         }).catch((err) => {
             setError(true);
-            setErrorMessage('Something went wrong');
+            setErrorMessage(err.response.data.message);
         });
     };
 

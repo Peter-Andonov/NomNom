@@ -5,7 +5,14 @@ const IngredientSet = require('../models/IngredientSet');
 const { ObjectId } = mongoose.Types;
 
 createRecipe = async (req, res) => {
-    const title = req.body.title;
+
+    const title = req.body.title.trim();
+
+    await validateRecipeName(title);
+    validateRecipeDifficulty(req.body.difficulty);
+    validateIngredientSections(req.body.ingredientSections);
+
+
     const coverImageUrl = req.body.coverImageUrl;
     const shortDescription = req.body.shortDescription;
     const stepsToCreate = req.body.stepsToCreate;
@@ -90,11 +97,15 @@ getRecipeById = async (req, res) => {
 updateRecipe = async (req, res) => {
     const recipeId = req.body.id;
 
-    const updatedRecipeData = {};
+    const title = req.body.title.trim();
 
-    if(req.body.title){
-        updatedRecipeData.title = req.body.title;
-    }
+    await validateRecipeName(title, recipeId);
+    validateRecipeDifficulty(req.body.difficulty);
+    validateIngredientSections(req.body.ingredientSections);
+
+    const updatedRecipeData = {};
+    updatedRecipeData.title = title;
+
     if(req.body.coverImageUrl){
         updatedRecipeData.coverImageUrl = req.body.coverImageUrl;
     }
@@ -113,9 +124,8 @@ updateRecipe = async (req, res) => {
     if(req.body.serves){
         updatedRecipeData.serves = req.body.serves;
     }
-    if(req.body.difficulty){
-        updatedRecipeData.difficulty = req.body.difficulty;
-    }
+
+    updatedRecipeData.difficulty = req.body.difficulty;
 
     const ingredientSections = req.body.ingredientSections;
 
@@ -207,6 +217,45 @@ removeRecipeFromFavourites = async (req, res) => {
     });
 
     return updatedUser;
+};
+
+validateRecipeName = async (title, id) => {
+
+    if(!title) {
+        const error = new Error("Recipe title must be provided");
+        error.statusCode = 400;
+        throw error;
+    };
+
+    const dupTitle = await Recipe.findOne({title: title});
+
+    if(dupTitle && (id === dupTitle._id.toString())) {
+        return true;
+    };
+
+    if (dupTitle) {
+        const error = new Error("There is already a recipe with that title");
+        error.statusCode = 400;
+        throw error;
+    };
+};
+
+validateIngredientSections = (sections) => {
+    sections.map((section) => {
+        if (section.units.includes('') || section.ingredients.includes('')) {
+            const error = new Error("Units and ingredients need to be provided for each row");
+            error.statusCode = 400;
+            throw error;
+        };
+    });
+};
+
+validateRecipeDifficulty = (difficulty) => {
+    if (!['easy', 'medium', 'hard'].includes(difficulty)) {
+        const error = new Error("Recipe difficulty needs to be provided");
+        error.statusCode = 400;
+        throw error;
+    };
 };
 
 

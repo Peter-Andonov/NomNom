@@ -14,13 +14,12 @@ import Footer from '../../Components/Footer';
 const EditRecipePage = () => {
 
     const recipeId = useParams();
+    const history = useHistory();
 
     const [title, setTitle] = useState('');
     const [coverImageUrl, setCoverImageUrl] = useState('');
     const [shortDescriptionState, setShortDescriptionState] = useState(EditorState.createEmpty());
     const [stepsState, setStepsState] = useState(EditorState.createEmpty());
-    const [units, setUnits] = useState([]);
-    const [ingredients, setIngredients] = useState([]);
     const [ingredientSections, setIngredientSections] = useState([{
         _id: 'section-0',
         name: '',
@@ -35,7 +34,6 @@ const EditRecipePage = () => {
     const [error, setError] = useState(false);
     const [errorMessage, setErrorMessage] = useState('');
 
-    const history = useHistory();
 
     useEffect(() => {
         Axios('http://localhost:5000/api/recipe', {
@@ -64,72 +62,6 @@ const EditRecipePage = () => {
             console.log(err)
         });
     }, [recipeId.id]);
-
-    useEffect(() => {
-        getIngredients();
-        getUnits();
-    }, []);
-
-    const getIngredients = () => {
-        Axios(`http://localhost:5000/api/ingredient/all`, {
-            method: "GET",
-            params: {
-                sortCrit: 'name',
-                sortOrd: 'asc'
-            }
-        }).then((res) => {
-            setIngredients(res.data.ingredients);
-        }).catch((err) => {
-            console.log(err);
-        });
-    };
-
-    const getUnits = () => {
-        Axios(`http://localhost:5000/api/unit/all`, {
-            method: "GET",
-            params: {
-                sortCrit: 'name',
-                sortOrd: 'asc'
-            }
-        }).then((res) => {
-            setUnits(res.data.units);
-        }).catch((err) => {
-            console.log(err);
-        });
-    };
-
-    const addIngredientSection = () => {
-        const newIngredientSection = `section-${ingredientSections.length}`;
-        setIngredientSections([...ingredientSections, {
-            _id: newIngredientSection,
-            name: '',
-            quantities: [''],
-            units: [''],
-            ingredients: ['']
-        }]);
-    };
-
-    const removeIngredientSection = () => {
-
-        if (ingredientSections.length === 1) {
-            return;
-        }
-
-        //remove the last ingredient section from the state
-        const newIngredientSections = [...ingredientSections];
-        newIngredientSections.splice((newIngredientSections.length - 1), 1);
-        setIngredientSections(newIngredientSections);
-    };
-
-    const handleInput = (newSectionState) => {
-        const newIngredientSections = ingredientSections.map((section) => {
-            if (section._id === newSectionState._id) {
-                return newSectionState
-            }
-            return section;
-        });
-        setIngredientSections(newIngredientSections);
-    };
 
     const saveRecipe = async () => {
 
@@ -178,12 +110,8 @@ const EditRecipePage = () => {
                 setShortDescriptionState={setShortDescriptionState}
                 stepsState={stepsState}
                 setStepsState={setStepsState}
-                addIngredientSection={addIngredientSection}
-                removeIngredientSection={removeIngredientSection}
                 ingredientSections={ingredientSections}
-                units={units}
-                ingredients={ingredients}
-                handleInput={handleInput}
+                setIngredientSections={setIngredientSections}
                 prepTime={prepTime}
                 setPrepTime={setPrepTime}
                 cookTime={cookTime}

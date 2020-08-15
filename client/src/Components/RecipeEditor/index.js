@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
+import Axios from 'axios';
 import TextEditor from '../TextEditor';
 import ImageSelector from '../ImageSelector';
 import Input from '../RegisterForm/Input';
@@ -91,6 +92,95 @@ const Button = styled.button`
 
 const RecipeEditor = (props) => {
 
+    const [allUnits, setAllUnits] = useState([]);
+    const [allIngredients , setAllIngredients] = useState([]);
+
+
+    useEffect(() => {
+        Axios(`http://localhost:5000/api/ingredient/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'name',
+                sortOrd: 'asc'
+            }
+        }).then((res) => {
+            setAllIngredients(res.data.ingredients);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
+    useEffect(() => {
+        Axios(`http://localhost:5000/api/unit/all`, {
+            method: "GET",
+            params: {
+                sortCrit: 'name',
+                sortOrd: 'asc'
+            }
+        }).then((res) => {
+            setAllUnits(res.data.units);
+        }).catch((err) => {
+            console.log(err);
+        });
+    }, []);
+
+    const addIngredientSection = () => {
+        const newIngredientSection = `section-${props.ingredientSections.length}`;
+        props.setIngredientSections([...props.ingredientSections, {
+            _id: newIngredientSection,
+            name: '',
+            quantities: [''],
+            units: [''],
+            ingredients: ['']
+        }]);
+    };
+
+    const removeIngredientSection = () => {
+
+        if (props.ingredientSections.length === 1) {
+            return;
+        };
+
+        //remove the last ingredient section from the state
+        const newIngredientSections = [...props.ingredientSections];
+        newIngredientSections.splice((newIngredientSections.length - 1), 1);
+        props.setIngredientSections(newIngredientSections);
+    };
+
+    const addInputRow = (idx) => {
+        const newState = [...props.ingredientSections];
+
+        newState[idx].quantities.push('')
+        newState[idx].units.push('')
+        newState[idx].ingredients.push('')
+        props.setIngredientSections(newState);
+    };
+
+    const removeInputRow = (idx) => {
+
+        const newState = [...props.ingredientSections];
+
+        if (newState[idx].ingredients.length <= 1) {
+            return;
+        };
+
+        newState[idx].quantities.splice((newState[idx].quantities.length - 1), 1);
+        newState[idx].units.splice((newState[idx].units.length - 1), 1);
+        newState[idx].ingredients.splice((newState[idx].ingredients.length - 1), 1);
+
+        props.setIngredientSections(newState);
+    };
+
+    const handleInput = (newSectionState) => {
+        const newIngredientSections = props.ingredientSections.map((section) => {
+            if (section._id === newSectionState._id) {
+                return newSectionState
+            }
+            return section;
+        });
+        props.setIngredientSections(newIngredientSections);
+    };
+
     return (
         <Wrapper>
             <h1>Create Recipe</h1>
@@ -115,17 +205,20 @@ const RecipeEditor = (props) => {
             />
             <Container>
                 <h3>Ingredient Sections</h3>
-                <SectionIcon src={addIcon} onClick={props.addIngredientSection} />
-                <SectionIcon src={removeIcon} onClick={props.removeIngredientSection} />
+                <SectionIcon src={addIcon} onClick={addIngredientSection} />
+                <SectionIcon src={removeIcon} onClick={removeIngredientSection} />
             </Container>
             <Container>
                 {props.ingredientSections.map((section, idx) =>
                     <IngredientsTable
                         key={section._id}
-                        units={props.units}
-                        ingredients={props.ingredients}
+                        idx={idx}
+                        units={allUnits}
+                        ingredients={allIngredients}
                         sectionState={props.ingredientSections[idx]}
-                        handleInput={props.handleInput}
+                        handleInput={handleInput}
+                        addInputRow={addInputRow}
+                        removeInputRow={removeInputRow}
                     />)}
             </Container>
             <h3>Additional recipe information</h3>

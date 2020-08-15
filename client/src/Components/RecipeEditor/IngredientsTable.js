@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import InputRow from './InputRow';
 import styled from 'styled-components';
 import addIcon from '../../Images/Icons/add-24px.svg';
@@ -43,41 +43,8 @@ const ColHeading = styled.td`
 `;
 
 const IngredientsTable = (props) => {
-    //This should not have state - fix !!!
+
     const initialRows = props.sectionState.ingredients.map((ingr, idx) => `input-${idx}`);
-
-    const [inputFields, setInputFields] = useState(initialRows);
-
-    const addInput = () => {
-        const newInput = `input-${inputFields.length}`;
-        setInputFields([...inputFields, newInput]);
-    };
-
-    const removeInput = () => {
-
-        if (inputFields.length === 1) {
-            return;
-        }
-        //remove the last input field from the state
-        const newInputFields = [...inputFields];
-        newInputFields.splice((newInputFields.length - 1), 1);
-        setInputFields(newInputFields);
-
-        //remove the last quantity input value from the state
-        const newQuantityInputValues = [...props.sectionState.quantities];
-        newQuantityInputValues.splice((newQuantityInputValues.length - 1), 1);
-        props.sectionState.quantities = newQuantityInputValues;
-
-        //remove the last unit input value from the state
-        const newUnitInputValues = [...props.sectionState.units];
-        newUnitInputValues.splice((newUnitInputValues.length - 1), 1);
-        props.sectionState.units = newUnitInputValues;
-
-        //remove the last ingredient input value from the state
-        const newInngredientInputValues = [...props.sectionState.ingredients];
-        newInngredientInputValues.splice((newInngredientInputValues.length - 1), 1);
-        props.sectionState.ingredients = newInngredientInputValues;
-    };
 
     const handleNameInput = (value) => {
         const { _id, quantities, units, ingredients } = { ...props.sectionState };
@@ -89,7 +56,7 @@ const IngredientsTable = (props) => {
             units,
             ingredients
         });
-    }
+    };
 
     const handleQuantityInputValues = (value, idx) => {
         const { _id, name, quantities, units, ingredients } = { ...props.sectionState };
@@ -130,6 +97,14 @@ const IngredientsTable = (props) => {
         });
     };
 
+    const addRow = () => {
+        props.addInputRow(props.idx);
+    };
+
+    const removeRow = () => {
+        props.removeInputRow(props.idx);
+    };
+
 
     return (
         <Wrapper>
@@ -149,7 +124,7 @@ const IngredientsTable = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {inputFields.map((input, idx) =>
+                    {initialRows.map((input, idx) =>
                         <InputRow
                             key={input}
                             idx={idx}
@@ -165,8 +140,8 @@ const IngredientsTable = (props) => {
                 </tbody>
             </table>
             <Container>
-                <SectionIcon src={addIcon} onClick={addInput} />
-                <SectionIcon src={removeIcon} onClick={removeInput} />
+                <SectionIcon src={addIcon} onClick={addRow} />
+                <SectionIcon src={removeIcon} onClick={removeRow} />
             </Container>
         </Wrapper>
     );

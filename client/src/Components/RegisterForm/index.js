@@ -161,6 +161,7 @@ class RegisterForm extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Input
                         id={'email'}
+                        testId={'input-email'}
                         key={'email'}
                         label={'Email'}
                         type={'email'}
@@ -172,6 +173,7 @@ class RegisterForm extends Component {
                     />
                     <Input
                         id={'password'}
+                        testId={'input-pass'}
                         key={'password'}
                         label={'Password'}
                         type={'password'}
@@ -183,6 +185,7 @@ class RegisterForm extends Component {
                     />
                     <Input
                         id={'re-password'}
+                        testId={'input-re-pass'}
                         key={'re-password'}
                         label={'Repeat Password'}
                         type={'password'}
@@ -192,7 +195,10 @@ class RegisterForm extends Component {
                         onChange={this.setRepeatPassword}
                         onBlur={this.validateRepeatPassword}
                     />
-                    <Submit label={'Register'} />
+                    <Submit
+                        testId={'register'}
+                        label={'Register'}
+                    />
                 </Form>
             </Wrapper>
         )

@@ -5,9 +5,7 @@ exports[`RecipeEditor component renders correctly 1`] = `
   <div
     class="sc-fzozJi hhEBat"
   >
-    <h1>
-      Create Recipe
-    </h1>
+    <h1 />
     <h3>
       Recipe Title
     </h3>
@@ -32,6 +30,7 @@ exports[`RecipeEditor component renders correctly 1`] = `
         <input
           accept="image/*"
           class="sc-AxjAm htLRco"
+          data-testid="image-upload"
           id="file"
           name="File"
           placeholder="Upload image"

@@ -23,6 +23,7 @@ const SelectorButton = (props) => {
     return (
         <div>
             <Input
+                data-testid="image-upload"
                 type='file'
                 name="File"
                 id='file'

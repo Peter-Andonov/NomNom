@@ -37,12 +37,13 @@ const Input = (props) => {
             <Label htmlFor={props.id}>{props.label}</Label>
             <StyledInput
                 id={props.id}
+                data-testid={props.testId}
                 type={props.type}
                 value={props.value}
                 onChange={handleChange}
                 onBlur={props.onBlur}
             />
-            {props.error && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
+            {props.error && <ErrorMessage data-testid={`error-${props.testId}`} >{props.errorMessage}</ErrorMessage>}
         </Wrapper>
     );
 };

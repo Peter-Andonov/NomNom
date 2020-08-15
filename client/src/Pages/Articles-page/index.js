@@ -62,7 +62,7 @@ const ArticlesPage = () => {
                 onChange={setSearch}
                 onSearch={getArticles}
             />
-            <FlexLister>
+            <FlexLister testId={'articles-list'}>
                 {articles && articles.map((article) =>
                     <ArticleCard
                         key={article._id}

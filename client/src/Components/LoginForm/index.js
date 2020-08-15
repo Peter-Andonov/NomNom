@@ -96,6 +96,7 @@ class LoginForm extends Component {
                 <Form onSubmit={this.handleSubmit}>
                     <Input
                         id={'email'}
+                        testId={'login-input-email'}
                         label={'Email'}
                         type={'email'}
                         value={this.state.email}
@@ -105,12 +106,16 @@ class LoginForm extends Component {
                     />
                     <Input
                         id={'password'}
+                        testId={'login-input-pass'}
                         label={'Password'}
                         type={'password'}
                         value={this.state.password}
                         onChange={this.setPassword}
                     />
-                    <Submit label={'Login'} />
+                    <Submit
+                        testId={'login'}
+                        label={'Login'}
+                    />
                 </Form>
             </Wrapper>
         );

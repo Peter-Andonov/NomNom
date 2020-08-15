@@ -43,7 +43,7 @@ const ArticleEditor = (props) => {
                 editorState={props.editorState}
                 setEditorState={props.setEditorState}
             />
-            {props.error && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
+            {props.error && <ErrorMessage data-testid="article-editor-error" >{props.errorMessage}</ErrorMessage>}
             <Submit
                 testId={'article'}
                 label={'Save Article'}

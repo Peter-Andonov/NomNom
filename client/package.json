@@ -38,6 +38,7 @@
   },
   "devDependencies": {
     "cypress": "^4.12.1",
+    "cypress-file-upload": "^4.0.7",
     "jest-dom": "^4.0.0",
     "jest-styled-components": "^7.0.2"
   }

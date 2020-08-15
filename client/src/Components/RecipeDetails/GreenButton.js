@@ -21,8 +21,10 @@ const GreenBtn = styled.button`
 
 const GreenButton = (props) => {
 
-    return(
-        <GreenBtn onClick={props.action} >{props.label}</GreenBtn>
+    return (
+        <GreenBtn
+            data-testid={props.testId}
+            onClick={props.action} >{props.label}</GreenBtn>
     );
 };
 

@@ -40,12 +40,14 @@ const Search = (props) => {
         <Wrapper>
             <Container>
                 <SearchInput
+                    data-testid="search-input"
                     type='text'
                     value={props.value}
                     onChange={handleInput}
                     onKeyDown={handleEnter}
                 />
                 <GreenButton
+                    testId={"search-submit"}
                     label={'Search'}
                     action={props.onSearch}
                 />

@@ -9,10 +9,14 @@ exports[`Header component renders admin navigation 1`] = `
       class="sc-AxgMl fOKyzp"
     >
       <a
-        class="sc-AxhCb eZTMiI"
+        class="sc-Axmtr csHywr"
         href="/"
+        text="Home"
       >
-        Home
+        <img
+          class="sc-AxmLO kLa-Dkk"
+          src="logo.png"
+        />
       </a>
       <a
         class="sc-AxhCb eZTMiI"
@@ -59,10 +63,14 @@ exports[`Header component renders guest navigation 1`] = `
       class="sc-AxgMl fOKyzp"
     >
       <a
-        class="sc-AxhCb eZTMiI"
+        class="sc-Axmtr csHywr"
         href="/"
+        text="Home"
       >
-        Home
+        <img
+          class="sc-AxmLO kLa-Dkk"
+          src="logo.png"
+        />
       </a>
       <a
         class="sc-AxhCb eZTMiI"
@@ -113,10 +121,14 @@ exports[`Header component renders user navigation 1`] = `
       class="sc-AxgMl fOKyzp"
     >
       <a
-        class="sc-AxhCb eZTMiI"
+        class="sc-Axmtr csHywr"
         href="/"
+        text="Home"
       >
-        Home
+        <img
+          class="sc-AxmLO kLa-Dkk"
+          src="logo.png"
+        />
       </a>
       <a
         class="sc-AxhCb eZTMiI"

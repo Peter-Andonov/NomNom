@@ -9,8 +9,8 @@ import RecipeEditor from './index';
 jest.mock('./IngredientsTable.js', () => () => <div />);
 jest.mock('../TextEditor/index.js', () => () => <div />);
 
-describe('Header component', () => {
-    it("renders guest navigation", () => {
+describe('RecipeEditor component', () => {
+    it("renders correctly", () => {
         const { asFragment } = render(
             <TestSetup value={{
                 loggedIn: true,

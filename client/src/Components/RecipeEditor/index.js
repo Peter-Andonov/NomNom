@@ -209,7 +209,7 @@ const RecipeEditor = (props) => {
                 <SectionIcon src={removeIcon} onClick={removeIngredientSection} />
             </Container>
             <Container>
-                {props.ingredientSections.map((section, idx) =>
+                {props.ingredientSections && props.ingredientSections.map((section, idx) =>
                     <IngredientsTable
                         key={section._id}
                         idx={idx}

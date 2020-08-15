@@ -1,0 +1,158 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header component renders admin navigation 1`] = `
+<DocumentFragment>
+  <header
+    class="sc-AxhUy koLwTO"
+  >
+    <nav
+      class="sc-AxgMl fOKyzp"
+    >
+      <a
+        class="sc-Axmtr csHywr"
+        href="/"
+        text="Home"
+      >
+        <img
+          class="sc-AxmLO kLa-Dkk"
+          src="logo.png"
+        />
+      </a>
+      <a
+        class="sc-AxhCb eZTMiI"
+        href="/recipes"
+      >
+        Recipes
+      </a>
+      <a
+        class="sc-AxhCb eZTMiI"
+        href="/ingredients"
+      >
+        Ingredients
+      </a>
+      <a
+        class="sc-AxhCb eZTMiI"
+        href="/articles"
+      >
+        Articles
+      </a>
+      <div
+        class="sc-AxirZ GpSyG"
+      >
+        <div
+          class="sc-AxjAm cxNAeo"
+        >
+          Admin
+        </div>
+      </div>
+      <div
+        class="sc-AxheI jYYRbo"
+      />
+      <div />
+    </nav>
+  </header>
+</DocumentFragment>
+`;
+
+exports[`Header component renders guest navigation 1`] = `
+<DocumentFragment>
+  <header
+    class="sc-AxhUy koLwTO"
+  >
+    <nav
+      class="sc-AxgMl fOKyzp"
+    >
+      <a
+        class="sc-Axmtr csHywr"
+        href="/"
+        text="Home"
+      >
+        <img
+          class="sc-AxmLO kLa-Dkk"
+          src="logo.png"
+        />
+      </a>
+      <a
+        class="sc-AxhCb eZTMiI"
+        href="/recipes"
+      >
+        Recipes
+      </a>
+      <a
+        class="sc-AxhCb eZTMiI"
+        href="/ingredients"
+      >
+        Ingredients
+      </a>
+      <a
+        class="sc-AxhCb eZTMiI"
+        href="/articles"
+      >
+        Articles
+      </a>
+      <div
+        class="sc-AxheI jYYRbo"
+      />
+      <div>
+        <a
+          class="sc-AxhCb eZTMiI"
+          href="/login"
+        >
+          Login
+        </a>
+        <a
+          class="sc-AxhCb eZTMiI"
+          href="/register"
+        >
+          Register
+        </a>
+      </div>
+    </nav>
+  </header>
+</DocumentFragment>
+`;
+
+exports[`Header component renders user navigation 1`] = `
+<DocumentFragment>
+  <header
+    class="sc-AxhUy koLwTO"
+  >
+    <nav
+      class="sc-AxgMl fOKyzp"
+    >
+      <a
+        class="sc-Axmtr csHywr"
+        href="/"
+        text="Home"
+      >
+        <img
+          class="sc-AxmLO kLa-Dkk"
+          src="logo.png"
+        />
+      </a>
+      <a
+        class="sc-AxhCb eZTMiI"
+        href="/recipes"
+      >
+        Recipes
+      </a>
+      <a
+        class="sc-AxhCb eZTMiI"
+        href="/ingredients"
+      >
+        Ingredients
+      </a>
+      <a
+        class="sc-AxhCb eZTMiI"
+        href="/articles"
+      >
+        Articles
+      </a>
+      <div
+        class="sc-AxheI jYYRbo"
+      />
+      <div />
+    </nav>
+  </header>
+</DocumentFragment>
+`;

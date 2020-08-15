@@ -1,0 +1,39 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dropdown component renders admin options - profile, logout 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-AxirZ hVzgMg"
+  >
+    <img
+      alt="Avatar"
+      class="sc-AxiKw fiBQpN"
+      src="https://res.cloudinary.com/nomnomapp/image/upload/v1596641498/Images/x5svb4l6kwcyiinazfqt.png"
+    />
+    <div
+      class="sc-AxjAm cxNAeo"
+    >
+      john.doe@gmail.com
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`Dropdown component renders user options - favourites, profile, logout 1`] = `
+<DocumentFragment>
+  <div
+    class="sc-AxirZ hVzgMg"
+  >
+    <img
+      alt="Avatar"
+      class="sc-AxiKw fiBQpN"
+      src="https://res.cloudinary.com/nomnomapp/image/upload/v1596641498/Images/x5svb4l6kwcyiinazfqt.png"
+    />
+    <div
+      class="sc-AxjAm cxNAeo"
+    >
+      john.doe@gmail.com
+    </div>
+  </div>
+</DocumentFragment>
+`;

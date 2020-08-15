@@ -25,7 +25,7 @@ const IngredientEditor = (props) => {
 
     return (
         <Wrapper onSubmit={props.action}>
-            <h1>Create Ingredient</h1>
+            <h1>{props.pageTitle}</h1>
             <h3>Name</h3>
             <Input
                 value={props.name}

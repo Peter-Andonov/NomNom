@@ -53,6 +53,7 @@ const CreateIngredientPage = () => {
         <PageLayout>
             <BannerImage />
             <IngredientEditor
+                pageTitle={'Create ingredient'}
                 name={name}
                 setName={setName}
                 imageUrl={imageUrl}

@@ -75,6 +75,7 @@ const EditIngredientPage = () => {
         <PageLayout>
             <BannerImage />
             <IngredientEditor
+                pageTitle={'Edit ingredient'}
                 name={name}
                 setName={setName}
                 imageUrl={imageUrl}

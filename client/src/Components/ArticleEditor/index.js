@@ -28,6 +28,7 @@ const ArticleEditor = (props) => {
             <h1>{props.pageTitle}</h1>
             <h3>Title</h3>
             <Input
+                testId={'article-title-input'}
                 value={props.title}
                 onChange={props.setTitle}
             />
@@ -38,11 +39,15 @@ const ArticleEditor = (props) => {
             />
             <h3>Article Body</h3>
             <TextEditor
+                testId={'article-body'}
                 editorState={props.editorState}
                 setEditorState={props.setEditorState}
             />
             {props.error && <ErrorMessage>{props.errorMessage}</ErrorMessage>}
-            <Submit label={'Save Article'} />
+            <Submit
+                testId={'article'}
+                label={'Save Article'}
+            />
         </Wrapper>
     );
 };

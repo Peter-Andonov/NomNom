@@ -26,7 +26,7 @@ const TextEditor = (props) => {
                 editorState={props.editorState}
                 setEditorState={props.setEditorState}
             />
-            <EditorContainer>
+            <EditorContainer data-testid={`editor-${props.testId}`} >
                 <Editor
                     editorState={props.editorState}
                     onChange={props.setEditorState}

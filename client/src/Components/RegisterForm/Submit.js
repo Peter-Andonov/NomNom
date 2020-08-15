@@ -25,7 +25,7 @@ const Button = styled.button`
 const Submit = (props) => {
 
     return (
-        <Button type='submit'>{props.label}</Button>
+        <Button data-testid={`submit-${props.testId}`} type='submit'>{props.label}</Button>
     );
 };
 

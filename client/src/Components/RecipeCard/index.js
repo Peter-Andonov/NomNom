@@ -82,11 +82,11 @@ const RecipeCard = (props) => {
                         <tr>
                             <td>
                                 <PropTitle>Prep time</PropTitle>
-                                <PropValue>{`${props.prepTime} min` || 'n/a'}</PropValue>
+                                <PropValue>{props.prepTime ? `${props.prepTime} min` : 'n/a'}</PropValue>
                             </td>
                             <td>
                                 <PropTitle>Cook time</PropTitle>
-                                <PropValue>{`${props.cookTime} min` || 'n/a'}</PropValue>
+                                <PropValue>{props.cookTime ? `${props.cookTime} min` : 'n/a'}</PropValue>
                             </td>
                         </tr>
                         <tr>

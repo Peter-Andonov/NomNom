@@ -54,4 +54,7 @@ $ npm install - will install dependencies
 $ npm run start - will start the backend server
 $ npm run client - will start the React development server
 $ npm run dev - will start both from the same terminal
+$ npm run test:snapshot - will run snapshot tests for the client application*
+$ npm run test:e2e - will run Cypress and allow for selection of test cases
 ```
+*Since the project uses Styled Components these tests fail on the auto generated css classes. I haven`t found a way around this.

@@ -3,6 +3,9 @@ const Ingredient = require('../models/Ingredient');
 const { ObjectId } = mongoose.Types;
 
 createIngredient = async (req, res) => {
+
+    await validateIngredientName(req.body.name);
+
     const name = req.body.name;
     const imageUrl = req.body.imageUrl;
     const description = req.body.description;
@@ -28,7 +31,11 @@ getIngredientById = async (req, res) => {
 };
 
 updateIngredient = async (req, res) => {
+
     const id = req.body.id;
+
+    await validateIngredientName(req.body.name, id);
+
     const updatedData = {};
 
     if (req.body.name) {
@@ -76,6 +83,21 @@ getAllIngredients = async (req, res) => {
     const data = { ingredients, totalIngredientsCount };
 
     return data;
+};
+
+
+validateIngredientName = async (name, id) => {
+    const dupName = await Ingredient.findOne({name: name});
+
+    if(dupName && (id === dupName._id.toString())) {
+        return true;
+    };
+
+    if (dupName) {
+        const error = new Error("There is already an ingredient with that name");
+        error.statusCode = 400;
+        throw error;
+    };
 };
 
 

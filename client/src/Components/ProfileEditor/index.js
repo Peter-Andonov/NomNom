@@ -29,6 +29,11 @@ const Container = styled.div`
     align-items: center;
 `;
 
+const ErrorMessage = styled.div`
+    font-size: 1rem;
+    color: red;
+`;
+
 
 const ProfileEditor = () => {
 
@@ -37,13 +42,15 @@ const ProfileEditor = () => {
     const [firstName, setFirstName] = useState(userContext.user.firstName);
     const [lastName, setLastName] = useState(userContext.user.lastName);
     const [profilePicUrl, setProfilePicUrl] = useState(userContext.user.profilePicUrl);
+    const [error, setError] = useState(false);
+    const [errorMessage, setErrorMessage] = useState('');
 
 
-    const saveProfile = async (e) => {
+    const saveProfile = (e) => {
 
         e.preventDefault();
 
-        const res = await Axios('http://localhost:5000/api/user', {
+        Axios('http://localhost:5000/api/user', {
             method: 'PATCH',
             headers: {
                 'content-type': 'application/json',
@@ -54,17 +61,22 @@ const ProfileEditor = () => {
                 firstName,
                 lastName
             }
-        });
+        }).then((res) => {
+            userContext.logIn({
+                _id: res.data._id,
+                email: res.data.email,
+                role: res.data.role,
+                firstName: res.data.firstName,
+                lastName: res.data.lastName,
+                profilePicUrl: res.data.profilePicUrl,
+                favouriteRecipes: res.data.favouriteRecipes
+            });
+        }).catch((err) => {
+            setError(true);
+            setErrorMessage(err.response.data.message);
+        })
 
-        userContext.logIn({
-            _id: res.data._id,
-            email: res.data.email,
-            role: res.data.role,
-            firstName: res.data.firstName,
-            lastName: res.data.lastName,
-            profilePicUrl: res.data.profilePicUrl,
-            favouriteRecipes: res.data.favouriteRecipes
-        });
+        
     };
 
     return (
@@ -90,6 +102,7 @@ const ProfileEditor = () => {
                         onChange={setLastName}
                     />
                 </Container>
+                {error && <ErrorMessage>{errorMessage}</ErrorMessage>}
                 <Submit label={"Save changes"} />
             </Form>
         </Wrapper>

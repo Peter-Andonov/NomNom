@@ -66,6 +66,10 @@ getUser = async (req, res) => {
 }
 
 updateUser = async (req, res) => {
+
+    validateName(req.body.firstName);
+    validateName(req.body.lastName);
+
     const id = req.body.id;
     const updatedData = {};
 
@@ -80,9 +84,6 @@ updateUser = async (req, res) => {
     if (req.body.profilePicUrl) {
         updatedData.profilePicUrl = req.body.profilePicUrl;
     };
-
-    validateName(updatedData.firstName);
-    validateName(updatedData.lastName);
 
     const updated = await User.findByIdAndUpdate(id, updatedData, { new: true });
 
